@@ -7,7 +7,11 @@
   "main": "dist/gitea-provider.js",
   "module": "src/gitea-provider.js",
   "description": "repository provider for gitea",
-  "keywords": ["git", "gitea", "repository-provider"],
+  "keywords": [
+    "git",
+    "gitea",
+    "repository-provider"
+  ],
   "contributors": [
     {
       "name": "Markus Felten",
@@ -21,10 +25,10 @@
     "pretest": "rollup -c tests/rollup.config.js",
     "precover": "rollup -c tests/rollup.config.js",
     "posttest": "npm run prepare && markdown-doctest",
-    "docs": "documentation readme src/github-provider.js --section=API",
+    "docs": "documentation readme src/gitea-provider.js --section=API",
     "semantic-release": "semantic-release",
     "prepare": "rollup -c",
-    "lint": "documentation lint src/github-provider.js",
+    "lint": "documentation lint src/gitea-provider.js",
     "travis-deploy-once": "travis-deploy-once"
   },
   "dependencies": {
@@ -57,12 +61,21 @@
   "homepage": "https://github.com/arlac77/gitea-repository-provider#readme",
   "release": {},
   "ava": {
-    "files": ["build/*-test.js"],
-    "require": ["babel-register"]
+    "files": [
+      "build/*-test.js"
+    ],
+    "require": [
+      "babel-register"
+    ]
   },
   "nyc": {
-    "include": ["build/*-test.js", "src/**/*.js"],
-    "reporter": ["lcov"],
+    "include": [
+      "build/*-test.js",
+      "src/**/*.js"
+    ],
+    "reporter": [
+      "lcov"
+    ],
     "report-dir": "./build/coverage"
   },
   "xo": {
