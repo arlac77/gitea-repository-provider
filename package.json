@@ -61,7 +61,8 @@
   "release": {},
   "ava": {
     "files": [
-      "tests/*-test.js"
+      "tests/*-test.js",
+      "tests/*-test.mjs"
     ],
     "require": [
       "esm"
