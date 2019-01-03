@@ -4,8 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "dist/gitea-provider.js",
-  "module": "src/gitea-provider.js",
+  "main": "src/gitea-provider.mjs",
+  "module": "src/gitea-provider.mjs",
   "description": "repository provider for gitea",
   "keywords": [
     "git",
@@ -21,9 +21,9 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "cover": "c8 --temp-directory build/coverage ava && c8 report -r lcov --temp-directory build/coverage",
-    "docs": "documentation readme src/gitea-provider.js --section=API",
-    "lint": "documentation lint src/gitea-provider.js",
-    "posttest": "markdown-doctest && npm run prepare",
+    "docs": "documentation readme src/gitea-provider.mjs --section=API",
+    "lint": "documentation lint src/gitea-provider.mjs",
+    "posttest": "markdown-doctest",
     "test": "ava"
   },
   "dependencies": {
