@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "content-entry": "^2.1.0",
+    "node-fetch": "^2.5.0",
     "repository-provider": "^12.5.1"
   },
   "devDependencies": {
