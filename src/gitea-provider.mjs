@@ -1,6 +1,11 @@
 import { Provider, Repository, Branch } from "repository-provider";
 import fetch from "node-fetch";
 
+
+function join(a,b) {
+  return [a,b].join('/');
+}
+
 /**
  * Gitea provider
  *
@@ -28,14 +33,21 @@ export class GiteaProvider extends Provider {
   }
 
   async *repositories(pattern) {
-    const result = await fetch(this.api + "repos/search", {
-      headers: { authorization: "token " + this.token },
+    const result = await fetch(join(this.api, "repos/search"), {
+      headers: {
+        authorization: "token " + this.token,
+    //    "Accept-Encoding": "identity"
+      },
       accept: "application/json"
     });
-    console.log(result);
-    repos = await result.json(result);
-    for (const r of result) {
-      yield r;
+
+    const json = await result.json();
+
+    for (const r of json.data) {
+      //console.log(r);
+      const repository = new Repository(this,r.name,r);
+
+      yield repository;
     }
   }
 }
