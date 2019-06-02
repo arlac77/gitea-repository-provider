@@ -54,7 +54,6 @@
   "release": {},
   "ava": {
     "files": [
-      "tests/*-test.js",
       "tests/*-test.mjs"
     ],
     "require": [
@@ -63,7 +62,6 @@
     "babel": false,
     "compileEnhancements": false,
     "extensions": [
-      "js",
       "mjs"
     ]
   },
