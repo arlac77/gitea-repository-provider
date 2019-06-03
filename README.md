@@ -25,6 +25,7 @@ repository provider for gitea
 ### Table of Contents
 
 -   [GiteaProvider](#giteaprovider)
+    -   [headers](#headers)
     -   [optionsFromEnvironment](#optionsfromenvironment)
         -   [Parameters](#parameters)
 
@@ -34,16 +35,21 @@ repository provider for gitea
 
 Gitea provider
 
+### headers
+
+fetch headers
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
+
 ### optionsFromEnvironment
 
 provide token and api from one of
 
--   GITEA_TOKEN
--   GITEA_API
-
 #### Parameters
 
--   `env` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** process env
+-   `env` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** process environment
+    -   `env.GITEA_TOKEN` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** api token
+    -   `env.GITEA_API` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** api url
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** with auth token
 

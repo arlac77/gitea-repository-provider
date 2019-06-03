@@ -17,15 +17,13 @@ function join(a, b) {
 export class GiteaProvider extends Provider {
   /**
    * provide token and api from one of
-   * - GITEA_TOKEN
-   * - GITEA_API
-   * @param {Object} env process env
+   * @param {Object} env process environment
+   * @param {string} env.GITEA_TOKEN api token
+   * @param {string} env.GITEA_API api url
    * @return {Object} with auth token
    */
   static optionsFromEnvironment(env) {
-    const token = env.GITEA_TOKEN;
-    const api = env.GITEA_API;
-    return { token, api };
+    return { token: env.GITEA_TOKEN, api: env.GITEA_API };
   }
 
   static get defaultOptions() {
@@ -61,7 +59,7 @@ export class GiteaProvider extends Provider {
     for (const r of json.data) {
       const [gn, rn] = r.full_name.split(/\//);
       const group = await this.createRepositoryGroup(gn, r.owner);
-      await group.createRepository(rn,r);
+      await group.createRepository(rn, r);
     }
   }
 }
