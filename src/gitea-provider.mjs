@@ -1,14 +1,8 @@
-import {
-  Provider,
-  RepositoryGroup,
-  Repository,
-  Branch
-} from "repository-provider";
 import fetch from "node-fetch";
 
-function join(a, b) {
-  return [a, b].join("/");
-}
+import { Provider } from "repository-provider";
+import { GiteaRepository } from './gitea-repository.mjs';
+import { join } from './util.mjs';
 
 /**
  * Gitea provider
@@ -60,6 +54,17 @@ export class GiteaProvider extends Provider {
       const [gn, rn] = r.full_name.split(/\//);
       const group = await this.createRepositoryGroup(gn, r.owner);
       await group.createRepository(rn, r);
+      console.log(group.name, rn);
     }
+  }
+
+  async repository(name) {
+    const r = await this.repositories([name]).next();
+    console.log(r);
+    return r.value;
+  }
+
+  get repositoryClass() {
+    return GiteaRepository;
   }
 }
