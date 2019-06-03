@@ -9,8 +9,11 @@ test("list repositories", async t => {
   const rps = {};
 
   for await (const r of provider.repositories()) {
+    //console.log(r.fullName);
+
     rps[r.fullName] = r;
   }
 
   t.true(Object.keys(rps).length > 0);
+  t.is(rps['markus/Omnia'].fullName,'markus/Omnia');
 });

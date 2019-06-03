@@ -1,4 +1,9 @@
-import { Provider, Repository, Branch } from "repository-provider";
+import {
+  Provider,
+  RepositoryGroup,
+  Repository,
+  Branch
+} from "repository-provider";
 import fetch from "node-fetch";
 
 function join(a, b) {
@@ -33,16 +38,19 @@ export class GiteaProvider extends Provider {
 
   /**
    * fetch headers
-   * @return {Object} suitable as hetch headers
+   * @return {Object} suitable as fetch headers
    */
   get headers() {
     return {
       authorization: "token " + this.token
-      //    "Accept-Encoding": "identity"
     };
   }
 
-  async *repositories(pattern) {
+  async _initialize() {
+    await this.fetchAllRepositories();
+  }
+
+  async fetchAllRepositories() {
     const result = await fetch(join(this.api, "repos/search"), {
       headers: this.headers,
       accept: "application/json"
@@ -51,10 +59,9 @@ export class GiteaProvider extends Provider {
     const json = await result.json();
 
     for (const r of json.data) {
-      //console.log(r);
-      const repository = new Repository(this, r.name, r);
-
-      yield repository;
+      const [gn, rn] = r.full_name.split(/\//);
+      const group = await this.createRepositoryGroup(gn, r.owner);
+      await group.createRepository(rn,r);
     }
   }
 }
