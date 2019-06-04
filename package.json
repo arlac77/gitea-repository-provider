@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "content-entry": "^2.1.0",
-    "node-fetch": "^2.5.0",
+    "node-fetch": "^2.6.0",
     "repository-provider": "^13.1.5"
   },
   "devDependencies": {
