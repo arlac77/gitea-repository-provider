@@ -16,13 +16,8 @@ export class GiteaRepository extends Repository {
       }
     );
 
-    const json = await result.json();
-
-    //console.log(json);
-
-    for (const b of json) {
-        console.log(b);
-      const branch = await this._createBranch(b.name, undefined, b);
+    for (const bd of await result.json()) {
+      await this._createBranch(bd.name, undefined, bd);
     }
   }
 }
