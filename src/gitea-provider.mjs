@@ -54,13 +54,13 @@ export class GiteaProvider extends Provider {
       const [gn, rn] = r.full_name.split(/\//);
       const group = await this.createRepositoryGroup(gn, r.owner);
       await group.createRepository(rn, r);
-      console.log(group.name, rn);
+      //console.log(group.name, rn);
     }
   }
 
   async repository(name) {
     const r = await this.repositories([name]).next();
-    console.log(r);
+    //console.log(r);
     return r.value;
   }
 
