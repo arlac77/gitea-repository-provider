@@ -3,11 +3,19 @@ import { GiteaProvider } from "../src/gitea-provider";
 
 const config = GiteaProvider.optionsFromEnvironment(process.env);
 
-test("repository", async t => {
+test("branch", async t => {
     const provider = new GiteaProvider(config);
 
     const repo = await provider.repository('markus/Omnia');
-    const b = await repo.branches();
 
-    t.is([b.keys].length, 1);
+    const b = await repo.defaultBranch;
+
+    const entries = {};
+
+    for await (const e of b.entries()) {
+        entries[e.name] = e;
+        //  console.log(e.name);
+    }
+
+    t.is(entries.Makefile.name, 'Makefile');
 });
