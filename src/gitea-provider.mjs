@@ -59,6 +59,10 @@ export class GiteaProvider extends Provider {
   }
 
   async repository(name) {
+    if(name === undefined) {
+      return undefined;
+    }
+
     const r = await this.repositories([name]).next();
     //console.log(r);
     return r.value;
