@@ -10,14 +10,16 @@ import { join } from './util.mjs';
  */
 export class GiteaProvider extends Provider {
   /**
-   * provide token and api from one of
-   * @param {Object} env process environment
-   * @param {string} env.GITEA_TOKEN api token
-   * @param {string} env.GITEA_API api url
-   * @return {Object} with auth token
+   * known environment variables
+   * @return {Object} 
+   * @return {string} GITEA_TOKEN api token
+   * @return {string} GITEA_API api url
    */
-  static optionsFromEnvironment(env) {
-    return { token: env.GITEA_TOKEN, api: env.GITEA_API };
+  static get environmentOptions() {
+    return {
+      'GITEA_TOKEN': 'token',
+      'GITEA_API': 'api'
+    };
   }
 
   static get defaultOptions() {
@@ -59,7 +61,7 @@ export class GiteaProvider extends Provider {
   }
 
   async repository(name) {
-    if(name === undefined) {
+    if (name === undefined) {
       return undefined;
     }
 

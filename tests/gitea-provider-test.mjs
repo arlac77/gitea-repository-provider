@@ -6,7 +6,11 @@ const config = GiteaProvider.optionsFromEnvironment({
   GITEA_API: "http://mydomain.com/gitea/v1/"
 });
 
-test("provider constructor", async t => {
+test("provider env options", t => {
+  t.deepEqual(config, { token: '123456', api: "http://mydomain.com/gitea/v1/" });
+});
+
+test("provider constructor", t => {
   const provider = new GiteaProvider(config);
 
   t.is(provider.token, "123456");
