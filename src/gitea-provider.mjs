@@ -63,7 +63,7 @@ export class GiteaProvider extends Provider {
       return undefined;
     }
 
-    const r = await this.repositories([name]).next();
+    const r = await this.repositories(name).next();
     //console.log(r);
     return r.value;
   }
