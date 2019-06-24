@@ -14,8 +14,21 @@ test("branch", async t => {
 
     for await (const e of b.entries()) {
         entries[e.name] = e;
-        //  console.log(e.name);
     }
 
     t.is(entries.Makefile.name, 'Makefile');
+
+    const stream = await entries.Makefile.getReadStream();
+
+    let c = '';
+
+    for await (const chunk of stream) {
+        c += chunk;
+    }
+
+    //console.log(c);
+    t.regex(c, /buildLib/);
+
+    //stream.pipe(process.stdout);
+
 });
