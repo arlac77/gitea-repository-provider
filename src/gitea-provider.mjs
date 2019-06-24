@@ -22,15 +22,6 @@ export class GiteaProvider extends Provider {
     };
   }
 
-  /**
-   * @param {Object} options 
-   * @return {boolean} true if token an api are present
-   */
-  static areOptionsSufficciant(options) {
-    return options.token !== undefined && options.api !== undefined;
-  }
-
-/*
   static get defaultOptions() {
     return {
       api: undefined,
@@ -38,7 +29,14 @@ export class GiteaProvider extends Provider {
       ...super.defaultOptions
     };
   }
-*/
+  
+  /**
+   * @param {Object} options 
+   * @return {boolean} true if token an api are present
+   */
+  static areOptionsSufficciant(options) {
+    return options.token !== undefined && options.api !== undefined;
+  }
 
   /**
    * fetch headers

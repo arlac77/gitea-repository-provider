@@ -17,6 +17,14 @@ test("provider constructor", t => {
   t.is(provider.api, "http://mydomain.com/gitea/v1/");
 });
 
+test("initialize", t => {
+  const provider = GiteaProvider.initialize(undefined, {
+    GITEA_TOKEN: "123456",
+    GITEA_API: "http://mydomain.com/gitea/v1/"
+  });
+  t.is(provider.name, 'GiteaProvider');
+});
+
 test("get undefined repo", async t => {
   const provider = new GiteaProvider(config);
 
