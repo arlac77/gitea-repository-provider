@@ -29,7 +29,7 @@ export class GiteaProvider extends Provider {
       ...super.defaultOptions
     };
   }
-  
+
   /**
    * @param {Object} options 
    * @return {boolean} true if token an api are present
@@ -53,29 +53,30 @@ export class GiteaProvider extends Provider {
   }
 
   async fetchAllRepositories() {
-    const result = await fetch(join(this.api, "repos/search"), {
+    const result = await fetch(join(this.api, "repos/search?limit=50"), {
       headers: this.headers,
       accept: "application/json"
     });
 
     const json = await result.json();
-
     for (const r of json.data) {
       const [gn, rn] = r.full_name.split(/\//);
       const group = await this.createRepositoryGroup(gn, r.owner);
       await group.createRepository(rn, r);
       //console.log(group.name, rn);
     }
+
+    /*delete json.data;
+    console.log(JSON.stringify(json,undefined,2));
+    */
   }
 
-  async repository(name) {
-    if (name === undefined) {
-      return undefined;
+  normalizeRepositoryName(name) {
+    const prefix = this.api.replace(/api\/v.+$/, '');
+    if (name.startsWith(prefix)) {
+      name = name.substring(prefix.length);
     }
-
-    const r = await this.repositories(name).next();
-    //console.log(r);
-    return r.value;
+    return super.normalizeRepositoryName(name);
   }
 
   get repositoryClass() {
