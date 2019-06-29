@@ -71,12 +71,13 @@ export class GiteaProvider extends Provider {
     */
   }
 
-  normalizeRepositoryName(name) {
-    const prefix = this.api.replace(/api\/v.+$/, '');
-    if (name.startsWith(prefix)) {
-      name = name.substring(prefix.length);
-    }
-    return super.normalizeRepositoryName(name);
+  /**
+   * All possible base urls
+   * @return {string[]} common base urls of all repositories
+   */
+  get repositoryBases()
+  {
+    return [this.api.replace(/api\/v.+$/, '')];
   }
 
   get repositoryClass() {
