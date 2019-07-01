@@ -7,10 +7,9 @@ const entryFixtures = {
     test: { isCollection: true }
 };
 
-test("branch", async t => {
+test("branch list entries", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
-  const repo = await provider.repository("markus/Omnia");
-  const branch = await repo.defaultBranch;
+  const branch = await provider.branch("markus/Omnia");
 
   t.plan(Object.keys(entryFixtures).length + 2);
 
@@ -31,5 +30,16 @@ test("branch", async t => {
         t.true(chunks.join().startsWith(ef.startsWith));
       }
     }
+  }
+});
+
+test("branch list entries filtered", async t => {
+  const provider = GiteaProvider.initialize(undefined, process.env);
+  const branch = await provider.branch("markus/Omnia");
+
+  t.plan(1);
+
+  for await (const entry of branch.entries('Makefile')) {
+    t.is(entry.name, 'Makefile');
   }
 });

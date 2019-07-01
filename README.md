@@ -26,7 +26,10 @@ repository provider for gitea
 
 -   [GiteaProvider](#giteaprovider)
     -   [headers](#headers)
+    -   [repositoryBases](#repositorybases)
     -   [environmentOptions](#environmentoptions)
+    -   [areOptionsSufficciant](#areoptionssufficciant)
+        -   [Parameters](#parameters)
 
 ## GiteaProvider
 
@@ -40,6 +43,12 @@ fetch headers
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
 
+### repositoryBases
+
+All possible base urls
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
+
 ### environmentOptions
 
 known environment variables
@@ -49,6 +58,14 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GITEA_TOKEN api token
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GITEA_API api url
+
+### areOptionsSufficciant
+
+#### Parameters
+
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if token an api are present
 
 # install
 
