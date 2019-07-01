@@ -1,34 +1,35 @@
 import test from "ava";
 import { GiteaProvider } from "../src/gitea-provider";
 
-const config = GiteaProvider.optionsFromEnvironment(process.env);
+const entryFixtures = {
+    '.gitignore': { startsWith: "out" },
+    Makefile: { startsWith: "CPPOPTIONS := -O3 -std=c++1y -stdlib=libc++" },
+    test: { isCollection: true }
+};
 
 test("branch", async t => {
-    const provider = new GiteaProvider(config);
+  const provider = GiteaProvider.initialize(undefined, process.env);
+  const repo = await provider.repository("markus/Omnia");
+  const branch = await repo.defaultBranch;
 
-    const repo = await provider.repository('markus/Omnia');
+  t.plan(Object.keys(entryFixtures).length + 2);
 
-    const b = await repo.defaultBranch;
+  for await (const entry of branch.entries()) {
+    const ef = entryFixtures[entry.name];
 
-    const entries = {};
+    if (ef !== undefined) {
+      if (ef.isCollection) {
+        t.true(entry.isCollection);
+      } else {
+        t.true((await entry.getString()).startsWith(ef.startsWith));
 
-    for await (const e of b.entries()) {
-        entries[e.name] = e;
+        const stream = await entry.getReadStream();
+        const chunks = [];
+        for await (const chunk of stream) {
+          chunks.push(chunk);
+        }
+        t.true(chunks.join().startsWith(ef.startsWith));
+      }
     }
-
-    t.is(entries.Makefile.name, 'Makefile');
-
-    const stream = await entries.Makefile.getReadStream();
-
-    let c = '';
-
-    for await (const chunk of stream) {
-        c += chunk;
-    }
-
-    //console.log(c);
-    t.regex(c, /buildLib/);
-
-    //stream.pipe(process.stdout);
-
+  }
 });
