@@ -30,7 +30,7 @@ export class GiteaBranch extends Branch {
             yield new BaseCollectionEntry(entry.path);
             break;
           default:
-            yield new GiteaContentEntry(this, entry);
+            yield new GiteaContentEntry(this, entry.path);
         }
       }
     }
@@ -38,8 +38,8 @@ export class GiteaBranch extends Branch {
 }
 
 class GiteaContentEntry extends StreamContentEntryMixin(ContentEntry) {
-  constructor(branch, entry) {
-    super(entry.path);
+  constructor(branch, name) {
+    super(name);
     Object.defineProperties(this, { branch: { value: branch } });
   }
 
