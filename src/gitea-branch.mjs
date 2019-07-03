@@ -23,7 +23,8 @@ export class GiteaBranch extends Branch {
     });
 
     const json = await result.json();
-    for (const entry of await json.tree) {
+
+    for (const entry of json.tree) {
       if (patterns === undefined || micromatch([entry.path], patterns).length === 1) {
         switch (entry.type) {
           case "tree":
