@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { Repository,Hook } from "repository-provider";
+import { Repository } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
