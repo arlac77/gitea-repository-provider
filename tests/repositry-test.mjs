@@ -1,4 +1,5 @@
 import test from "ava";
+import { assertRepo } from "./util.mjs";
 import { GiteaProvider } from "../src/gitea-provider";
 
 const owner1 = {
@@ -37,51 +38,22 @@ const repoFixtures = {
       {
         id: 3,
         active: true,
-        url: 'https://mfelten.dynv6.net/services/ci/api/gitea',
+        url: "https://mfelten.dynv6.net/services/ci/api/gitea",
         events: new Set([
-          'create',
-          'delete',
-          'fork',
-          'push',
-          'issues',
-          'issue_comment',
-          'pull_request',
-          'repository',
-          'release'
+          "create",
+          "delete",
+          "fork",
+          "push",
+          "issues",
+          "issue_comment",
+          "pull_request",
+          "repository",
+          "release"
         ])
       }
     ]
   }
 };
-
-async function assertRepo(t, repository, fixture) {
-  if (fixture === undefined) {
-    t.is(repository, undefined);
-  } else {
-    t.is(repository.fullName, fixture.fullName);
-
-    if (fixture.owner) {
-      t.is(repository.owner.name, fixture.owner.name);
-      t.is(repository.owner.id, fixture.owner.id);
-    }
-
-    if (fixture.hooks) {
-      let n = 0;
-      for await (const h of repository.hooks()) {
-        const fh = fixture.hooks[n++];
-        t.is(h.id, fh.id);
-        t.is(h.url, fh.url);
-        t.is(h.active, fh.active);
-        t.deepEqual(h.events, fh.events);
-      }
-    }
-
-    if (fixture.provider) {
-      t.is(repository.provider.constructor, fixture.provider);
-    }
-  }
-}
-
 
 test("locate repository several", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
