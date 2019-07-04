@@ -59,8 +59,11 @@ async function assertRepo(t, repository, fixture) {
     t.is(repository, undefined);
   } else {
     t.is(repository.fullName, fixture.fullName);
-    t.is(repository.owner.name, fixture.owner.name);
-    t.is(repository.owner.id, fixture.owner.id);
+
+    if (fixture.owner) {
+      t.is(repository.owner.name, fixture.owner.name);
+      t.is(repository.owner.id, fixture.owner.id);
+    }
 
     if (fixture.hooks) {
       let n = 0;
@@ -78,6 +81,7 @@ async function assertRepo(t, repository, fixture) {
     }
   }
 }
+
 
 test("locate repository several", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
