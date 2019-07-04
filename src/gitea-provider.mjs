@@ -63,12 +63,7 @@ export class GiteaProvider extends Provider {
       const [gn, rn] = r.full_name.split(/\//);
       const group = await this.createRepositoryGroup(gn, r.owner);
       await group.createRepository(rn, r);
-      //console.log(group.name, rn);
     }
-
-    /*delete json.data;
-    console.log(JSON.stringify(json,undefined,2));
-    */
   }
 
   /**
