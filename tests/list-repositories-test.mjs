@@ -1,10 +1,8 @@
 import test from "ava";
-import { GiteaProvider } from "../src/gitea-provider";
-
-const config = GiteaProvider.optionsFromEnvironment(process.env);
+import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 test("list repositories", async t => {
-  const provider = new GiteaProvider(config);
+  const provider = GiteaProvider.initialize(undefined, process.env);
 
   let rps = {};
 

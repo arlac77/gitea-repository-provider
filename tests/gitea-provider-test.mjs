@@ -1,5 +1,5 @@
 import test from "ava";
-import { GiteaProvider } from "../src/gitea-provider";
+import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const config = GiteaProvider.optionsFromEnvironment({
   GITEA_TOKEN: "123456",

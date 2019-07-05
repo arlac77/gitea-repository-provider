@@ -5,6 +5,33 @@ import { GiteaBranch } from "./gitea-branch.mjs";
 
 export class GiteaRepository extends Repository {
 
+  async _fetchPullRequests() {
+    const result = await fetch(
+      join(this.provider.api, "repos", this.fullName, "pulls"),
+      {
+        headers: this.provider.headers,
+        accept: "application/json"
+      }
+    );
+
+    for (const p of await result.json()) {
+      const getBranch = async u => this.provider.branch([u.repo.full_name,u.ref].join('#'));
+
+      const pr = new this.pullRequestClass(
+        await getBranch(p.head),
+        await getBranch(p.base),
+        String(p.number),
+        {
+          id: p.id,
+          title: p.title,
+          body: p.body,
+          state: p.state
+        }
+      );
+      this._pullRequests.set(pr.name, pr);
+    }
+  }
+
   async _fetchBranches() {
     const result = await fetch(
       join(this.provider.api, "repos", this.fullName, "branches"),
