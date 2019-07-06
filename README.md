@@ -30,6 +30,9 @@ repository provider for gitea
     -   [environmentOptions](#environmentoptions)
     -   [areOptionsSufficciant](#areoptionssufficciant)
         -   [Parameters](#parameters)
+-   [GiteaPullRequest](#giteapullrequest)
+    -   [list](#list)
+        -   [Parameters](#parameters-1)
 
 ## GiteaProvider
 
@@ -66,6 +69,19 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if token an api are present
+
+## GiteaPullRequest
+
+**Extends PullRequest**
+
+### list
+
+list all pull request for a given destination repo
+
+#### Parameters
+
+-   `destination` **Repository** 
+-   `states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
 
 # install
 
