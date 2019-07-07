@@ -1,4 +1,5 @@
 import { generateBranchName } from "repository-provider";
+import { StringContentEntry } from "content-entry";
 
 export async function assertRepo(t, repository, fixture) {
   if (fixture === undefined) {
@@ -37,18 +38,28 @@ export async function pullRequestLivecycle(t, provider, repoName) {
   const destination = await repository.defaultBranch;
   const source = await destination.createBranch(name);
 
+  const commit = await source.commit("message text", [
+    new StringContentEntry("README.md", `file content #${name}`)
+  ]);
+
+
   const pr = await provider.pullRequestClass.open(source, destination, {
-    title: "a test pr",
-    body: "this is the body"
+    title: `test pr from ${name}`,
+    body: "this is the body\n- a\n- b\n- c"
   });
 
-  t.is(pr.title, "a test pr");
-  t.is(pr.body, "this is the body");
+  t.is(pr.title, `test pr from ${name}`);
+  t.is(pr.body, "this is the body\n- a\n- b\n- c");
   t.is(pr.state, "OPEN");
+  t.is(pr.locked, false);
+  t.is(pr.merged, false);
+  t.true(pr.number !== undefined);
 
-  for await (p of provider.pullRequestClasss.list(destination)) {
-    console.log(p, pr.equals(p));
+  for await (const p of provider.pullRequestClass.list(repository)) {
+    console.log('LIST',p, pr.equals(p), pr.number,p.number, pr.repository, p.repository);
   }
 
-  await pr.decline();
+  
+  //await pr.decline();
+  await source.delete();
 }
