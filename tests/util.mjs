@@ -1,3 +1,5 @@
+import { generateBranchName } from "repository-provider";
+
 export async function assertRepo(t, repository, fixture) {
   if (fixture === undefined) {
     t.is(repository, undefined);
@@ -25,4 +27,28 @@ export async function assertRepo(t, repository, fixture) {
       t.is(repository.provider.constructor, fixture.provider);
     }
   }
+}
+
+export async function pullRequestLivecycle(t, provider, repoName) {
+  const repository = await provider.repository(repoName);
+
+  const name = await generateBranchName(repository, "pr-test/*");
+
+  const destination = await repository.defaultBranch;
+  const source = await destination.createBranch(name);
+
+  const pr = await provider.pullRequestClass.open(source, destination, {
+    title: "a test pr",
+    body: "this is the body"
+  });
+
+  t.is(pr.title, "a test pr");
+  t.is(pr.body, "this is the body");
+  t.is(pr.state, "OPEN");
+
+  for await (p of provider.pullRequestClasss.list(destination)) {
+    console.log(p, pr.equals(p));
+  }
+
+  await pr.decline();
 }

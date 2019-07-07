@@ -52,7 +52,7 @@ export class GiteaPullRequest extends PullRequest {
 
   static async open(source, destination, options) {
     const result = await fetch(
-      join(provider.api, "repos", this.fullName, "pulls"),
+      join(source.provider.api, "repos", this.fullName, "pulls"),
       {
         method: "POST",
         data: {
@@ -64,11 +64,17 @@ export class GiteaPullRequest extends PullRequest {
     );
 
     console.log(result);
-    return new this(source, destination, "4711", {
-      description: p.description,
-      title: p.title,
-      state: p.state
+    const json = await result.json();
+    console.log(json);
+
+    return new this(source, destination, json.number, {
+      body: json.body,
+      title: json.title,
+      state: json.state
     });
+  }
+
+  async decline() {
   }
 
   async _write() {
