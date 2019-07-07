@@ -32,10 +32,10 @@ export class GiteaPullRequest extends PullRequest {
       }
     );
 
-    for (const p of await result.json()) {
-      const getBranch = async u =>
+    const getBranch = async u =>
         provider.branch([u.repo.full_name, u.ref].join("#"));
 
+    for (const p of await result.json()) {
       yield new provider.pullRequestClass(
         await getBranch(p.head),
         await getBranch(p.base),
@@ -71,5 +71,9 @@ export class GiteaPullRequest extends PullRequest {
     });
   }
 
-  async merge() {}
+  async _write() {
+  }
+  
+  async _merge(method) {
+  }
 }
