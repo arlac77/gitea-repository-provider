@@ -51,15 +51,21 @@ export class GiteaPullRequest extends PullRequest {
   }
 
   static async open(source, destination, options) {
+    const provider = source.provider;
+
+    const data = {
+      base: source.name,
+      head: destination.name,
+      ...options
+    };
+    console.log(data);
+
     const result = await fetch(
-      join(source.provider.api, "repos", this.fullName, "pulls"),
+      join(provider.api, "repos", destination.repository.fullName, "pulls"),
       {
         method: "POST",
-        data: {
-          base: source.name,
-          head: destination.name,
-          ...options
-        }
+        headers: provider.headers,
+        data
       }
     );
 
