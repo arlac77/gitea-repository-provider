@@ -19,7 +19,7 @@ test("list pull requests", async t => {
   t.true(prs.length > 0);
 });
 
-test.skip("pull request livecycle", async t => {
+test("pull request livecycle", async t => {
   await pullRequestLivecycle(
     t,
     GiteaProvider.initialize(undefined, process.env),
