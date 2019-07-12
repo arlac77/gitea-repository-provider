@@ -58,18 +58,20 @@ export class GiteaPullRequest extends PullRequest {
       head: destination.name,
       ...options
     };
-    console.log(data);
 
     const result = await fetch(
       join(provider.api, "repos", destination.repository.fullName, "pulls"),
       {
         method: "POST",
-        headers: provider.headers,
-        data
+        headers: {
+          'Content-Type' : 'application/json',
+          ...provider.headers },
+        body: JSON.stringify(data)
       }
     );
 
-    console.log(result);
+    console.log(await result.text());
+
     const json = await result.json();
     console.log(json);
 
