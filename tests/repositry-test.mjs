@@ -59,7 +59,6 @@ test("locate repository several", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
 
   for (const rn of Object.keys(repoFixtures)) {
-    const r = repoFixtures[rn];
     const repository = await provider.repository(rn);
     await assertRepo(t, repository, repoFixtures[rn]);
   }
