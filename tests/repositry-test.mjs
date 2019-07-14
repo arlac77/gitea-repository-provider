@@ -60,6 +60,6 @@ test("locate repository several", async t => {
 
   for (const rn of Object.keys(repoFixtures)) {
     const repository = await provider.repository(rn);
-    await assertRepo(t, repository, repoFixtures[rn]);
+    await assertRepo(t, repository, repoFixtures[rn], rn);
   }
 });
