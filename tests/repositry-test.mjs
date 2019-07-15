@@ -16,6 +16,7 @@ const repoFixtures = {
   "http://www.heise.de/index.html": undefined,
 
   "git@bitbucket.org:arlac77/sync-test-repository.git": undefined,
+  "https://arlac77@bitbucket.org/arlac77/sync-test-repository.git" : undefined,
 
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.consumption.git": {
     provider: GiteaProvider,
