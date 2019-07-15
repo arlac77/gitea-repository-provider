@@ -70,7 +70,7 @@ export class GiteaPullRequest extends PullRequest {
       }
     );
 
-    console.log(await result.text());
+   // console.log(await result.text());
 
     const json = await result.json();
     console.log(json);

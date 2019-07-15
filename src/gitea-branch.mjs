@@ -25,7 +25,10 @@ export class GiteaBranch extends Branch {
     const json = await result.json();
 
     for (const entry of json.tree) {
-      if (patterns === undefined || micromatch([entry.path], patterns).length === 1) {
+      if (
+        patterns === undefined ||
+        micromatch([entry.path], patterns).length === 1
+      ) {
         switch (entry.type) {
           case "tree":
             yield new BaseCollectionEntry(entry.path);
@@ -34,6 +37,42 @@ export class GiteaBranch extends Branch {
             yield new GiteaContentEntry(this, entry.path);
         }
       }
+    }
+  }
+
+  /**
+   * Commit entries
+   * @param {string} message commit message
+   * @param {Entry[]} updates file content to be commited
+   * @param {Object} options
+   * @return {Promise}
+   */
+  async commit(message, updates, options) {
+    for (const u of updates) {
+      const result = await fetch(
+        join(
+          this.provider.api,
+          "repos",
+          this.repository.fullName,
+          "contents",
+          u.name
+        ),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...this.provider.headers
+          },
+          body: JSON.stringify({
+            message,
+            branch: this.name,
+            content: (await u.getBuffer()).toString("base64")
+          })
+        }
+      );
+
+      console.log(result.ok);
+      console.log(await result.text());
     }
   }
 }
