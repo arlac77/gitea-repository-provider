@@ -15,6 +15,9 @@ const repoFixtures = {
   "git@mfelten.de/github-repository-provider.git": undefined,
   "http://www.heise.de/index.html": undefined,
 
+  "git@bitbucket.org:arlac77/sync-test-repository.git": undefined,
+  "https://arlac77@bitbucket.org/arlac77/sync-test-repository.git" : undefined,
+
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.consumption.git": {
     provider: GiteaProvider,
     fullName: "markus/de.mfelten.consumption",
@@ -60,6 +63,6 @@ test("locate repository several", async t => {
 
   for (const rn of Object.keys(repoFixtures)) {
     const repository = await provider.repository(rn);
-    await assertRepo(t, repository, repoFixtures[rn]);
+    await assertRepo(t, repository, repoFixtures[rn], rn);
   }
 });
