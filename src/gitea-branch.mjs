@@ -6,6 +6,10 @@ import { Branch } from "repository-provider";
 import { join } from "./util.mjs";
 import micromatch from "micromatch";
 
+/**
+ *
+ *
+ */
 export class GiteaBranch extends Branch {
   async *entries(patterns) {
     const url =

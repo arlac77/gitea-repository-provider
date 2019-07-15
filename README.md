@@ -30,9 +30,12 @@ repository provider for gitea
     -   [environmentOptions](#environmentoptions)
     -   [areOptionsSufficciant](#areoptionssufficciant)
         -   [Parameters](#parameters)
+-   [GiteaBranch](#giteabranch)
+    -   [commit](#commit)
+        -   [Parameters](#parameters-1)
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
-        -   [Parameters](#parameters-1)
+        -   [Parameters](#parameters-2)
 
 ## GiteaProvider
 
@@ -69,6 +72,22 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if token an api are present
+
+## GiteaBranch
+
+**Extends Branch**
+
+### commit
+
+Commit entries
+
+#### Parameters
+
+-   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
+-   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** file content to be commited
+-   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
 
 ## GiteaPullRequest
 
