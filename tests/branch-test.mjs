@@ -1,4 +1,6 @@
 import test from "ava";
+import { assertCommit } from "./util.mjs";
+
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const entryFixtures = {
@@ -54,4 +56,11 @@ test("branch entry", async t => {
 
   const entry = await branch.entry("Makefile");
   await checkEntry(t, entry, entryFixtures.Makefile);
+});
+
+test.skip("branch commmit", async t => {
+  const provider = GiteaProvider.initialize(undefined, process.env);
+
+  await assertCommit(t,
+    await provider.repository("https://mfelten.dynv6.net/services/git/markus/sync-test-repository.git"));
 });

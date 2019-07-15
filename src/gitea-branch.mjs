@@ -53,6 +53,23 @@ export class GiteaBranch extends Branch {
    */
   async commit(message, updates, options) {
     for (const u of updates) {
+      const data = {
+        message,
+        branch: this.name,
+        content: (await u.getBuffer()).toString("base64")
+      };
+
+      console.log(data);
+      console.log(
+        join(
+          this.provider.api,
+          "repos",
+          this.repository.fullName,
+          "contents",
+          u.name
+        )
+      );
+
       const result = await fetch(
         join(
           this.provider.api,
@@ -67,15 +84,11 @@ export class GiteaBranch extends Branch {
             "Content-Type": "application/json",
             ...this.provider.headers
           },
-          body: JSON.stringify({
-            message,
-            branch: this.name,
-            content: (await u.getBuffer()).toString("base64")
-          })
+          body: JSON.stringify(data)
         }
       );
 
-      console.log(result.ok);
+      console.log(result.ok, result.status, result.statusText);
       console.log(await result.text());
     }
   }

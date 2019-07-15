@@ -2,7 +2,6 @@ import { generateBranchName } from "repository-provider";
 import { StringContentEntry } from "content-entry";
 
 export async function assertRepo(t, repository, fixture, url) {
-
   t.log(url);
   if (fixture === undefined) {
     t.is(repository, undefined);
@@ -95,4 +94,18 @@ export async function pullRequestLivecycle(t, provider, repoName) {
 
   //await pr.decline();
   await source.delete();
+}
+
+export async function assertCommit(t, repository, entryName = "README.md") {
+  const branchName = await generateBranchName(repository, "commit-test/*");
+  const branch = await repository.createBranch(branchName);
+  try {
+    const commit = await branch.commit("message text", [
+      new StringContentEntry(entryName, `file content #${branchName}`)
+    ]);
+
+    t.is(commit.ref, `refs/heads/${branchName}`);
+  } finally {
+    await repository.deleteBranch(branchName);
+  }
 }
