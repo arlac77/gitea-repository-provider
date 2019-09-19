@@ -48,6 +48,13 @@ export class GiteaRepository extends Repository {
     );
 
     const data = await result.json();
+
+    //console.log(data);
+
+    if(Array.isArray(data)) {
+      return data[0].object.sha;
+    }
+
     return data.object.sha;
   }
 
