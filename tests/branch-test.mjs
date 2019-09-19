@@ -1,6 +1,5 @@
 import test from "ava";
-import { assertCommit } from "./util.mjs";
-
+import { assertCommit } from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const entryFixtures = {

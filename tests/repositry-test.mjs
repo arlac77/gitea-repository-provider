@@ -1,5 +1,5 @@
 import test from "ava";
-import { assertRepo } from "./util.mjs";
+import { assertRepo } from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const owner1 = {

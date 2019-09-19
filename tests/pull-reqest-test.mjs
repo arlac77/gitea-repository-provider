@@ -1,5 +1,5 @@
 import test from "ava";
-import { pullRequestLivecycle } from "./util.mjs";
+import { pullRequestLivecycle } from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const TEST_REPO =
