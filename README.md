@@ -36,6 +36,7 @@ repository provider for gitea
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
         -   [Parameters](#parameters-2)
+-   [GiteaGroup](#giteagroup)
 
 ## GiteaProvider
 
@@ -101,6 +102,12 @@ list all pull request for a given destination repo
 
 -   `destination` **Repository** 
 -   `states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
+
+## GiteaGroup
+
+**Extends RepositoryGroup**
+
+represents either a user or an org
 
 # install
 
