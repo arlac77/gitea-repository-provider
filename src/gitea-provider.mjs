@@ -3,6 +3,7 @@ import fetch from "node-fetch";
 import { Provider } from "repository-provider";
 import { GiteaRepository } from './gitea-repository.mjs';
 import { GiteaPullRequest } from './gitea-pull-request.mjs';
+import { GiteaGroup } from './gitea-group.mjs';
 import { join } from './util.mjs';
 
 /**
@@ -84,4 +85,7 @@ export class GiteaProvider extends Provider {
     return GiteaPullRequest;
   }
 
+  get repositoryGroupClass() {
+    return GiteaGroup;
+  }
 }
