@@ -1,3 +1,3 @@
 export function join(...args) {
-  return [...args].join("/");
+  return args.join("/");
 }
