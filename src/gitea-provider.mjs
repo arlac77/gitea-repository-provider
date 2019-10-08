@@ -1,10 +1,11 @@
 import fetch from "node-fetch";
 
 import { Provider } from "repository-provider";
-import { GiteaRepository } from './gitea-repository.mjs';
-import { GiteaPullRequest } from './gitea-pull-request.mjs';
-import { GiteaGroup } from './gitea-group.mjs';
-import { join } from './util.mjs';
+import { GiteaRepository } from "./gitea-repository.mjs";
+import { GiteaPullRequest } from "./gitea-pull-request.mjs";
+import { GiteaOrganization } from "./gitea-organization.mjs";
+import { GiteaUser } from "./gitea-user.mjs";
+import { join } from "./util.mjs";
 
 /**
  * Gitea provider
@@ -13,14 +14,14 @@ import { join } from './util.mjs';
 export class GiteaProvider extends Provider {
   /**
    * known environment variables
-   * @return {Object} 
+   * @return {Object}
    * @return {string} GITEA_TOKEN api token
    * @return {string} GITEA_API api url
    */
   static get environmentOptions() {
     return {
-      'GITEA_TOKEN': 'token',
-      'GITEA_API': 'api'
+      GITEA_TOKEN: "token",
+      GITEA_API: "api"
     };
   }
 
@@ -33,7 +34,7 @@ export class GiteaProvider extends Provider {
   }
 
   /**
-   * @param {Object} options 
+   * @param {Object} options
    * @return {boolean} true if token an api are present
    */
   static areOptionsSufficciant(options) {
@@ -68,13 +69,37 @@ export class GiteaProvider extends Provider {
     }
   }
 
+  async _createRepositoryGroup(name, options) {
+    const fetchOptions = {
+      headers: this.headers,
+      accept: "application/json"
+    };
+
+    let clazz;
+    let result = await fetch(join(this.api, "orgs", name), fetchOptions);
+
+    if (result.ok) {
+      clazz = GiteaOrganization;
+    }
+    else {
+      clazz = GiteaUser;
+      result = await fetch(join(this.api, "users", name), fetchOptions);
+    }
+
+    const data = await result.json();
+    //console.log(data);
+    const repositoryGroup = new clazz(this, name, data);
+    await repositoryGroup.initialize();
+    this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
+    return repositoryGroup;
+  }
+
   /**
    * All possible base urls
    * @return {string[]} common base urls of all repositories
    */
-  get repositoryBases()
-  {
-    return [this.api.replace(/api\/v.+$/, '')];
+  get repositoryBases() {
+    return [this.api.replace(/api\/v.+$/, "")];
   }
 
   get repositoryClass() {
@@ -86,6 +111,6 @@ export class GiteaProvider extends Provider {
   }
 
   get repositoryGroupClass() {
-    return GiteaGroup;
+    return GiteaOrganization;
   }
 }
