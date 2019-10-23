@@ -80,13 +80,13 @@ export class GiteaProvider extends Provider {
 
     if (result.ok) {
       clazz = GiteaOrganization;
-    }
-    else {
+    } else {
       clazz = GiteaUser;
       result = await fetch(join(this.api, "users", name), fetchOptions);
     }
 
     const data = await result.json();
+
     const repositoryGroup = new clazz(this, name, data);
     await repositoryGroup.initialize();
     this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
