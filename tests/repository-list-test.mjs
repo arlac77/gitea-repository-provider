@@ -1,5 +1,8 @@
 import test from "ava";
-import { assertRepo } from "repository-provider-test-support";
+import {
+  assertRepo,
+  repositoryListTest
+} from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 const repoFixtures = {
@@ -30,7 +33,7 @@ const repoFixtures = {
   },
 
   "arlac77/aggregation-repository-provider": {
- /*   branch: "master",
+    /*   branch: "master",
     fullName: "arlac77/aggregation-repository-provider"*/
   }
 };
@@ -46,26 +49,15 @@ test("locate repository several", async t => {
   }
 });
 
-test("list repositories", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
-
-  let rps = {};
-
-  for await (const r of provider.repositories()) {
-    //console.log(r.fullName);
-
-    rps[r.fullName] = r;
+const provider = GiteaProvider.initialize(undefined, process.env);
+const fullResult = {
+  Omnia: {
+    fullName: "markus/Omnia"
   }
+};
 
-  t.true(Object.keys(rps).length > 0);
-  t.is(rps["markus/Omnia"].fullName, "markus/Omnia");
+test.serial(repositoryListTest, provider, "markus/Omnia", fullResult);
+test.serial(repositoryListTest, provider, "markus/*", fullResult);
+test.serial(repositoryListTest, provider, "*", fullResult);
+test.serial(repositoryListTest, provider, undefined, fullResult);
 
-  rps = {};
-
-  for await (const r of provider.repositories(["markus/*"])) {
-    rps[r.fullName] = r;
-  }
-
-  t.true(Object.keys(rps).length > 0);
-  t.is(rps["markus/Omnia"].fullName, "markus/Omnia");
-});
