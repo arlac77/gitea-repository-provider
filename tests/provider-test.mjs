@@ -1,5 +1,8 @@
 import test from "ava";
+import { providerTest } from "repository-provider-test-support/src/provider-test.mjs";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
+
+test(providerTest, new GiteaProvider());
 
 const config = GiteaProvider.optionsFromEnvironment({
   GITEA_TOKEN: "123456",
@@ -7,7 +10,10 @@ const config = GiteaProvider.optionsFromEnvironment({
 });
 
 test("provider env options", t => {
-  t.deepEqual(config, { token: '123456', api: "http://mydomain.com/gitea/v1/" });
+  t.deepEqual(config, {
+    token: "123456",
+    api: "http://mydomain.com/gitea/v1/"
+  });
 });
 
 test("provider constructor", t => {
@@ -22,18 +28,10 @@ test("initialize", t => {
     GITEA_TOKEN: "123456",
     GITEA_API: "http://mydomain.com/gitea/v1/"
   });
-  t.is(provider.name, 'GiteaProvider');
+  t.is(provider.name, "GiteaProvider");
 
   provider = GiteaProvider.initialize(undefined, {
-    GITEA_TOKEN: "123456",
+    GITEA_TOKEN: "123456"
   });
   t.is(provider, undefined);
-});
-
-test("get undefined repo", async t => {
-  const provider = new GiteaProvider(config);
-
-  const repository = await provider.repository();
-
-  t.is(repository, undefined)
 });
