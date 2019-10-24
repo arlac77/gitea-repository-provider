@@ -35,7 +35,9 @@ export class GiteaPullRequest extends PullRequest {
     const getBranch = async u =>
         provider.branch([u.repo.full_name, u.ref].join("#"));
 
-    for (const p of await result.json()) {
+    const json = await result.json();
+    console.log("list pulls", json);
+    for (const p of json) {
       yield new provider.pullRequestClass(
         await getBranch(p.head),
         await getBranch(p.base),
