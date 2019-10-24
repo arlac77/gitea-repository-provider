@@ -56,16 +56,29 @@ export class GiteaProvider extends Provider {
   }
 
   async fetchAllRepositories() {
-    const result = await fetch(join(this.api, "repos/search?limit=50"), {
-      headers: this.headers,
-      accept: "application/json"
-    });
+    let page = 1;
 
-    const json = await result.json();
-    for (const r of json.data) {
-      const [gn, rn] = r.full_name.split(/\//);
-      const group = await this.createRepositoryGroup(gn, r.owner);
-      await group.createRepository(rn, r);
+    while (true) {
+      const result = await fetch(
+        join(this.api, `repos/search?limit=50&page=${page}`),
+        {
+          headers: this.headers,
+          accept: "application/json"
+        }
+      );
+
+      const json = await result.json();
+      if (json.data.length === 0) {
+        break;
+      }
+
+      for (const r of json.data) {
+        const [gn, rn] = r.full_name.split(/\//);
+        const group = await this.createRepositoryGroup(gn, r.owner);
+        await group.createRepository(rn, r);
+      }
+
+      page++;
     }
   }
 
