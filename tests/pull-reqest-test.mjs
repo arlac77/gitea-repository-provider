@@ -10,6 +10,7 @@ test("list pull requests", async t => {
 
   const repository = await provider.repository(TEST_REPO);
 
+  t.truthy(repository);
   const prs = [];
 
   for await (const pr of repository.pullRequests()) {
