@@ -32,9 +32,13 @@ repository provider for gitea
 -   [GiteaBranch](#giteabranch)
     -   [commit](#commit)
         -   [Parameters](#parameters-1)
+-   [GiteaContentEntry](#giteacontententry)
+    -   [Parameters](#parameters-2)
+-   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
+    -   [Parameters](#parameters-3)
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
-        -   [Parameters](#parameters-2)
+        -   [Parameters](#parameters-4)
 -   [GiteaOrganization](#giteaorganization)
 -   [GiteaUser](#giteauser)
 
@@ -89,6 +93,28 @@ Commit entries
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+
+## GiteaContentEntry
+
+**Extends BufferContentEntryMixin(ContentEntry)**
+
+works for all branches
+
+### Parameters
+
+-   `branch`  
+-   `name`  
+
+## GiteaMasterOnlyContentEntry
+
+**Extends StreamContentEntryMixin(ContentEntry)**
+
+only works for master branch
+
+### Parameters
+
+-   `branch`  
+-   `name`  
 
 ## GiteaPullRequest
 

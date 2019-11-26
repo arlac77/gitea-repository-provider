@@ -12,14 +12,28 @@ async function checkEntry(t, entry, fixture) {
   if (fixture.isCollection) {
     t.true(entry.isCollection);
   } else {
-    t.true((await entry.getString()).startsWith(fixture.startsWith));
+    t.true(
+      (await entry.getString()).startsWith(fixture.startsWith),
+      "getStream"
+    );
 
     const stream = await entry.getReadStream();
     const chunks = [];
     for await (const chunk of stream) {
       chunks.push(chunk);
     }
-    t.true(chunks.join().startsWith(fixture.startsWith));
+
+    const all = Buffer.concat(chunks);
+
+/*
+    console.log(fixture.startsWith);
+    console.log(all.toString("utf8"));
+*/
+
+    t.true(
+      all.toString("utf8").startsWith(fixture.startsWith),
+      "getReadStream"
+    );
   }
 }
 
@@ -49,7 +63,7 @@ test("branch list entries filtered", async t => {
   }
 });
 
-test("branch entry", async t => {
+test("branch entry master", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
   const branch = await provider.branch("markus/Omnia");
 
@@ -57,9 +71,24 @@ test("branch entry", async t => {
   await checkEntry(t, entry, entryFixtures.Makefile);
 });
 
+test("branch entry none master", async t => {
+  const provider = GiteaProvider.initialize(undefined, process.env);
+  const branch = await provider.branch(
+    "markus/sync-test-repository#pr-source-1"
+  );
+
+  const entry = await branch.entry("README.md");
+
+  await checkEntry(t, entry, { startsWith: "# pr-source-1" });
+});
+
 test.skip("branch commmit", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
 
-  await assertCommit(t,
-    await provider.repository("https://mfelten.dynv6.net/services/git/markus/sync-test-repository.git"));
+  await assertCommit(
+    t,
+    await provider.repository(
+      "https://mfelten.dynv6.net/services/git/markus/sync-test-repository.git"
+    )
+  );
 });
