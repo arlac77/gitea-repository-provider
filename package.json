@@ -1,10 +1,11 @@
 {
   "name": "gitea-repository-provider",
   "version": "0.0.0-semantic-release",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
+  "type": "module",
   "main": "src/gitea-provider.mjs",
   "module": "src/gitea-provider.mjs",
   "description": "repository provider for gitea",
@@ -71,6 +72,5 @@
     "repository": {
       "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
     }
-  },
-  "sideEffects": false
+  }
 }
