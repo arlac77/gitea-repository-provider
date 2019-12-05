@@ -21,7 +21,8 @@ const repoFixtures = {
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.consumption.git": {
     provider: GiteaProvider,
     fullName: "markus/de.mfelten.consumption",
-    owner: owner1
+    owner: owner1,
+    isArchived: true
   },
   "markus/Omnia": {
     provider: GiteaProvider,

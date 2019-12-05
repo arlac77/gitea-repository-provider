@@ -72,10 +72,14 @@ export class GiteaProvider extends Provider {
         break;
       }
 
+      const mapAttributesNames = {
+        archived: 'isArchived'
+      };
+
       for (const r of json.data) {
         const [gn, rn] = r.full_name.split(/\//);
         const group = await this.createRepositoryGroup(gn, r.owner);
-        await group.createRepository(rn, r);
+        await group.createRepository(rn, Object.fromEntries(Object.entries(r).map(([name,value]) => [mapAttributesNames[name] ? mapAttributesNames[name] : name, value])));
       }
 
       page++;
