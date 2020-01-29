@@ -13,17 +13,17 @@ export class GiteaPullRequest extends PullRequest {
 
   /**
    * list all pull request for a given destination repo
-   * @param {Repository} destination
+   * @param {Repository} respository
    * @param {Set<string>} states
    */
-  static async *list(destination, states) {
-    const provider = destination.provider;
+  static async *list(respository, source, destination, states) {
+    const provider = respository.provider;
 
     const result = await fetch(
       join(
         provider.api,
         "repos",
-        destination.fullName,
+        respository.fullName,
         "pulls"
       ) /*+ '?states=all'*/,
       {
