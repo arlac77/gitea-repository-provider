@@ -123,12 +123,19 @@ only works for master branch
 
 ### list
 
-list all pull request for a given destination repo
+List all pull request for a given repo
+result can be filtered by source branch, destination branch and states
 
 #### Parameters
 
--   `destination` **Repository** 
--   `states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** 
+-   `respository`  
+-   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
+    -   `filter.source` **Branch?** 
+    -   `filter.destination` **Branch?** 
+    -   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
+-   `repository` **Repository** 
+
+Returns **Iterator&lt;PullRequest>** 
 
 ## GiteaOrganization
 

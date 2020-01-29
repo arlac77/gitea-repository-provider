@@ -4,7 +4,7 @@ import { PullRequest } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
- * 
+ *
  */
 export class GiteaPullRequest extends PullRequest {
   static get validStates() {
@@ -12,20 +12,29 @@ export class GiteaPullRequest extends PullRequest {
   }
 
   /**
-   * list all pull request for a given destination repo
-   * @param {Repository} respository
-   * @param {Set<string>} states
+   * List all pull request for a given repo
+   * result can be filtered by source branch, destination branch and states
+   * @param {Repository} repository
+   * @param {Object} filter
+   * @param {Branch?} filter.source
+   * @param {Branch?} filter.destination
+   * @param {Set<string>?} filter.states
+   * @return {Iterator<PullRequest>}
    */
-  static async *list(respository, source, destination, states) {
+  static async *list(respository, filter = {}) {
     const provider = respository.provider;
 
+    let state = "all";
+
+    if (filter.states) {
+      for (const s of GiteaPullRequest.validStates)
+        if (filter.states.has(s)) {
+          state = s.toLocaleLowerCase();
+          break;
+        }
+    }
     const result = await fetch(
-      join(
-        provider.api,
-        "repos",
-        respository.fullName,
-        "pulls"
-      ) /*+ '?states=all'*/,
+      join(provider.api, "repos", respository.fullName, `pulls?state=${state}`),
       {
         headers: provider.headers,
         accept: "application/json"
@@ -33,7 +42,7 @@ export class GiteaPullRequest extends PullRequest {
     );
 
     const getBranch = async u =>
-        provider.branch([u.repo.full_name, u.ref].join("#"));
+      provider.branch([u.repo.full_name, u.ref].join("#"));
 
     const json = await result.json();
     console.log("list pulls", json);
@@ -66,13 +75,14 @@ export class GiteaPullRequest extends PullRequest {
       {
         method: "POST",
         headers: {
-          'Content-Type' : 'application/json',
-          ...provider.headers },
+          "Content-Type": "application/json",
+          ...provider.headers
+        },
         body: JSON.stringify(data)
       }
     );
 
-   // console.log(await result.text());
+    // console.log(await result.text());
 
     const json = await result.json();
     console.log(json);
@@ -84,12 +94,9 @@ export class GiteaPullRequest extends PullRequest {
     });
   }
 
-  async decline() {
-  }
+  async decline() {}
 
-  async _write() {
-  }
-  
-  async _merge(method) {
-  }
+  async _write() {}
+
+  async _merge(method) {}
 }
