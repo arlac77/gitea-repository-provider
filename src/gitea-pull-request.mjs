@@ -13,7 +13,7 @@ export class GiteaPullRequest extends PullRequest {
 
   /**
    * List all pull request for a given repo
-   * result can be filtered by source branch, destination branch and states
+   * result will be filtered by source branch, destination branch and states
    * @param {Repository} repository
    * @param {Object} filter
    * @param {Branch?} filter.source
