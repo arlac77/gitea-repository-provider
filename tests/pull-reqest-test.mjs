@@ -1,29 +1,22 @@
 import test from "ava";
-import { pullRequestLivecycle } from "repository-provider-test-support";
+import { pullRequestLivecycle, pullRequestList } from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
-const TEST_REPO =
+const REPOSITORY_NAME =
   "https://mfelten.dynv6.net/services/git/markus/sync-test-repository.git";
 
-test("list pull requests", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
-
-  const repository = await provider.repository(TEST_REPO);
-
-  t.truthy(repository);
-  const prs = [];
-
-  for await (const pr of repository.pullRequests()) {
-    prs.push(pr);
-  }
-
-  t.true(prs.length > 0);
-});
-
-test.skip("pull request livecycle", async t => {
+test.skip("pr livecycle", async t => {
   await pullRequestLivecycle(
     t,
     GiteaProvider.initialize(undefined, process.env),
-    TEST_REPO
+    REPOSITORY_NAME
+  );
+});
+
+test.skip("pr list", async t => {
+  await pullRequestList(
+    t,
+    GiteaProvider.initialize(undefined, process.env),
+    REPOSITORY_NAME
   );
 });

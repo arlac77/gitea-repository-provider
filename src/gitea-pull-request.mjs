@@ -33,6 +33,7 @@ export class GiteaPullRequest extends PullRequest {
           break;
         }
     }
+
     const result = await fetch(
       join(provider.api, "repos", respository.fullName, `pulls?state=${state}`),
       {
@@ -45,19 +46,24 @@ export class GiteaPullRequest extends PullRequest {
       provider.branch([u.repo.full_name, u.ref].join("#"));
 
     const json = await result.json();
-    console.log("list pulls", json);
+    //console.log("list pulls", json);
     for (const p of json) {
-      yield new provider.pullRequestClass(
-        await getBranch(p.head),
-        await getBranch(p.base),
-        String(p.number),
-        {
-          id: p.id,
-          title: p.title,
-          body: p.body,
-          state: p.state
-        }
-      );
+      const source = await getBranch(p.head);
+      if (filter.source && !source.equals(filter.source)) {
+        continue;
+      }
+
+      const destination = await getBranch(p.base);
+      if (filter.destination && !destination.equals(filter.destination)) {
+        continue;
+      }
+
+      yield new provider.pullRequestClass(source, destination, p.number, {
+        id: p.id,
+        title: p.title,
+        body: p.body,
+        state: p.state
+      });
     }
   }
 
