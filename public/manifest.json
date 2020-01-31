@@ -1,0 +1,10 @@
+{
+  "name": "gitea-repository-provider",
+  "description": "repository provider for gitea",
+  "icons": [
+    {
+      "src": "facicon.ico",
+      "sizes": "16x16"
+    }
+  ]
+}
