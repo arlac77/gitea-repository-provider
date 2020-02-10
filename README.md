@@ -124,16 +124,15 @@ only works for master branch
 ### list
 
 List all pull request for a given repo
-result can be filtered by source branch, destination branch and states
+result will be filtered by source branch, destination branch and states
 
 #### Parameters
 
--   `respository`  
+-   `respository` **Repository** 
 -   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
     -   `filter.source` **Branch?** 
     -   `filter.destination` **Branch?** 
     -   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
--   `repository` **Repository** 
 
 Returns **Iterator&lt;PullRequest>** 
 
