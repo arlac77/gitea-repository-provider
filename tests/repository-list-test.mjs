@@ -59,7 +59,7 @@ const fullResult = {
   }
 };
 
-test.serial(repositoryListTest, provider, "markus/Omnia", fullResult);
-test.serial(repositoryListTest, provider, "markus/*", fullResult);
-test.serial(repositoryListTest, provider, "*", fullResult);
-test.serial(repositoryListTest, provider, undefined, fullResult);
+test(repositoryListTest, provider, "markus/Omnia", fullResult);
+test(repositoryListTest, provider, "markus/*", fullResult);
+test(repositoryListTest, provider, "*", fullResult);
+test(repositoryListTest, provider, undefined, fullResult);
