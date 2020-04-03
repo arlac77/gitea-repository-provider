@@ -14,6 +14,7 @@ const repoFixtures = {
     description: "infrasctucture build on arch linux (arm)",
     provider: GiteaProvider
   },
+
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux": {
     branch: "master",
     fullName: "markus/de.mfelten.archlinux",
@@ -32,20 +33,22 @@ const repoFixtures = {
     provider: GiteaProvider
   },
 
-  "arlac77/aggregation-repository-provider": {
-    /*   branch: "master",
-    fullName: "arlac77/aggregation-repository-provider"*/
-  }
+  "arlac77/aggregation-repository-provider": undefined
+  /*
+  {
+       branch: "master",
+    fullName: "arlac77/aggregation-repository-provider"
+  }*/
 };
 
 test("locate repository several", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
 
-  t.plan(13);
+  t.plan(18);
 
-  for (const rn of Object.keys(repoFixtures)) {
-    const repository = await provider.repository(rn);
-    await assertRepo(t, repository, repoFixtures[rn], rn);
+  for (const [name, repoFixture] of Object.entries(repoFixtures)) {
+    const repository = await provider.repository(name);
+    await assertRepo(t, repository, repoFixture, name);
   }
 });
 
@@ -60,4 +63,3 @@ test.serial(repositoryListTest, provider, "markus/Omnia", fullResult);
 test.serial(repositoryListTest, provider, "markus/*", fullResult);
 test.serial(repositoryListTest, provider, "*", fullResult);
 test.serial(repositoryListTest, provider, undefined, fullResult);
-

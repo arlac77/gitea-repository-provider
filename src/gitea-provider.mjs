@@ -53,9 +53,7 @@ export class GiteaProvider extends Provider {
   }
 
   async initializeRepositories() {
-    let page = 1;
-
-    while (true) {
+    for (let page = 1; ; page++) {
       const result = await fetch(
         join(this.api, `repos/search?limit=50&page=${page}`),
         {
@@ -70,20 +68,31 @@ export class GiteaProvider extends Provider {
       }
 
       const mapAttributesNames = {
-        archived: 'isArchived'
+        archived: "isArchived"
       };
 
       for (const r of json.data) {
         const [gn, rn] = r.full_name.split(/\//);
-        const group = await this.createRepositoryGroup(gn, r.owner);
-        await group.createRepository(rn, Object.fromEntries(Object.entries(r).map(([name,value]) => [mapAttributesNames[name] ? mapAttributesNames[name] : name, value])));
+        const group = await this._createRepositoryGroup(gn, r.owner);
+        await group._createRepository(
+          rn,
+          Object.fromEntries(
+            Object.entries(r).map(([name, value]) => [
+              mapAttributesNames[name] ? mapAttributesNames[name] : name,
+              value
+            ])
+          )
+        );
       }
-
-      page++;
     }
   }
 
   async _createRepositoryGroup(name, options) {
+    let repositoryGroup = this._repositoryGroups.get(name);
+    if(repositoryGroup) {
+      return repositoryGroup;
+    }
+
     const fetchOptions = {
       headers: this.headers,
       accept: "application/json"
@@ -101,7 +110,7 @@ export class GiteaProvider extends Provider {
 
     const data = await result.json();
 
-    const repositoryGroup = new clazz(this, name, data);
+    repositoryGroup = new clazz(this, name, data);
     await repositoryGroup.initialize();
     this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
     return repositoryGroup;

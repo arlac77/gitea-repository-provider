@@ -41,19 +41,6 @@ export class GiteaRepository extends Repository {
   }
 
   async _createBranch(name, from, options) {
-    const res = await this.octokit.git.getRef({
-      owner: this.owner.name,
-      repo: this.name,
-      ref: `heads/${from.name}`
-    });
-
-    await this.octokit.git.createRef({
-      owner: this.owner.name,
-      repo: this.name,
-      ref: `refs/heads/${name}`,
-      sha: res.data.object.sha
-    });
-
     return new this.branchClass(this, name, options);
   }
 
