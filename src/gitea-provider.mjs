@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
 import { Provider } from "repository-provider";
 import { GiteaRepository } from "./gitea-repository.mjs";
@@ -51,11 +52,7 @@ export class GiteaProvider extends Provider {
     };
   }
 
-  async _initialize() {
-    await this.fetchAllRepositories();
-  }
-
-  async fetchAllRepositories() {
+  async initializeRepositories() {
     let page = 1;
 
     while (true) {
@@ -130,3 +127,8 @@ export class GiteaProvider extends Provider {
     return GiteaOrganization;
   }
 }
+
+replaceWithOneTimeExecutionMethod(
+  GiteaProvider.prototype,
+  "initializeRepositories"
+);
