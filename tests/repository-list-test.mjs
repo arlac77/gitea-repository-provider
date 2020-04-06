@@ -54,8 +54,8 @@ test("locate repository several", async t => {
 
 const provider = GiteaProvider.initialize(undefined, process.env);
 const fullResult = {
-  Omnia: {
-    fullName: "markus/Omnia"
+  "markus/Omnia": {
+    name: "Omnia"
   }
 };
 
