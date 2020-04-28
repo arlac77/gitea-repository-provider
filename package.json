@@ -35,14 +35,14 @@
     "repository-provider": "^16.17.5"
   },
   "devDependencies": {
-    "ava": "^3.8.0",
+    "ava": "^3.8.1",
     "c8": "^7.1.0",
     "documentation": "^12.3.0",
     "repository-provider-test-support": "github:arlac77/repository-provider-test-support",
     "semantic-release": "^17.0.7"
   },
   "engines": {
-    "node": ">=12.16.2"
+    "node": ">=12.16.3"
   },
   "repository": {
     "type": "git",
