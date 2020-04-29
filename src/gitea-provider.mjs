@@ -73,8 +73,8 @@ export class GiteaProvider extends Provider {
 
       for (const r of json.data) {
         const [gn, rn] = r.full_name.split(/\//);
-        const group = await this._createRepositoryGroup(gn, r.owner);
-        await group._createRepository(
+        const group = await this.addRepositoryGroup(gn, r.owner);
+        await group.addRepository(
           rn,
           Object.fromEntries(
             Object.entries(r).map(([name, value]) => [
@@ -87,7 +87,7 @@ export class GiteaProvider extends Provider {
     }
   }
 
-  async _createRepositoryGroup(name, options) {
+  async addRepositoryGroup(name, options) {
     let repositoryGroup = this._repositoryGroups.get(name);
     if(repositoryGroup) {
       return repositoryGroup;
