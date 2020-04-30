@@ -15,7 +15,7 @@ export class GiteaRepository extends Repository {
     );
 
     for (const bd of await result.json()) {
-      await this._createBranch(bd.name, undefined, bd);
+      await this.addBranch(bd.name, bd);
     }
   }
 
@@ -38,10 +38,6 @@ export class GiteaRepository extends Repository {
         })
       );
     }
-  }
-
-  async _createBranch(name, from, options) {
-    return new this.branchClass(this, name, options);
   }
 
   async refId(ref) {
