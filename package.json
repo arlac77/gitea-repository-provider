@@ -8,7 +8,8 @@
   "type": "module",
   "main": "src/gitea-provider.mjs",
   "exports": {
-    ".": "./src/gitea-provider.mjs"
+    ".": "./src/gitea-provider.mjs",
+    "./": "./"
   },
   "description": "repository provider for gitea",
   "keywords": [
