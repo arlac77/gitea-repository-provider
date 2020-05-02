@@ -6,7 +6,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "main": "src/gitea-provider.mjs",
+  "main": "./src/gitea-provider.mjs",
   "exports": {
     ".": "./src/gitea-provider.mjs",
     "./": "./"
