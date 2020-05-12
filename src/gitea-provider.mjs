@@ -68,7 +68,11 @@ export class GiteaProvider extends Provider {
       }
 
       const mapAttributesNames = {
-        archived: "isArchived"
+        archived: "isArchived",
+        template: "isTemplate",
+        private: "isPrivate",
+        homepage: "homePageURL",
+        default_branch: "defaultBranchName"
       };
 
       for (const r of json.data) {
