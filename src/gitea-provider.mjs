@@ -1,12 +1,22 @@
 import fetch from "node-fetch";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
-import { Provider } from "repository-provider";
+import { Provider, mapAttributes } from "repository-provider";
 import { GiteaRepository } from "./gitea-repository.mjs";
 import { GiteaPullRequest } from "./gitea-pull-request.mjs";
 import { GiteaOrganization } from "./gitea-organization.mjs";
 import { GiteaUser } from "./gitea-user.mjs";
 import { join } from "./util.mjs";
+
+const repositoryAttributeMapping = {
+  archived: "isArchived",
+  template: "isTemplate",
+  private: "isPrivate",
+  mirror: "isMirror",
+  website: "homePageURL",
+  default_branch: "defaultBranchName"
+};
+
 
 /**
  * Gitea provider
@@ -67,26 +77,10 @@ export class GiteaProvider extends Provider {
         break;
       }
 
-      const mapAttributesNames = {
-        archived: "isArchived",
-        template: "isTemplate",
-        private: "isPrivate",
-        homepage: "homePageURL",
-        default_branch: "defaultBranchName"
-      };
-
       for (const r of json.data) {
         const [gn, rn] = r.full_name.split(/\//);
         const group = await this.addRepositoryGroup(gn, r.owner);
-        group.addRepository(
-          rn,
-          Object.fromEntries(
-            Object.entries(r).map(([name, value]) => [
-              mapAttributesNames[name] ? mapAttributesNames[name] : name,
-              value
-            ])
-          )
-        );
+        group.addRepository(rn, mapAttributes(r, repositoryAttributeMapping));
       }
     }
   }
@@ -105,7 +99,6 @@ export class GiteaProvider extends Provider {
       this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
       return repositoryGroup;
     }*/
-
 
     const fetchOptions = {
       headers: this.headers,
