@@ -22,7 +22,10 @@ const repoFixtures = {
     provider: GiteaProvider,
     fullName: "markus/de.mfelten.consumption",
     owner: owner1,
-    isArchived: true
+    isArchived: true,
+    //homePageURL: 'XX'
+    //isTemplate: true,
+    //isPrivate: true
   },
   "markus/Omnia": {
     provider: GiteaProvider,
