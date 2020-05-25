@@ -1,9 +1,6 @@
 import fetch from "node-fetch";
 import micromatch from "micromatch";
-import { BaseCollectionEntry } from "content-entry/src/base-collection-entry.mjs";
-import { ContentEntry } from "content-entry/src/content-entry.mjs";
-import { StreamContentEntryMixin } from "content-entry/src/stream-content-entry-mixin.mjs";
-import { BufferContentEntryMixin } from "content-entry/src/buffer-content-entry-mixin.mjs";
+import { BufferContentEntryMixin, StreamContentEntryMixin, ContentEntry, BaseCollectionEntry } from "content-entry";
 import { Branch } from "repository-provider";
 import { join } from "./util.mjs";
 
