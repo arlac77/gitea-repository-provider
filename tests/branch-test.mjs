@@ -82,7 +82,7 @@ test("branch entry none master", async t => {
   await checkEntry(t, entry, { startsWith: "# pr-source-1" });
 });
 
-test.only("branch commmit", async t => {
+test.skip("branch commmit", async t => {
   const provider = GiteaProvider.initialize(undefined, process.env);
 
   await assertCommit(

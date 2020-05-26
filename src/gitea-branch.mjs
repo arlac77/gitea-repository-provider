@@ -1,7 +1,11 @@
 import fetch from "node-fetch";
-import micromatch from "micromatch";
-import { BufferContentEntryMixin, StreamContentEntryMixin, ContentEntry, BaseCollectionEntry } from "content-entry";
-import { Branch } from "repository-provider";
+import {
+  BufferContentEntryMixin,
+  StreamContentEntryMixin,
+  ContentEntry,
+  BaseCollectionEntry
+} from "content-entry";
+import { Branch, match } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -26,20 +30,12 @@ export class GiteaBranch extends Branch {
 
     const json = await result.json();
 
-    for (const entry of json.tree) {
-      if (
-        patterns === undefined ||
-        micromatch([entry.path], patterns).length === 1
-      ) {
-        switch (entry.type) {
-          case "tree":
-            yield new BaseCollectionEntry(entry.path);
-            break;
-          default:
-            yield new (this.name === 'master' ? GiteaMasterOnlyContentEntry : GiteaContentEntry)(this, entry.path);
-           // yield new GiteaContentEntry(this, entry.path);
-        }
-      }
+    for (const entry of match(json.tree, patterns, entry => entry.path)) {
+      yield entry.type === "tree"
+        ? new BaseCollectionEntry(entry.path)
+        : new (this.name === "master"
+            ? GiteaMasterOnlyContentEntry
+            : GiteaContentEntry)(this, entry.path);
     }
   }
 
@@ -48,7 +44,7 @@ export class GiteaBranch extends Branch {
    * @param {string} message commit message
    * @param {Entry[]} updates file content to be commited
    * @param {Object} options
-   * @return {Promise}
+   * @return {Commit}
    */
   async commit(message, updates, options) {
     for (const u of updates) {
@@ -113,7 +109,7 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
       "repos",
       this.branch.repository.fullName,
       "contents",
-      this.name  + "?ref="+this.branch.name
+      this.name + "?ref=" + this.branch.name
     );
 
     const result = await fetch(url, {
@@ -126,17 +122,18 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
       chunks.push(chunk);
     }
 
-    const entry = JSON.parse(Buffer.concat(chunks).toString('utf8'));
-    return Buffer.from(entry.content, 'base64');
+    const entry = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+    return Buffer.from(entry.content, "base64");
   }
-
 }
 
 /**
  * only works for master branch
  *
  */
-class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(ContentEntry) {
+class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
+  ContentEntry
+) {
   constructor(branch, name) {
     super(name);
     Object.defineProperties(this, { branch: { value: branch } });
@@ -147,7 +144,6 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(ContentEntry) 
   }
 
   async getReadStream(options) {
-  
     const url = join(
       this.provider.api,
       "repos",
@@ -155,7 +151,7 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(ContentEntry) 
       "raw",
       this.name
     );
-  
+
     const result = await fetch(url, {
       headers: this.provider.headers
     });
