@@ -30,7 +30,9 @@ export class GiteaBranch extends Branch {
 
     const json = await result.json();
 
-    for (const entry of match(json.tree, patterns, entry => entry.path)) {
+    for (const entry of match(json.tree, patterns, {
+      getName: entry => entry.path
+    })) {
       yield entry.type === "tree"
         ? new BaseCollectionEntry(entry.path)
         : new (this.name === "master"
