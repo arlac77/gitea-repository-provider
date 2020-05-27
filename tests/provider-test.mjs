@@ -1,5 +1,5 @@
 import test from "ava";
-import { providerTest } from "repository-provider-test-support/src/provider-test.mjs";
+import { providerTest } from "repository-provider-test-support";
 import { GiteaProvider } from "../src/gitea-provider.mjs";
 
 test(providerTest, new GiteaProvider());
