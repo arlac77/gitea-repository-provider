@@ -24,7 +24,7 @@ const repositoryAttributeMapping = {
  */
 export class GiteaProvider extends Provider {
   /**
-   * known environment variables
+   * Known environment variables
    * @return {Object}
    * @return {string} GITEA_TOKEN api token
    * @return {string} GITEA_API api url
@@ -53,7 +53,7 @@ export class GiteaProvider extends Provider {
   }
 
   /**
-   * fetch headers
+   * Fetch headers
    * @return {Object} suitable as fetch headers
    */
   get headers() {
