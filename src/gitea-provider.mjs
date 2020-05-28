@@ -148,3 +148,5 @@ replaceWithOneTimeExecutionMethod(
   GiteaProvider.prototype,
   "initializeRepositories"
 );
+
+export default GiteaProvider;
