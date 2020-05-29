@@ -17,6 +17,9 @@ const repositoryAttributeMapping = {
   default_branch: "defaultBranchName"
 };
 
+const groupAttributeMapping = {
+  full_name: "displayName"
+};
 
 /**
  * Gitea provider
@@ -65,7 +68,7 @@ export class GiteaProvider extends Provider {
   async initializeRepositories() {
     for (let page = 1; ; page++) {
       const result = await fetch(
-        join(this.api, `repos/search?limit=50&page=${page}`),
+        new URL(`repos/search?limit=50&page=${page}`, this.api + "/"),
         {
           headers: this.headers,
           accept: "application/json"
@@ -79,7 +82,10 @@ export class GiteaProvider extends Provider {
 
       for (const r of json.data) {
         const [gn, rn] = r.full_name.split(/\//);
-        const group = await this.addRepositoryGroup(gn, r.owner);
+        const group = await this.addRepositoryGroup(
+          gn,
+          mapAttributes(r.owner, groupAttributeMapping)
+        );
         group.addRepository(rn, mapAttributes(r, repositoryAttributeMapping));
       }
     }
