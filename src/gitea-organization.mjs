@@ -8,7 +8,6 @@ export class GiteaOrganization extends RepositoryGroup {
     return {
       ...super.defaultOptions,
       username: undefined,
-      full_name: undefined,
       avatar_url: undefined,
       website: undefined,
       location: undefined,

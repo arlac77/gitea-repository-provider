@@ -81,12 +81,11 @@ export class GiteaProvider extends Provider {
       }
 
       for (const r of json.data) {
-        const [gn, rn] = r.full_name.split(/\//);
         const group = await this.addRepositoryGroup(
-          gn,
+          r.owner.username,
           mapAttributes(r.owner, groupAttributeMapping)
         );
-        group.addRepository(rn, mapAttributes(r, repositoryAttributeMapping));
+        group.addRepository(r.name, mapAttributes(r, repositoryAttributeMapping));
       }
     }
   }
@@ -97,31 +96,31 @@ export class GiteaProvider extends Provider {
       return repositoryGroup;
     }
 
-    /*
-    if(options && options.username) {
-      console.log(name, options);
-      repositoryGroup = new GiteaUser(this, name, options);
-      await repositoryGroup.initialize();
-      this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
-      return repositoryGroup;
-    }*/
-
     const fetchOptions = {
       headers: this.headers,
       accept: "application/json"
     };
 
     let clazz;
-    let result = await fetch(join(this.api, "orgs", name), fetchOptions);
+    let result;
 
-    if (result.ok) {
-      clazz = GiteaOrganization;
-    } else {
-      clazz = GiteaUser;
-      result = await fetch(join(this.api, "users", name), fetchOptions);
+    const f = async type => {
+      clazz = type === 'users' ? GiteaUser : GiteaOrganization;
+      result = await fetch(join(this.api, type, name), fetchOptions);
     }
 
-    const data = await result.json();
+    if(options && options.email) {
+      await f('users');
+    }
+    else {
+      await f('orgs');
+    }
+
+    if (!result.ok) {
+      await f(clazz === GiteaUser ? 'orgs': 'orgs');
+    }
+
+    const data = mapAttributes( await result.json(), groupAttributeMapping);
 
     repositoryGroup = new clazz(this, name, data);
     await repositoryGroup.initialize();
