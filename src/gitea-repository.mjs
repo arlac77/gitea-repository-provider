@@ -1,8 +1,12 @@
 import fetch from "node-fetch";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
-import { Repository } from "repository-provider";
+import { Repository, mapAttributes } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
+
+const branchAttributeMapping = {
+  protected: "isProtected"
+};
 
 export class GiteaRepository extends Repository {
   async initializeBranches() {
@@ -15,7 +19,7 @@ export class GiteaRepository extends Repository {
     );
 
     for (const bd of await result.json()) {
-      await this.addBranch(bd.name, bd);
+      await this.addBranch(bd.name, mapAttributes(bd, branchAttributeMapping));
     }
   }
 
@@ -68,4 +72,7 @@ replaceWithOneTimeExecutionMethod(
   "initializeBranches"
 );
 replaceWithOneTimeExecutionMethod(GiteaRepository.prototype, "initializeHooks");
-replaceWithOneTimeExecutionMethod(GiteaRepository.prototype, "initializePullRequests");
+replaceWithOneTimeExecutionMethod(
+  GiteaRepository.prototype,
+  "initializePullRequests"
+);
