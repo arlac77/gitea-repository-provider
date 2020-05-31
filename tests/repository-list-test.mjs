@@ -3,7 +3,7 @@ import {
   assertRepo,
   repositoryListTest
 } from "repository-provider-test-support";
-import { GiteaProvider } from "../src/gitea-provider.mjs";
+import { GiteaProvider } from "gitea-repository-provider";
 
 const repoFixtures = {
   "": undefined,

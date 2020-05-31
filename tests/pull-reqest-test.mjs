@@ -1,6 +1,6 @@
 import test from "ava";
 import { pullRequestLivecycle, pullRequestList } from "repository-provider-test-support";
-import { GiteaProvider } from "../src/gitea-provider.mjs";
+import { GiteaProvider } from "gitea-repository-provider";
 
 const REPOSITORY_NAME =
   "https://mfelten.dynv6.net/services/git/markus/sync-test-repository.git";
