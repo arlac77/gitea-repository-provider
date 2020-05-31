@@ -1,11 +1,12 @@
 import fetch from "node-fetch";
+import { matcher } from "matching-iterator";
 import {
   BufferContentEntryMixin,
   StreamContentEntryMixin,
   ContentEntry,
   BaseCollectionEntry
 } from "content-entry";
-import { Branch, match } from "repository-provider";
+import { Branch } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -30,8 +31,8 @@ export class GiteaBranch extends Branch {
 
     const json = await result.json();
 
-    for (const entry of match(json.tree, patterns, {
-      getName: entry => entry.path
+    for (const entry of matcher(json.tree, patterns, {
+      name: "path"
     })) {
       yield entry.type === "tree"
         ? new BaseCollectionEntry(entry.path)

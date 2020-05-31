@@ -5,6 +5,16 @@ import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
 export class GiteaRepository extends Repository {
+  static get attributeMapping() {
+    return {
+      archived: "isArchived",
+      template: "isTemplate",
+      private: "isPrivate",
+      mirror: "isMirror",
+      website: "homePageURL",
+      default_branch: "defaultBranchName" };
+  }
+
   async initializeBranches() {
     const result = await fetch(
       join(this.provider.api, "repos", this.fullName, "branches"),
@@ -29,7 +39,7 @@ export class GiteaRepository extends Repository {
     );
 
     for (const h of await result.json()) {
-      this.addHook(
+      this._addHook(
         new this.hookClass(this, h.name, new Set(h.events), {
           id: h.id,
           active: h.active,
