@@ -14,6 +14,11 @@ import { join } from "./util.mjs";
  *
  */
 export class GiteaBranch extends Branch {
+  static get attributeMapping() {
+    return {
+      full_name: "displayName" };
+  }
+
   async *entries(patterns) {
     const url =
       join(

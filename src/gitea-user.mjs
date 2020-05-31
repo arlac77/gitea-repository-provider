@@ -8,11 +8,10 @@ export class GiteaUser extends RepositoryGroup {
     return {
       ...super.defaultOptions,
       login: undefined,
-      language: undefined,
       email: undefined,
-      full_name: undefined,
+      username: undefined,
       avatar_url: undefined,
-      username: undefined
+      language: undefined,
     };
   }
 }

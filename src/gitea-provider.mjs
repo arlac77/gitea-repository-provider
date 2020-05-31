@@ -8,6 +8,7 @@ import { GiteaOrganization } from "./gitea-organization.mjs";
 import { GiteaUser } from "./gitea-user.mjs";
 import { join } from "./util.mjs";
 
+
 /**
  * Gitea provider
  *
@@ -55,7 +56,7 @@ export class GiteaProvider extends Provider {
   async initializeRepositories() {
     for (let page = 1; ; page++) {
       const result = await fetch(
-        join(this.api, `repos/search?limit=50&page=${page}`),
+        new URL(`repos/search?limit=50&page=${page}`, this.api + "/"),
         {
           headers: this.headers,
           accept: "application/json"
@@ -68,9 +69,8 @@ export class GiteaProvider extends Provider {
       }
 
       for (const r of json.data) {
-        const [gn, rn] = r.full_name.split(/\//);
-        const group = await this.addRepositoryGroup(gn, r.owner);
-        group.addRepository(rn, r);
+        const group = await this.addRepositoryGroup( r.owner.username, r.owner);
+        group.addRepository(r.name, r);
       }
     }
   }
@@ -81,33 +81,31 @@ export class GiteaProvider extends Provider {
       return repositoryGroup;
     }
 
-    /*
-    if(options && options.username) {
-      console.log(name, options);
-      repositoryGroup = new GiteaUser(this, name, options);
-      await repositoryGroup.initialize();
-      this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
-      return repositoryGroup;
-    }*/
-
     const fetchOptions = {
       headers: this.headers,
       accept: "application/json"
     };
 
     let clazz;
-    let result = await fetch(join(this.api, "orgs", name), fetchOptions);
+    let result;
 
-    if (result.ok) {
-      clazz = GiteaOrganization;
-    } else {
-      clazz = GiteaUser;
-      result = await fetch(join(this.api, "users", name), fetchOptions);
+    const f = async type => {
+      clazz = type === 'users' ? GiteaUser : GiteaOrganization;
+      result = await fetch(join(this.api, type, name), fetchOptions);
     }
 
-    const data = await result.json();
+    if(options && options.email) {
+      await f('users');
+    }
+    else {
+      await f('orgs');
+    }
 
-    repositoryGroup = new clazz(this, name, data);
+    if (!result.ok) {
+      await f(clazz === GiteaUser ? 'orgs': 'orgs');
+    }
+
+    repositoryGroup = new clazz(this, name, await result.json());
     await repositoryGroup.initialize();
     this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
     return repositoryGroup;
@@ -138,3 +136,5 @@ replaceWithOneTimeExecutionMethod(
   GiteaProvider.prototype,
   "initializeRepositories"
 );
+
+export default GiteaProvider;
