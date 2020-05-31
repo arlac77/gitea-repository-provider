@@ -14,4 +14,11 @@ export class GiteaUser extends RepositoryGroup {
       language: undefined,
     };
   }
+
+  static get attributeMapping() {
+    return {
+      ...super.attributeMapping,
+      avatar_url: "avatarURL" };
+  }
+
 }
