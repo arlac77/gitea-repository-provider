@@ -4,10 +4,6 @@ import { Repository } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
-const branchAttributeMapping = {
-  protected: "isProtected"
-};
-
 export class GiteaRepository extends Repository {
   static get attributeMapping() {
     return {
