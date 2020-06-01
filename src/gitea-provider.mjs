@@ -106,7 +106,6 @@ export class GiteaProvider extends Provider {
     }
 
     repositoryGroup = new clazz(this, name, await result.json());
-    await repositoryGroup.initialize();
     this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
     return repositoryGroup;
   }
