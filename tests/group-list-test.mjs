@@ -6,7 +6,7 @@ const provider = GiteaProvider.initialize(undefined, process.env);
 
 const fullResult = {
   markus: { name: "markus", username: "markus" },
-  "github-mirror": { description: "github.com mirror" }
+  "github-mirror": { description: "mirror of github.com" }
 };
 
 test(groupListTest, provider, undefined, fullResult);
