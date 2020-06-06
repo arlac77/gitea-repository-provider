@@ -1,6 +1,6 @@
 import test from "ava";
 import { assertRepo } from "repository-provider-test-support";
-import { GiteaProvider } from "gitea-repository-provider";
+import GiteaProvider from "gitea-repository-provider";
 
 const owner1 = {
   name: "markus",

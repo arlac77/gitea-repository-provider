@@ -1,6 +1,6 @@
 import test from "ava";
 import { providerTest } from "repository-provider-test-support";
-import { GiteaProvider } from "gitea-repository-provider";
+import GiteaProvider from "gitea-repository-provider";
 
 test(providerTest, new GiteaProvider());
 
