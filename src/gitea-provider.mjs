@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
-import { Provider } from "repository-provider";
+import { MultiGroupProvider } from "repository-provider";
 import { GiteaRepository } from "./gitea-repository.mjs";
 import { GiteaPullRequest } from "./gitea-pull-request.mjs";
 import { GiteaOrganization } from "./gitea-organization.mjs";
@@ -13,7 +13,7 @@ import { join } from "./util.mjs";
  * Gitea provider
  *
  */
-export class GiteaProvider extends Provider {
+export class GiteaProvider extends MultiGroupProvider {
   /**
    * Known environment variables
    * @return {Object}
