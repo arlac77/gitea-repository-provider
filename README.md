@@ -43,13 +43,13 @@ repository provider for gitea
 
 ## GiteaProvider
 
-**Extends Provider**
+**Extends MultiGroupProvider**
 
 Gitea provider
 
 ### headers
 
-fetch headers
+Fetch headers
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
 
@@ -61,7 +61,7 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 
 ### environmentOptions
 
-known environment variables
+Known environment variables
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -91,7 +91,7 @@ Commit entries
 -   `updates` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;Entry>** file content to be commited
 -   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)** 
+Returns **Commit** 
 
 ## GiteaContentEntry
 
