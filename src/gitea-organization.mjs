@@ -4,9 +4,9 @@ import { RepositoryGroup } from "repository-provider";
  *
  */
 export class GiteaOrganization extends RepositoryGroup {
-  static get defaultOptions() {
+  static get attributes() {
     return {
-      ...super.defaultOptions,
+      ...super.attributes,
       username: undefined,
       avatar_url: undefined,
       website: undefined,

@@ -8,30 +8,25 @@ import { GiteaOrganization } from "./gitea-organization.mjs";
 import { GiteaUser } from "./gitea-user.mjs";
 import { join } from "./util.mjs";
 
-
 /**
  * Gitea provider
- *
+ * Known environment variables
+ * - GITEA_TOKEN api token
+ * - GITEA_API api url
  */
 export class GiteaProvider extends MultiGroupProvider {
-  /**
-   * Known environment variables
-   * @return {Object}
-   * @return {string} GITEA_TOKEN api token
-   * @return {string} GITEA_API api url
-   */
-  static get environmentOptions() {
+  static get attributes() {
     return {
-      GITEA_TOKEN: "token",
-      GITEA_API: "api"
-    };
-  }
+      ...super.attributes,
 
-  static get defaultOptions() {
-    return {
-      api: undefined,
-      token: undefined,
-      ...super.defaultOptions
+      api: {
+        env: "GITEA_API"
+      },
+
+      token: {
+        env: "GITEA_TOKEN",
+        private: true
+      }
     };
   }
 
@@ -69,7 +64,7 @@ export class GiteaProvider extends MultiGroupProvider {
       }
 
       for (const r of json.data) {
-        const group = await this.addRepositoryGroup( r.owner.username, r.owner);
+        const group = await this.addRepositoryGroup(r.owner.username, r.owner);
         group.addRepository(r.name, r);
       }
     }
@@ -90,19 +85,18 @@ export class GiteaProvider extends MultiGroupProvider {
     let result;
 
     const f = async type => {
-      clazz = type === 'users' ? GiteaUser : GiteaOrganization;
+      clazz = type === "users" ? GiteaUser : GiteaOrganization;
       result = await fetch(join(this.api, type, name), fetchOptions);
-    }
+    };
 
-    if(options && options.email) {
-      await f('users');
-    }
-    else {
-      await f('orgs');
+    if (options && options.email) {
+      await f("users");
+    } else {
+      await f("orgs");
     }
 
     if (!result.ok) {
-      await f(clazz === GiteaUser ? 'orgs': 'orgs');
+      await f(clazz === GiteaUser ? "orgs" : "orgs");
     }
 
     repositoryGroup = new clazz(this, name, await result.json());
