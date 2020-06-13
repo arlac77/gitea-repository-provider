@@ -7,10 +7,10 @@ export class GiteaUser extends RepositoryGroup {
   static get attributes() {
     return {
       ...super.attributes,
-      login: undefined,
-      email: undefined,
-      username: undefined,
-      language: undefined
+      login: {},
+      email: {},
+      username: {},
+      language: {}
     };
   }
 
