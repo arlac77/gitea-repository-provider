@@ -20,10 +20,13 @@ export class GiteaProvider extends MultiGroupProvider {
       ...super.attributes,
 
       api: {
+        description: "URL of the provider api",
+        set: (value) => value.endsWith('/') ? value : value + '/',
         env: "GITEA_API"
       },
 
       token: {
+        description: "api token",
         env: "GITEA_TOKEN",
         private: true
       }
@@ -51,7 +54,7 @@ export class GiteaProvider extends MultiGroupProvider {
   async initializeRepositories() {
     for (let page = 1; ; page++) {
       const result = await fetch(
-        new URL(`repos/search?limit=50&page=${page}`, this.api + "/"),
+        new URL(`repos/search?limit=50&page=${page}`, this.api),
         {
           headers: this.headers,
           accept: "application/json"

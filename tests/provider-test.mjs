@@ -26,9 +26,11 @@ test("provider constructor", t => {
 test("initialize", t => {
   let provider = GiteaProvider.initialize(undefined, {
     GITEA_TOKEN: "123456",
-    GITEA_API: "http://mydomain.com/gitea/v1/"
+    GITEA_API: "http://mydomain.com/gitea/v1"
   });
   t.is(provider.name, "GiteaProvider");
+  t.is(provider.api, "http://mydomain.com/gitea/v1/");
+  t.is(provider.token, "123456");
 
   provider = GiteaProvider.initialize(undefined, {
     GITEA_TOKEN: "123456"
