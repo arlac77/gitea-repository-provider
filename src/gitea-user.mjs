@@ -10,7 +10,6 @@ export class GiteaUser extends RepositoryGroup {
       login: undefined,
       email: undefined,
       username: undefined,
-      avatar_url: undefined,
       language: undefined
     };
   }

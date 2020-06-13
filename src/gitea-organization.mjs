@@ -7,11 +7,17 @@ export class GiteaOrganization extends RepositoryGroup {
   static get attributes() {
     return {
       ...super.attributes,
-      username: undefined,
-      avatar_url: undefined,
-      website: undefined,
-      location: undefined,
-      visibility: undefined
+      username: {},
+      location: {},
+      visibility: {}
     };
   }
+
+  static get attributeMapping() {
+    return {
+      avatar_url: "avatarURL",
+      website: "homePageURL"
+    };
+  }
+
 }
