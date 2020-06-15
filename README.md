@@ -25,7 +25,6 @@ repository provider for gitea
 -   [GiteaProvider](#giteaprovider)
     -   [headers](#headers)
     -   [repositoryBases](#repositorybases)
-    -   [environmentOptions](#environmentoptions)
     -   [areOptionsSufficciant](#areoptionssufficciant)
         -   [Parameters](#parameters)
 -   [GiteaBranch](#giteabranch)
@@ -46,6 +45,10 @@ repository provider for gitea
 **Extends MultiGroupProvider**
 
 Gitea provider
+Known environment variables
+
+-   GITEA_TOKEN api token
+-   GITEA_API api url
 
 ### headers
 
@@ -58,16 +61,6 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 All possible base urls
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
-
-### environmentOptions
-
-Known environment variables
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GITEA_TOKEN api token
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** GITEA_API api url
 
 ### areOptionsSufficciant
 
