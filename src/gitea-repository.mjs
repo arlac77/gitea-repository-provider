@@ -12,17 +12,22 @@ export class GiteaRepository extends Repository {
       private: "isPrivate",
       mirror: "isMirror",
       website: "homePageURL",
-      default_branch: "defaultBranchName" };
+      default_branch: "defaultBranchName"
+    };
   }
 
-  async initializeBranches() {
-    const result = await fetch(
-      join(this.provider.api, "repos", this.fullName, "branches"),
+  async fetch(...parts) {
+    return await fetch(
+      new URL(join("repos", this.fullName, ...parts), this.provider.api),
       {
         headers: this.provider.headers,
         accept: "application/json"
       }
     );
+  }
+
+  async initializeBranches() {
+    const result = await this.fetch("branches");
 
     for (const bd of await result.json()) {
       await this.addBranch(bd.name, bd);
@@ -30,13 +35,7 @@ export class GiteaRepository extends Repository {
   }
 
   async initializeHooks() {
-    const result = await fetch(
-      join(this.provider.api, "repos", this.fullName, "hooks"),
-      {
-        headers: this.provider.headers,
-        accept: "application/json"
-      }
-    );
+    const result = await this.fetch("hooks");
 
     for (const h of await result.json()) {
       this.addHook(
@@ -51,14 +50,7 @@ export class GiteaRepository extends Repository {
   }
 
   async refId(ref) {
-    const result = await fetch(
-      join(this.provider.api, "repos", this.fullName, "git", ref),
-      {
-        headers: this.provider.headers,
-        accept: "application/json"
-      }
-    );
-
+    const result = await this.fetch("git", ref);
     const data = await result.json();
 
     if (Array.isArray(data)) {

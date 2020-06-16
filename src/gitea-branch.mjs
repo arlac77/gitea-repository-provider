@@ -16,18 +16,16 @@ import { join } from "./util.mjs";
 export class GiteaBranch extends Branch {
   static get attributeMapping() {
     return {
-      full_name: "displayName" };
+      full_name: "displayName"
+    };
   }
 
   async *entries(patterns) {
-    const url =
-      join(
-        this.provider.api,
-        "repos",
-        this.repository.fullName,
-        "git/trees",
-        await this.refId()
-      ) + "?recursive=true";
+    const url = new URL(
+      join("repos", this.repository.fullName, "git/trees", await this.refId()) +
+        "?recursive=true",
+      this.provider.api
+    );
 
     const result = await fetch(url, {
       headers: this.provider.headers,
@@ -74,12 +72,9 @@ export class GiteaBranch extends Branch {
       );
 
       const result = await fetch(
-        join(
-          this.provider.api,
-          "repos",
-          this.repository.fullName,
-          "contents",
-          u.name
+        new URL(
+          join("repos", this.repository.fullName, "contents", u.name),
+          this.provider.api
         ),
         {
           method: "POST",
@@ -112,12 +107,14 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
   }
 
   async getBuffer() {
-    const url = join(
-      this.provider.api,
-      "repos",
-      this.branch.repository.fullName,
-      "contents",
-      this.name + "?ref=" + this.branch.name
+    const url = new URL(
+      join(
+        "repos",
+        this.branch.repository.fullName,
+        "contents",
+        this.name + "?ref=" + this.branch.name
+      ),
+      this.provider.api
     );
 
     const result = await fetch(url, {
@@ -152,12 +149,9 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
   }
 
   async getReadStream(options) {
-    const url = join(
-      this.provider.api,
-      "repos",
-      this.branch.repository.fullName,
-      "raw",
-      this.name
+    const url = new URL(
+      join("repos", this.branch.repository.fullName, "raw", this.name),
+      this.provider.api
     );
 
     const result = await fetch(url, {

@@ -21,7 +21,7 @@ export class GiteaProvider extends MultiGroupProvider {
 
       api: {
         description: "URL of the provider api",
-        set: (value) => value.endsWith('/') ? value : value + '/',
+        set: value => (value.endsWith("/") ? value : value + "/"),
         env: "GITEA_API",
         mandatory: true
       },
@@ -91,7 +91,7 @@ export class GiteaProvider extends MultiGroupProvider {
 
     const f = async type => {
       clazz = type === "users" ? GiteaUser : GiteaOrganization;
-      result = await fetch(join(this.api, type, name), fetchOptions);
+      result = await fetch(new URL(join(type, name), this.api), fetchOptions);
     };
 
     if (options && options.email) {
