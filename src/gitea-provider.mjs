@@ -22,13 +22,15 @@ export class GiteaProvider extends MultiGroupProvider {
       api: {
         description: "URL of the provider api",
         set: (value) => value.endsWith('/') ? value : value + '/',
-        env: "GITEA_API"
+        env: "GITEA_API",
+        mandatory: true
       },
 
       token: {
         description: "api token",
         env: "GITEA_TOKEN",
-        private: true
+        private: true,
+        mandatory: true
       }
     };
   }
