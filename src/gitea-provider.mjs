@@ -36,14 +36,6 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 
   /**
-   * @param {Object} options
-   * @return {boolean} true if token an api are present
-   */
-  static areOptionsSufficciant(options) {
-    return options.token !== undefined && options.api !== undefined;
-  }
-
-  /**
    * Fetch headers
    * @return {Object} suitable as fetch headers
    */
