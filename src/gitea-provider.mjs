@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { getHeaderLink } from "fetch-link-util";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
 import { MultiGroupProvider } from "repository-provider";
@@ -46,25 +47,23 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 
   async initializeRepositories() {
-    for (let page = 1; ; page++) {
-      const result = await fetch(
-        new URL(`repos/search?limit=50&page=${page}`, this.api),
-        {
-          headers: this.headers,
-          accept: "application/json"
-        }
-      );
+    let next = new URL("repos/search?limit=1000", this.api);
+    do {
+      const response = await fetch(next, {
+        headers: this.headers,
+        accept: "application/json"
+      });
 
-      const json = await result.json();
-      if (json.data.length === 0) {
-        break;
-      }
-
+      const json = await response.json();
+      //console.log(json.data.map(r => `${r.owner.username}/${r.name}`));
       for (const r of json.data) {
         const group = await this.addRepositoryGroup(r.owner.username, r.owner);
         group.addRepository(r.name, r);
       }
-    }
+
+      next = getHeaderLink(response.headers);
+      //console.log(response.headers.get('link'),next);
+    } while (next);
   }
 
   async addRepositoryGroup(name, options) {
