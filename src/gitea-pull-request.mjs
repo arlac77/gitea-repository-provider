@@ -34,7 +34,7 @@ export class GiteaPullRequest extends PullRequest {
         }
     }
 
-    const result = repository.fetch(`pulls?state=${state}`);
+    const result = respository.fetch(`pulls?state=${state}`);
 
     const getBranch = async u =>
       provider.branch([u.repo.full_name, u.ref].join("#"));
