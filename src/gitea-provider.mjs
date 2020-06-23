@@ -28,7 +28,7 @@ export class GiteaProvider extends MultiGroupProvider {
       },
 
       token: {
-        description: "api token",
+        description: "API token",
         env: "GITEA_TOKEN",
         private: true,
         mandatory: true
