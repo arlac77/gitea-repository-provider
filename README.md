@@ -25,18 +25,16 @@ repository provider for gitea
 -   [GiteaProvider](#giteaprovider)
     -   [headers](#headers)
     -   [repositoryBases](#repositorybases)
-    -   [areOptionsSufficciant](#areoptionssufficciant)
-        -   [Parameters](#parameters)
 -   [GiteaBranch](#giteabranch)
     -   [commit](#commit)
-        -   [Parameters](#parameters-1)
+        -   [Parameters](#parameters)
 -   [GiteaContentEntry](#giteacontententry)
-    -   [Parameters](#parameters-2)
+    -   [Parameters](#parameters-1)
 -   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
-    -   [Parameters](#parameters-3)
+    -   [Parameters](#parameters-2)
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
-        -   [Parameters](#parameters-4)
+        -   [Parameters](#parameters-3)
 -   [GiteaOrganization](#giteaorganization)
 -   [GiteaUser](#giteauser)
 
@@ -61,14 +59,6 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 All possible base urls
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
-
-### areOptionsSufficciant
-
-#### Parameters
-
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-Returns **[boolean](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** true if token an api are present
 
 ## GiteaBranch
 
