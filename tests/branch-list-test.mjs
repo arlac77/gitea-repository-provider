@@ -7,3 +7,7 @@ const provider = GiteaProvider.initialize({}, process.env);
 
 test(branchListTest, provider, "bad-name/unknown-*");
 test(branchListTest, provider, "arlac77/*repository-provider");
+test(branchListTest, provider, "github-mirror/*repository-provider",4);
+test(branchListTest, provider, "github-mirror/repository-provider",
+  {"github-mirror/repository-provider": { fullCondensedName : "github-mirror/repository-provider"
+  }});
