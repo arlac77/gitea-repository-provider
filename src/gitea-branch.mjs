@@ -45,6 +45,22 @@ export class GiteaBranch extends Branch {
     }
   }
 
+  async sha(path) {
+    const result = await fetch(
+      new URL(
+        join("repos", this.repository.fullName, "contents", path) +
+          "#" +
+          this.name,
+        this.provider.api
+      )
+    );
+
+    const json = await result.json();
+
+   // console.log(json);
+    return json.sha;
+  }
+
   /**
    * Commit entries
    * @param {string} message commit message
@@ -57,11 +73,12 @@ export class GiteaBranch extends Branch {
       const data = {
         message,
         branch: this.name,
-        content: (await u.getBuffer()).toString("base64")
+        content: (await u.getBuffer()).toString("base64"),
+        sha: await this.sha(u.name)
       };
 
       console.log(data);
-      console.log(
+   /*   console.log(
         join(
           this.provider.api,
           "repos",
@@ -69,7 +86,7 @@ export class GiteaBranch extends Branch {
           "contents",
           u.name
         )
-      );
+      );*/
 
       const result = await fetch(
         new URL(
@@ -77,7 +94,7 @@ export class GiteaBranch extends Branch {
           this.provider.api
         ),
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
             ...this.provider.headers
