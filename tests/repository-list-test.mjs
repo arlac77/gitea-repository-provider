@@ -11,14 +11,14 @@ const repoFixtures = {
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux.git": {
     branch: "master",
     fullName: "markus/de.mfelten.archlinux",
-    description: "infrasctucture build on arch linux (arm)",
+    description: "infrastructure build on arch linux (arm)",
     provider: GiteaProvider
   },
 
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux": {
     branch: "master",
     fullName: "markus/de.mfelten.archlinux",
-    description: "infrasctucture build on arch linux (arm)",
+    description: "infrastructure build on arch linux (arm)",
     provider: GiteaProvider
   },
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux#master": {
@@ -29,7 +29,7 @@ const repoFixtures = {
   "markus/de.mfelten.archlinux#master": {
     branch: "master",
     fullName: "markus/de.mfelten.archlinux",
-    description: "infrasctucture build on arch linux (arm)",
+    description: "infrastructure build on arch linux (arm)",
     provider: GiteaProvider
   },
 
