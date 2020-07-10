@@ -8,9 +8,9 @@ export class GiteaUser extends RepositoryGroup {
     return {
       ...super.attributes,
       login: { type: "string" },
-      email: { type: "string"},
-      username: { type: "string"},
-      language: { type: "string"}
+      email: { type: "string" },
+      username: { type: "string" },
+      language: { type: "string" }
     };
   }
 

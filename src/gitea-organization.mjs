@@ -19,5 +19,4 @@ export class GiteaOrganization extends RepositoryGroup {
       website: "homePageURL"
     };
   }
-
 }

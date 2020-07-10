@@ -29,7 +29,7 @@ export class GiteaProvider extends MultiGroupProvider {
       },
 
       token: {
-        type: "string"
+        type: "string",
         description: "API token",
         env: "GITEA_TOKEN",
         private: true,
@@ -122,7 +122,7 @@ export class GiteaProvider extends MultiGroupProvider {
     return GiteaOrganization;
   }
 
-/*
+  /*
   async *branches(patterns="*") {
     await this.initializeRepositories();
 
