@@ -39,10 +39,8 @@ export class GiteaRepository extends Repository {
 
     for (const h of await result.json()) {
       this.addHook(
-        new this.hookClass(this, h.name, new Set(h.events), {
-          id: h.id,
-          active: h.active,
-          type: h.type,
+        new this.hookClass(this, h.id, new Set(h.events), {
+          ...h,
           ...h.config
         })
       );
