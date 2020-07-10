@@ -21,6 +21,7 @@ export class GiteaProvider extends MultiGroupProvider {
       ...super.attributes,
 
       api: {
+        type: "url",
         description: "URL of the provider api",
         set: value => (value.endsWith("/") ? value : value + "/"),
         env: "GITEA_API",
@@ -28,6 +29,7 @@ export class GiteaProvider extends MultiGroupProvider {
       },
 
       token: {
+        type: "string"
         description: "API token",
         env: "GITEA_TOKEN",
         private: true,

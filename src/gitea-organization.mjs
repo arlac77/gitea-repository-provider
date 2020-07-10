@@ -7,9 +7,9 @@ export class GiteaOrganization extends RepositoryGroup {
   static get attributes() {
     return {
       ...super.attributes,
-      username: {},
-      location: {},
-      visibility: {}
+      username: { type: "string" },
+      location: { type: "string" },
+      visibility: { type: "string" }
     };
   }
 
