@@ -56,6 +56,11 @@ export class GiteaProvider extends MultiGroupProvider {
         accept: "application/json"
       });
 
+      if(!response.ok) {
+        console.log(response);
+        return;
+      }
+  
       const json = await response.json();
       //console.log(json.data.map(r => `${r.owner.username}/${r.name}`));
       for (const r of json.data) {

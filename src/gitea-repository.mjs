@@ -29,6 +29,11 @@ export class GiteaRepository extends Repository {
   async initializeBranches() {
     const result = await this.fetch("branches");
 
+    if(!result.ok) {
+      console.log(result);
+      return;
+    }
+
     for (const bd of await result.json()) {
       await this.addBranch(bd.name, bd);
     }
@@ -36,6 +41,11 @@ export class GiteaRepository extends Repository {
 
   async initializeHooks() {
     const result = await this.fetch("hooks");
+
+    if(!result.ok) {
+      console.log(result);
+      return;
+    }
 
     for (const h of await result.json()) {
       this.addHook(
