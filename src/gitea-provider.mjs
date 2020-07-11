@@ -102,6 +102,11 @@ export class GiteaProvider extends MultiGroupProvider {
       await f(clazz === GiteaUser ? "orgs" : "orgs");
     }
 
+    if(!result.ok) {
+      console.log(result);
+      return;
+    }
+
     repositoryGroup = new clazz(this, name, await result.json());
     this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
     return repositoryGroup;
