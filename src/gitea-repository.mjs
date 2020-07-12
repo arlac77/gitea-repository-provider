@@ -16,12 +16,13 @@ export class GiteaRepository extends Repository {
     };
   }
 
-  async fetch(...parts) {
+  async fetch(path, options) {
     return await fetch(
-      new URL(join("repos", this.fullName, ...parts), this.provider.api),
+      new URL(join("repos", this.fullName, path), this.provider.api),
       {
         headers: this.provider.headers,
-        accept: "application/json"
+        accept: "application/json",
+        ...options
       }
     );
   }
@@ -29,20 +30,48 @@ export class GiteaRepository extends Repository {
   async initializeBranches() {
     const result = await this.fetch("branches");
 
-    if(!result.ok) {
+    if (!result.ok) {
       console.log(result);
       return;
     }
 
     for (const bd of await result.json()) {
-      await this.addBranch(bd.name, bd);
+      this.addBranch(bd.name, bd);
     }
+  }
+
+  async createBranch(name, from, options) {
+    const branch = this._branches.get(name);
+    if (branch) {
+      return branch;
+    }
+
+    const body = {
+      new_branch_name: name
+    };
+
+    if (from) {
+      body.old_branch_name = from.name;
+    }
+
+    const result = await this.fetch("branches", {
+      method: "POST",
+      body: JSON.stringify(body)
+    });
+
+    console.log(result);
+    
+    if (result.ok) {
+      this.addBranch(name);
+    }
+
+    return result;
   }
 
   async initializeHooks() {
     const result = await this.fetch("hooks");
 
-    if(!result.ok) {
+    if (!result.ok) {
       console.log(result);
       return;
     }
@@ -58,7 +87,7 @@ export class GiteaRepository extends Repository {
   }
 
   async refId(ref) {
-    const result = await this.fetch("git", ref);
+    const result = await this.fetch(`git/${ref}`);
     const data = await result.json();
 
     if (Array.isArray(data)) {
