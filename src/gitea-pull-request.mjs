@@ -11,6 +11,13 @@ export class GiteaPullRequest extends PullRequest {
     return new Set(["OPEN", "CLOSED"]);
   }
 
+  static get attributes() {
+    return {
+      ...super.attributes,
+      mergeable: { type: "boolean" }
+    };
+  }
+
   /**
    * List all pull request for a given repo
    * result will be filtered by source branch, destination branch and states
