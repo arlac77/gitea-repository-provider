@@ -99,7 +99,7 @@ export class GiteaProvider extends MultiGroupProvider {
     }
 
     if (!result.ok) {
-      await f(clazz === GiteaUser ? "orgs" : "orgs");
+      await f(clazz === GiteaUser ? "users" : "orgs");
     }
 
     if(!result.ok) {
