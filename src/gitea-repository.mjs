@@ -59,13 +59,11 @@ export class GiteaRepository extends Repository {
       body: JSON.stringify(body)
     });
 
-    console.log(result);
-    
     if (result.ok) {
-      this.addBranch(name);
+      return this.addBranch(name);
     }
 
-    return result;
+    throw result;
   }
 
   async initializeHooks() {
