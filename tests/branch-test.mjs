@@ -25,11 +25,6 @@ async function checkEntry(t, entry, fixture) {
 
     const all = Buffer.concat(chunks);
 
-/*
-    console.log(fixture.startsWith);
-    console.log(all.toString("utf8"));
-*/
-
     t.true(
       all.toString("utf8").startsWith(fixture.startsWith),
       "getReadStream"

@@ -52,7 +52,6 @@ export class GiteaPullRequest extends PullRequest {
     }
 
     const json = await result.json();
-    //console.log("list pulls", json);
     for (const p of json) {
       const source = await getBranch(p.head);
       if (filter.source && !source.equals(filter.source)) {
@@ -97,7 +96,6 @@ export class GiteaPullRequest extends PullRequest {
       }
     );
 
-    // console.log(await result.text());
 
     const json = await result.json();
     console.log(json);

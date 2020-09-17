@@ -57,7 +57,6 @@ export class GiteaBranch extends Branch {
 
     const json = await result.json();
 
-   // console.log(json);
     return json.sha;
   }
 
@@ -76,17 +75,6 @@ export class GiteaBranch extends Branch {
         content: (await u.getBuffer()).toString("base64"),
         sha: await this.sha(u.name)
       };
-
-      console.log(data);
-   /*   console.log(
-        join(
-          this.provider.api,
-          "repos",
-          this.repository.fullName,
-          "contents",
-          u.name
-        )
-      );*/
 
       const result = await fetch(
         new URL(
