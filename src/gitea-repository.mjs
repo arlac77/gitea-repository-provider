@@ -16,6 +16,17 @@ export class GiteaRepository extends Repository {
     };
   }
 
+  static get attributes() {
+    return {
+      ...super.attributes,
+      allow_merge_commits: { type: "boolean" },
+      allow_rebase: { type: "boolean" },
+      allow_rebase_explicit: { type: "boolean" },
+      allow_squash_merge: { type: "boolean" },
+      ignore_whitespace_conflicts: { type: "boolean" }
+    };
+  }
+
   async fetch(path, options) {
     return await fetch(
       new URL(join("repos", this.fullName, path), this.provider.api),
