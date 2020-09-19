@@ -98,7 +98,6 @@ export class GiteaPullRequest extends PullRequest {
 
 
     const json = await result.json();
-    console.log(json);
 
     return new this(source, destination, json.number, {
       body: json.body,

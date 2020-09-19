@@ -62,14 +62,12 @@ export class GiteaProvider extends MultiGroupProvider {
       }
   
       const json = await response.json();
-      //console.log(json.data.map(r => `${r.owner.username}/${r.name}`));
       for (const r of json.data) {
         const group = await this.addRepositoryGroup(r.owner.username, r.owner);
         group.addRepository(r.name, r);
       }
 
       next = getHeaderLink(response.headers);
-      //console.log(response.headers.get('link'),next);
     } while (next);
   }
 
