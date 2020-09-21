@@ -129,24 +129,6 @@ export class GiteaProvider extends MultiGroupProvider {
   get repositoryGroupClass() {
     return GiteaOrganization;
   }
-
-  /*
-  async *branches(patterns="*") {
-    await this.initializeRepositories();
-
-    for (const pattern of Array.isArray(patterns) ? patterns : [patterns]) {
-      const [groupPattern, repoPattern] = pattern.split(/\//);
-
-      console.log("P",pattern,groupPattern);
-
-  for(const g of this._repositoryGroups.values()) {
-    console.log(g);
-  }
-}
-catch(e) { console.error(e); }
-    }
-  }
-*/
 }
 
 replaceWithOneTimeExecutionMethod(
