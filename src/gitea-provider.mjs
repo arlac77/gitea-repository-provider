@@ -118,6 +118,14 @@ export class GiteaProvider extends MultiGroupProvider {
     return [this.api.replace(/api\/v.+$/, "")];
   }
 
+  /**
+   * We are called gitea
+   * @return {string} gitea
+   */
+  get name() {
+    return 'gitea';
+  }
+
   get repositoryClass() {
     return GiteaRepository;
   }
