@@ -25,6 +25,7 @@ repository provider for gitea
 -   [GiteaProvider](#giteaprovider)
     -   [headers](#headers)
     -   [repositoryBases](#repositorybases)
+    -   [name](#name)
 -   [GiteaBranch](#giteabranch)
     -   [commit](#commit)
         -   [Parameters](#parameters)
@@ -59,6 +60,12 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 All possible base urls
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
+
+### name
+
+We are called gitea
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** gitea
 
 ## GiteaBranch
 
