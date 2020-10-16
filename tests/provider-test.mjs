@@ -28,7 +28,7 @@ test("initialize", t => {
     GITEA_TOKEN: "123456",
     GITEA_API: "http://mydomain.com/gitea/v1"
   });
-  t.is(provider.name, "GiteaProvider");
+  t.is(provider.name, "gitea");
   t.is(provider.api, "http://mydomain.com/gitea/v1/");
   t.is(provider.token, "123456");
 
