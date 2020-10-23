@@ -45,6 +45,15 @@ export class GiteaBranch extends Branch {
     }
   }
 
+  async removeEntries(entries) {
+    for await (const entry of entries) {
+      await fetch(new URL(`/repos/${this.repository.fullName}/contents/${entry.name}`,this.provider.api), {
+        method: "DELETE",
+        body: JSON.stringify({ branch: this.name, message: "", sha: "" })
+      });
+    }
+  }
+ 
   async sha(path) {
     const result = await fetch(
       new URL(
