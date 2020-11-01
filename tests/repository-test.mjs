@@ -75,6 +75,8 @@ const repoFixtures = {
 };
 
 test("locate repository several", async t => {
+  t.plan(42);
+
   const provider = GiteaProvider.initialize(undefined, process.env);
 
   for (const [name, repoFixture] of Object.entries(repoFixtures)) {
