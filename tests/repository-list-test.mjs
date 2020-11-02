@@ -61,5 +61,11 @@ const fullResult = {
 
 test(repositoryListTest, provider, "markus/Omnia", fullResult);
 test(repositoryListTest, provider, "markus/*", fullResult);
+test(
+  repositoryListTest,
+  provider,
+  "https://mfelten.dynv6.net/services/git/markus/*",
+  fullResult
+);
 test(repositoryListTest, provider, "*", fullResult);
 test(repositoryListTest, provider, undefined, fullResult);
