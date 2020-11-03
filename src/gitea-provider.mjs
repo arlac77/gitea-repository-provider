@@ -56,11 +56,11 @@ export class GiteaProvider extends MultiGroupProvider {
         accept: "application/json"
       });
 
-      if(!response.ok) {
+      if (!response.ok) {
         console.log(response);
         return;
       }
-  
+
       const json = await response.json();
       for (const r of json.data) {
         const group = await this.addRepositoryGroup(r.owner.username, r.owner);
@@ -90,17 +90,13 @@ export class GiteaProvider extends MultiGroupProvider {
       result = await fetch(new URL(join(type, name), this.api), fetchOptions);
     };
 
-    if (options && options.email) {
-      await f("users");
-    } else {
-      await f("orgs");
-    }
+    await f(options && options.email ? "users" : "orgs");
 
     if (!result.ok) {
       await f(clazz === GiteaUser ? "users" : "orgs");
     }
 
-    if(!result.ok) {
+    if (!result.ok) {
       console.log(result);
       return;
     }
@@ -123,7 +119,7 @@ export class GiteaProvider extends MultiGroupProvider {
    * @return {string} gitea
    */
   get name() {
-    return 'gitea';
+    return "gitea";
   }
 
   get repositoryClass() {
