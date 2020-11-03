@@ -4,14 +4,27 @@ import GiteaProvider from "gitea-repository-provider";
 
 const provider = GiteaProvider.initialize(undefined, process.env);
 
-const fullResult = {
-  markus: { name: "markus", username: "markus" },
-  "github-mirror": { description: "mirror of github.com" }
+const markurGroup = {
+  markus: { id: 1, name: "markus", username: "markus" }
+};
+const githubMirrorGroup = {
+  "github-mirror": { id: 6, description: "mirror of github.com" }
 };
 
-test(groupListTest, provider, undefined, fullResult);
-test("2nd. time", groupListTest, provider, undefined, fullResult);
-test(groupListTest, provider, "*", fullResult);
-test(groupListTest, provider, "markus", {
-  markus: { name: "markus", username: "markus" }
-});
+const allGroups = {
+  ...markurGroup,
+  ...githubMirrorGroup
+};
+
+test(groupListTest, provider, undefined, allGroups);
+test("2nd. time", groupListTest, provider, undefined, allGroups);
+test(groupListTest, provider, "*", allGroups);
+test(groupListTest, provider, provider.repositoryBases[0] + "*", allGroups);
+test(groupListTest, provider, "markus", markurGroup);
+test(
+  groupListTest,
+  provider,
+  provider.repositoryBases[0] + "markus",
+  markurGroup
+);
+test(groupListTest, provider, "https://invalid/gitea", 0);
