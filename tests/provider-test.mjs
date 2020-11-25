@@ -20,7 +20,10 @@ test("provider constructor", t => {
   const provider = new GiteaProvider(config);
   t.is(provider.token, "123456");
   t.is(provider.api, "http://mydomain.com/gitea/api/v1/");
-  t.deepEqual(provider.repositoryBases, ["http://mydomain.com/gitea/"]);
+  t.deepEqual(provider.repositoryBases, [
+    "gitea:",
+    "http://mydomain.com/gitea/"
+  ]);
 });
 
 test("initialize", t => {
@@ -30,7 +33,10 @@ test("initialize", t => {
   });
   t.is(provider.name, "gitea");
   t.is(provider.api, "http://mydomain.com/gitea/api/v1/");
-  t.deepEqual(provider.repositoryBases, ["http://mydomain.com/gitea/"]);
+  t.deepEqual(provider.repositoryBases, [
+    "gitea:",
+    "http://mydomain.com/gitea/"
+  ]);
   t.is(provider.token, "123456");
 
   provider = GiteaProvider.initialize(undefined, {
