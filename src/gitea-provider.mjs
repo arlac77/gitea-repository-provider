@@ -111,7 +111,7 @@ export class GiteaProvider extends MultiGroupProvider {
    * @return {string[]} common base urls of all repositories
    */
   get repositoryBases() {
-    return [this.name + ':', this.api.replace(/api\/v.+$/, "")];
+    return super.repositoryBases.concat([this.api.replace(/api\/v.+$/, "")]);
   }
 
   /**
