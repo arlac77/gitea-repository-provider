@@ -10,8 +10,8 @@ import { GiteaUser } from "./gitea-user.mjs";
 import { join } from "./util.mjs";
 
 /**
- * Gitea provider
- * Known environment variables
+ * Gitea provider.
+ * Known environment variables:
  * - GITEA_TOKEN api token
  * - GITEA_API api url
  */
