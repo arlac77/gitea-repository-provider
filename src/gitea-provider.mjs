@@ -16,6 +16,14 @@ import { join } from "./util.mjs";
  * - GITEA_API api url
  */
 export class GiteaProvider extends MultiGroupProvider {
+  /**
+   * We are called gitea.
+   * @return {string} gitea
+   */
+  static get name() {
+    return "gitea";
+  }
+
   static get attributes() {
     return {
       ...super.attributes,
@@ -112,14 +120,6 @@ export class GiteaProvider extends MultiGroupProvider {
    */
   get repositoryBases() {
     return super.repositoryBases.concat([this.api.replace(/api\/v.+$/, "")]);
-  }
-
-  /**
-   * We are called gitea
-   * @return {string} gitea
-   */
-  get name() {
-    return "gitea";
   }
 
   get repositoryClass() {

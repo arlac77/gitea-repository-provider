@@ -2,6 +2,8 @@ import test from "ava";
 import { providerTest } from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
 
+test("factory name", t => t.is(GiteaProvider.name, "gitea"));
+
 test(providerTest, new GiteaProvider());
 
 const config = GiteaProvider.optionsFromEnvironment({
