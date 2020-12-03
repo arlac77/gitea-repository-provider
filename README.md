@@ -38,8 +38,8 @@ repository provider for gitea
 
 **Extends MultiGroupProvider**
 
-Gitea provider
-Known environment variables
+Gitea provider.
+Known environment variables:
 
 -   GITEA_TOKEN api token
 -   GITEA_API api url
@@ -68,7 +68,7 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 ### commit
 
-Commit entries
+Commit entries.
 
 #### Parameters
 
@@ -106,8 +106,8 @@ only works for master branch
 
 ### list
 
-List all pull request for a given repo
-result will be filtered by source branch, destination branch and states
+List all pull request for a given repo.
+Result will be filtered by source branch, destination branch and states.
 
 #### Parameters
 
