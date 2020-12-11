@@ -31,7 +31,8 @@ export class GiteaProvider extends MultiGroupProvider {
       api: {
         type: "url",
         description: "URL of the provider api",
-        set: value => (value === undefined || value.endsWith("/") ? value : value + "/"),
+        set: value =>
+          value === undefined || value.endsWith("/") ? value : value + "/",
         env: "GITEA_API",
         mandatory: true
       },
@@ -86,8 +87,8 @@ export class GiteaProvider extends MultiGroupProvider {
     }
 
     const fetchOptions = {
-      headers: this.headers,
-      accept: "application/json"
+      headers: this.headers
+      //   accept: "application/json"
     };
 
     let clazz;

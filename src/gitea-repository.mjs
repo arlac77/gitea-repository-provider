@@ -31,8 +31,10 @@ export class GiteaRepository extends Repository {
     return await fetch(
       new URL(join("repos", this.fullName, path), this.provider.api),
       {
-        headers: this.provider.headers,
-        accept: "application/json",
+        headers: {
+          ...this.provider.headers,
+          "content-type": "application/json"
+        },
         ...options
       }
     );
@@ -71,7 +73,7 @@ export class GiteaRepository extends Repository {
     });
 
     if (result.ok) {
-      return this.addBranch(name);
+      return this.addBranch(name, await result.json());
     }
 
     throw result;

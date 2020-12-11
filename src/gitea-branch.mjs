@@ -47,13 +47,19 @@ export class GiteaBranch extends Branch {
 
   async removeEntries(entries) {
     for await (const entry of entries) {
-      await fetch(new URL(`/repos/${this.repository.fullName}/contents/${entry.name}`,this.provider.api), {
-        method: "DELETE",
-        body: JSON.stringify({ branch: this.name, message: "", sha: "" })
-      });
+      await fetch(
+        new URL(
+          `/repos/${this.repository.fullName}/contents/${entry.name}`,
+          this.provider.api
+        ),
+        {
+          method: "DELETE",
+          body: JSON.stringify({ branch: this.name, message: "", sha: "" })
+        }
+      );
     }
   }
- 
+
   async sha(path) {
     const result = await fetch(
       new URL(
@@ -70,39 +76,63 @@ export class GiteaBranch extends Branch {
   }
 
   /**
+   * Writes content into the branch
+   * @param {ConentEntry} entry
+   * @return {Promise<Entry>} written content with sha values set
+   */
+  async writeEntry(entry) {
+    const data = {
+      message,
+      branch: this.name,
+      content: (await entry.getBuffer()).toString("base64"),
+      sha: await this.sha(entry.name)
+    };
+
+    const result = await fetch(
+      new URL(
+        join("repos", this.repository.fullName, "contents", entry.name),
+        this.provider.api
+      ),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...this.provider.headers
+        },
+        body: JSON.stringify(data)
+      }
+    );
+
+    entry.sha = json.sha;
+    return entry;
+  }
+
+  /**
    * Commit entries.
    * @param {string} message commit message
-   * @param {Entry[]} updates file content to be commited
+   * @param {ContentEntry[]} entries content to be commited
    * @param {Object} options
    * @return {Commit}
    */
-  async commit(message, updates, options) {
-    for (const u of updates) {
-      const data = {
-        message,
-        branch: this.name,
-        content: (await u.getBuffer()).toString("base64"),
-        sha: await this.sha(u.name)
-      };
+  async commit(message, entries, options) {
+    const updates = await Promise.all(
+      entries.map(entry => this.writeEntry(entry))
+    );
 
-      const result = await fetch(
-        new URL(
-          join("repos", this.repository.fullName, "contents", u.name),
-          this.provider.api
-        ),
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            ...this.provider.headers
-          },
-          body: JSON.stringify(data)
-        }
-      );
-
-      console.log(result.ok, result.status, result.statusText);
-      console.log(await result.text());
-    }
+    const result = await fetch(
+      new URL(
+        join("repos", this.repository.fullName, "git/trees/",updates.sha),
+        this.provider.api
+      ),
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...this.provider.headers
+        },
+        body: JSON.stringify(data)
+      }
+    );
   }
 }
 
