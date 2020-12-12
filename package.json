@@ -31,8 +31,8 @@
     "lint:docs": "documentation lint ./src/gitea-provider.mjs"
   },
   "dependencies": {
-    "content-entry": "^2.6.0",
-    "fetch-link-util": "^1.0.1",
+    "content-entry": "^2.6.1",
+    "fetch-link-util": "^1.0.2",
     "matching-iterator": "^1.1.2",
     "node-fetch": "^3.0.0-beta.9",
     "one-time-execution-method": "^2.0.4",
