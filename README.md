@@ -21,10 +21,6 @@ repository provider for gitea
 
 ### Table of Contents
 
--   [GiteaProvider](#giteaprovider)
-    -   [headers](#headers)
-    -   [repositoryBases](#repositorybases)
-    -   [name](#name)
 -   [GiteaBranch](#giteabranch)
     -   [writeEntry](#writeentry)
         -   [Parameters](#parameters)
@@ -34,39 +30,15 @@ repository provider for gitea
     -   [Parameters](#parameters-2)
 -   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
     -   [Parameters](#parameters-3)
+-   [GiteaOrganization](#giteaorganization)
+-   [GiteaProvider](#giteaprovider)
+    -   [headers](#headers)
+    -   [repositoryBases](#repositorybases)
+    -   [name](#name)
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
         -   [Parameters](#parameters-4)
--   [GiteaOrganization](#giteaorganization)
 -   [GiteaUser](#giteauser)
-
-## GiteaProvider
-
-**Extends MultiGroupProvider**
-
-Gitea provider.
-Known environment variables:
-
--   GITEA_TOKEN api token
--   GITEA_API api url
-
-### headers
-
-Fetch headers
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
-
-### repositoryBases
-
-All possible base urls
-
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
-
-### name
-
-We are called gitea.
-
-Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** gitea
 
 ## GiteaBranch
 
@@ -116,6 +88,38 @@ only works for master branch
 -   `branch`  
 -   `name`  
 
+## GiteaOrganization
+
+**Extends RepositoryGroup**
+
+## GiteaProvider
+
+**Extends MultiGroupProvider**
+
+Gitea provider.
+Known environment variables:
+
+-   GITEA_TOKEN api token
+-   GITEA_API api url
+
+### headers
+
+Fetch headers
+
+Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
+
+### repositoryBases
+
+All possible base urls
+
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
+
+### name
+
+We are called gitea.
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** gitea
+
 ## GiteaPullRequest
 
 **Extends PullRequest**
@@ -134,10 +138,6 @@ Result will be filtered by source branch, destination branch and states.
     -   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
 
 Returns **Iterator&lt;PullRequest>** 
-
-## GiteaOrganization
-
-**Extends RepositoryGroup**
 
 ## GiteaUser
 
