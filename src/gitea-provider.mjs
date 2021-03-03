@@ -24,6 +24,13 @@ export class GiteaProvider extends MultiGroupProvider {
     return "gitea";
   }
 
+  /**
+   * @return {string} default env name prefix
+   */
+  static get instanceIdentifier() {
+    return "GITEA_"
+  }
+  
   static get attributes() {
     return {
       ...super.attributes,
@@ -33,14 +40,14 @@ export class GiteaProvider extends MultiGroupProvider {
         description: "URL of the provider api",
         set: value =>
           value === undefined || value.endsWith("/") ? value : value + "/",
-        env: "GITEA_API",
+        env: "{{instanceIdentifier}}API",
         mandatory: true
       },
 
       token: {
         type: "string",
         description: "API token",
-        env: "GITEA_TOKEN",
+        env: "{{instanceIdentifier}}TOKEN",
         private: true,
         mandatory: true
       }
@@ -48,7 +55,7 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 
   /**
-   * Fetch headers
+   * Fetch headers.
    * @return {Object} suitable as fetch headers
    */
   get headers() {
@@ -116,7 +123,7 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 
   /**
-   * All possible base urls
+   * All possible base urls.
    * @return {string[]} common base urls of all repositories
    */
   get repositoryBases() {
