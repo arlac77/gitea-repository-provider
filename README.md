@@ -35,6 +35,7 @@ repository provider for gitea
     -   [headers](#headers)
     -   [repositoryBases](#repositorybases)
     -   [name](#name)
+    -   [instanceIdentifier](#instanceidentifier)
 -   [GiteaPullRequest](#giteapullrequest)
     -   [list](#list)
         -   [Parameters](#parameters-4)
@@ -104,13 +105,13 @@ Known environment variables:
 
 ### headers
 
-Fetch headers
+Fetch headers.
 
 Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
 
 ### repositoryBases
 
-All possible base urls
+All possible base urls.
 
 Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
 
@@ -119,6 +120,10 @@ Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Gl
 We are called gitea.
 
 Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** gitea
+
+### instanceIdentifier
+
+Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** default env name prefix
 
 ## GiteaPullRequest
 
