@@ -3,7 +3,7 @@
 [![minified size](https://badgen.net/bundlephobia/min/gitea-repository-provider)](https://bundlephobia.com/result?p=gitea-repository-provider)
 [![downloads](http://img.shields.io/npm/dm/gitea-repository-provider.svg?style=flat-square)](https://npmjs.org/package/gitea-repository-provider)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/gitea-repository-provider.svg?style=flat-square)](https://github.com/arlac77/gitea-repository-provider/issues)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fgitea-repository-provider%2Fbadge&style=flat)](https://actions-badge.atrox.dev/arlac77/gitea-repository-provider/goto)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fgitea-repository-provider%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/gitea-repository-provider/goto)
 [![Styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/gitea-repository-provider/badge.svg)](https://snyk.io/test/github/arlac77/gitea-repository-provider)
@@ -21,25 +21,25 @@ repository provider for gitea
 
 ### Table of Contents
 
--   [GiteaBranch](#giteabranch)
-    -   [writeEntry](#writeentry)
-        -   [Parameters](#parameters)
-    -   [commit](#commit)
-        -   [Parameters](#parameters-1)
--   [GiteaContentEntry](#giteacontententry)
-    -   [Parameters](#parameters-2)
--   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
-    -   [Parameters](#parameters-3)
--   [GiteaOrganization](#giteaorganization)
--   [GiteaProvider](#giteaprovider)
-    -   [headers](#headers)
-    -   [repositoryBases](#repositorybases)
-    -   [name](#name)
-    -   [instanceIdentifier](#instanceidentifier)
--   [GiteaPullRequest](#giteapullrequest)
-    -   [list](#list)
-        -   [Parameters](#parameters-4)
--   [GiteaUser](#giteauser)
+*   [GiteaBranch](#giteabranch)
+    *   [writeEntry](#writeentry)
+        *   [Parameters](#parameters)
+    *   [commit](#commit)
+        *   [Parameters](#parameters-1)
+*   [GiteaContentEntry](#giteacontententry)
+    *   [Parameters](#parameters-2)
+*   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
+    *   [Parameters](#parameters-3)
+*   [GiteaOrganization](#giteaorganization)
+*   [GiteaProvider](#giteaprovider)
+    *   [headers](#headers)
+    *   [repositoryBases](#repositorybases)
+    *   [name](#name)
+    *   [instanceIdentifier](#instanceidentifier)
+*   [GiteaPullRequest](#giteapullrequest)
+    *   [list](#list)
+        *   [Parameters](#parameters-4)
+*   [GiteaUser](#giteauser)
 
 ## GiteaBranch
 
@@ -51,9 +51,9 @@ Writes content into the branch
 
 #### Parameters
 
--   `entry` **ConentEntry** 
+*   `entry` **ConentEntry** 
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)&lt;Entry>** written content with sha values set
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Entry>** written content with sha values set
 
 ### commit
 
@@ -61,9 +61,9 @@ Commit entries.
 
 #### Parameters
 
--   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
--   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;ContentEntry>** content to be commited
--   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+*   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
+*   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>** content to be commited
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 Returns **Commit** 
 
@@ -75,8 +75,8 @@ works for all branches
 
 ### Parameters
 
--   `branch`  
--   `name`  
+*   `branch`  
+*   `name`  
 
 ## GiteaMasterOnlyContentEntry
 
@@ -86,8 +86,8 @@ only works for master branch
 
 ### Parameters
 
--   `branch`  
--   `name`  
+*   `branch`  
+*   `name`  
 
 ## GiteaOrganization
 
@@ -100,8 +100,8 @@ only works for master branch
 Gitea provider.
 Known environment variables:
 
--   GITEA_TOKEN api token
--   GITEA_API api url
+*   GITEA_TOKEN api token
+*   GITEA_API api url
 
 ### headers
 
@@ -113,7 +113,7 @@ Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 
 All possible base urls.
 
-Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
+Returns **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>** common base urls of all repositories
 
 ### name
 
@@ -136,13 +136,14 @@ Result will be filtered by source branch, destination branch and states.
 
 #### Parameters
 
--   `respository` **Repository** 
--   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
-    -   `filter.source` **Branch?** 
-    -   `filter.destination` **Branch?** 
-    -   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)&lt;[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
+*   `respository` **Repository** 
+*   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
-Returns **Iterator&lt;PullRequest>** 
+    *   `filter.source` **Branch?** 
+    *   `filter.destination` **Branch?** 
+    *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
+
+Returns **Iterator\<PullRequest>** 
 
 ## GiteaUser
 
