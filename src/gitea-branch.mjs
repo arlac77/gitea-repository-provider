@@ -76,11 +76,12 @@ export class GiteaBranch extends Branch {
   }
 
   /**
-   * Writes content into the branch
+   * Writes content into the branch.
    * @param {ConentEntry} entry
+   * @param {String} message
    * @return {Promise<Entry>} written content with sha values set
    */
-  async writeEntry(entry) {
+  async writeEntry(entry,message) {
     const data = {
       message,
       branch: this.name,
@@ -116,7 +117,7 @@ export class GiteaBranch extends Branch {
    */
   async commit(message, entries, options) {
     const updates = await Promise.all(
-      entries.map(entry => this.writeEntry(entry))
+      entries.map(entry => this.writeEntry(entry,message))
     );
 
     const result = await fetch(
