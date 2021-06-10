@@ -122,6 +122,7 @@ export class GiteaBranch extends Branch {
       entries.map(entry => this.writeEntry(entry, message))
     );
 
+    const data = updates;
     const result = await fetch(
       new URL(
         join("repos", this.repository.fullName, "git/trees/", updates.sha),
@@ -136,6 +137,8 @@ export class GiteaBranch extends Branch {
         body: JSON.stringify(data)
       }
     );
+
+    return result.json;
   }
 }
 
