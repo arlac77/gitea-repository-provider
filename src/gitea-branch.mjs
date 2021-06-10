@@ -81,7 +81,7 @@ export class GiteaBranch extends Branch {
    * @param {String} message
    * @return {Promise<Entry>} written content with sha values set
    */
-  async writeEntry(entry,message) {
+  async writeEntry(entry, message) {
     const data = {
       message,
       branch: this.name,
@@ -103,6 +103,8 @@ export class GiteaBranch extends Branch {
         body: JSON.stringify(data)
       }
     );
+  
+    const json = await result.json();
 
     entry.sha = json.sha;
     return entry;
@@ -117,12 +119,12 @@ export class GiteaBranch extends Branch {
    */
   async commit(message, entries, options) {
     const updates = await Promise.all(
-      entries.map(entry => this.writeEntry(entry,message))
+      entries.map(entry => this.writeEntry(entry, message))
     );
 
     const result = await fetch(
       new URL(
-        join("repos", this.repository.fullName, "git/trees/",updates.sha),
+        join("repos", this.repository.fullName, "git/trees/", updates.sha),
         this.provider.api
       ),
       {
