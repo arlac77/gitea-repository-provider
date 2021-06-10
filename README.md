@@ -47,11 +47,12 @@ repository provider for gitea
 
 ### writeEntry
 
-Writes content into the branch
+Writes content into the branch.
 
 #### Parameters
 
 *   `entry` **ConentEntry** 
+*   `message` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Entry>** written content with sha values set
 
