@@ -149,11 +149,16 @@ export class GiteaBranch extends Branch {
 class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
   constructor(branch, name) {
     super(name);
-    Object.defineProperties(this, { branch: { value: branch } });
+    this.branch = branch;
   }
 
   get provider() {
     return this.branch.provider;
+  }
+
+  get buffer()
+  {
+    return this.getBuffer();
   }
 
   async getBuffer() {
@@ -171,7 +176,7 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
       headers: this.provider.headers
     });
 
-    const stream = await await result.body;
+    const stream = await result.body;
     const chunks = [];
     for await (const chunk of stream) {
       chunks.push(chunk);
@@ -191,14 +196,19 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
 ) {
   constructor(branch, name) {
     super(name);
-    Object.defineProperties(this, { branch: { value: branch } });
+    this.branch = branch;
   }
 
   get provider() {
     return this.branch.provider;
   }
 
-  async getReadStream(options) {
+  get readStream()
+  {
+    return this.getReadStream();
+  }
+
+  async getReadStream() {
     const url = new URL(
       join("repos", this.branch.repository.fullName, "raw", this.name),
       this.provider.api

@@ -17,7 +17,7 @@ async function checkEntry(t, entry, fixture) {
       "getStream"
     );
 
-    const stream = await entry.getReadStream();
+    const stream = await entry.readStream;
     const chunks = [];
     for await (const chunk of stream) {
       chunks.push(chunk);
@@ -27,7 +27,7 @@ async function checkEntry(t, entry, fixture) {
 
     t.true(
       all.toString("utf8").startsWith(fixture.startsWith),
-      "getReadStream"
+      "readStream"
     );
   }
 }
@@ -73,6 +73,8 @@ test("branch entry none master", async t => {
   );
 
   const entry = await branch.entry("README.md");
+
+  t.is(entry.name,'README.md');
 
   await checkEntry(t, entry, { startsWith: "# pr-source-1" });
 });
