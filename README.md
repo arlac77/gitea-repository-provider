@@ -39,6 +39,7 @@ repository provider for gitea
 *   [GiteaPullRequest](#giteapullrequest)
     *   [list](#list)
         *   [Parameters](#parameters-4)
+*   [update](#update)
 *   [GiteaUser](#giteauser)
 
 ## GiteaBranch
@@ -145,6 +146,10 @@ Result will be filtered by source branch, destination branch and states.
     *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
 
 Returns **Iterator\<PullRequest>** 
+
+## update
+
+<https://try.gitea.io/api/swagger#/repository/repoEdit>
 
 ## GiteaUser
 
