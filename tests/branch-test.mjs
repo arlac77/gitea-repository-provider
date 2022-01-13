@@ -13,7 +13,7 @@ async function checkEntry(t, entry, fixture) {
     t.true(entry.isCollection);
   } else {
     t.true(
-      (await entry.getString()).startsWith(fixture.startsWith),
+      (await entry.string).startsWith(fixture.startsWith),
       "getStream"
     );
 
