@@ -77,8 +77,9 @@ works for all branches
 
 ### Parameters
 
-*   `branch`  
 *   `name`  
+*   `mode`  
+*   `branch`  
 
 ## GiteaMasterOnlyContentEntry
 
@@ -88,8 +89,9 @@ only works for master branch
 
 ### Parameters
 
-*   `branch`  
 *   `name`  
+*   `mode`  
+*   `branch`  
 
 ## GiteaOrganization
 
