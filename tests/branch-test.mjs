@@ -14,7 +14,7 @@ async function checkEntry(t, entry, fixture) {
   } else {
     t.true(
       (await entry.string).startsWith(fixture.startsWith),
-      "getStream"
+      "string"
     );
 
     const stream = await entry.readStream;

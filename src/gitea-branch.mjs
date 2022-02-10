@@ -41,7 +41,7 @@ export class GiteaBranch extends Branch {
         ? new BaseCollectionEntry(entry.path)
         : new (this.name === "master"
             ? GiteaMasterOnlyContentEntry
-            : GiteaContentEntry)(this, entry.path);
+            : GiteaContentEntry)(entry.path, parseInt(entry.mode, 8), this);
     }
   }
 
@@ -147,9 +147,10 @@ export class GiteaBranch extends Branch {
  *
  */
 class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
-  constructor(branch, name) {
+  constructor(name, mode, branch) {
     super(name);
     this.branch = branch;
+    Object.defineProperty(this, "mode", { value: mode });
   }
 
   get provider() {
@@ -194,9 +195,10 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
 class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
   ContentEntry
 ) {
-  constructor(branch, name) {
+  constructor(name, mode, branch) {
     super(name);
     this.branch = branch;
+    Object.defineProperty(this, "mode", { value: mode });
   }
 
   get provider() {

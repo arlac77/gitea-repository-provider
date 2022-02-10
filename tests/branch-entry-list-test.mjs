@@ -11,10 +11,10 @@ test("branch entries list", async t => {
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.branch("master");
   await entryListTest(t, branch, undefined, {
-    "README.md": { startsWith: "fil" },
-    "tests/rollup.config.js": { startsWith: "import babel" },
+    "README.md": { startsWith: "fil", mode: 0o100644  },
+    "tests/rollup.config.js": { startsWith: "import babel", mode: 0o100644 },
     tests: { isCollection: true },
-    "a/b/c/file.txt": { startsWith: "file content" }
+    "a/b/c/file.txt": { startsWith: "file content", mode: 0o100644 }
   });
 });
 
