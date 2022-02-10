@@ -19,15 +19,30 @@ export class GiteaRepository extends Repository {
   static get attributes() {
     return {
       ...super.attributes,
-      allow_manual_merge: { type: "boolean", writable: true },
-      allow_merge_commits: { type: "boolean", writable: true },
-      allow_rebase: { type: "boolean", writable: true },
-      allow_rebase_explicit: { type: "boolean", writable: true },
-      allow_squash_merge: { type: "boolean", writable: true },
-      autodetect_manual_merge: { type: "boolean", writable: true },
-      ignore_whitespace_conflicts: { type: "boolean", writable: true },
-      default_delete_branch_after_merge: { type: "boolean", writable: true },
-      default_delete_branch_after_merge: { type: "boolean", writable: true },
+      allow_manual_merge: { type: "boolean", default: false, writable: true },
+      allow_merge_commits: { type: "boolean", default: false, writable: true },
+      allow_rebase: { type: "boolean", default: false, writable: true },
+      allow_rebase_explicit: {
+        type: "boolean",
+        default: false,
+        writable: true
+      },
+      allow_squash_merge: { type: "boolean", default: false, writable: true },
+      autodetect_manual_merge: {
+        type: "boolean",
+        default: false,
+        writable: true
+      },
+      ignore_whitespace_conflicts: {
+        type: "boolean",
+        default: false,
+        writable: true
+      },
+      default_delete_branch_after_merge: {
+        type: "boolean",
+        default: false,
+        writable: true
+      },
       default_merge_style: { type: "string", writable: true }
     };
   }
@@ -48,8 +63,8 @@ export class GiteaRepository extends Repository {
   /**
    * {@link https://try.gitea.io/api/swagger#/repository/repoEdit}
    */
-   async update() {
-    return this.fetch('', {
+  async update() {
+    return this.fetch("", {
       method: "PATCH",
       body: JSON.stringify(
         mapAttributesInverse(
