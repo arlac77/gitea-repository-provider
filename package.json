@@ -34,7 +34,7 @@
     "fetch-link-util": "^1.0.6",
     "matching-iterator": "^2.0.3",
     "node-fetch": "^3.2.3",
-    "one-time-execution-method": "^2.0.12",
+    "one-time-execution-method": "^2.0.13",
     "repository-provider": "^27.0.3"
   },
   "devDependencies": {
