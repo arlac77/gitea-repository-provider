@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import { Repository } from "repository-provider";
 import { join } from "./util.mjs";
@@ -48,16 +47,12 @@ export class GiteaRepository extends Repository {
   }
 
   async fetch(path, options) {
-    return await fetch(
-      new URL(join("repos", this.fullName, path), this.provider.api),
-      {
-        headers: {
-          ...this.provider.headers,
-          "content-type": "application/json"
-        },
-        ...options
-      }
-    );
+    return await this.provider.fetch(join("repos", this.fullName, path), {
+      headers: {
+        "content-type": "application/json"
+      },
+      ...options
+    });
   }
 
   /**

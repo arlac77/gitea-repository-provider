@@ -1,8 +1,9 @@
 import test from "ava";
-import { groupListTest } from "repository-provider-test-support";
+import { groupListTest, createMessageDestination } from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
 
-const provider = GiteaProvider.initialize(undefined, process.env);
+const messageDestination = createMessageDestination().messageDestination;
+const provider = GiteaProvider.initialize({ messageDestination}, process.env);
 
 const markurGroup = {
   markus: { id: 1, name: "markus", username: "markus" }

@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { stateActionHandler } from "fetch-rate-limit-util";
 import { getHeaderLink } from "fetch-link-util";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
@@ -28,9 +29,9 @@ export class GiteaProvider extends MultiGroupProvider {
    * @return {string} default env name prefix
    */
   static get instanceIdentifier() {
-    return "GITEA_"
+    return "GITEA_";
   }
-  
+
   static get attributes() {
     return {
       ...super.attributes,
@@ -54,30 +55,48 @@ export class GiteaProvider extends MultiGroupProvider {
     };
   }
 
-  /**
-   * Fetch headers.
-   * @return {Object} suitable as fetch headers
-   */
-  get headers() {
-    return {
-      authorization: "token " + this.token
-    };
+  fetch(url, options = {}, responseHandler) {
+    return stateActionHandler(
+      fetch,
+      new URL(url, this.api),
+      {
+        ...options,
+        headers: {
+          authorization: `token ${this.token}`,
+          ...options.headers
+        }
+      },
+      responseHandler,
+      undefined,
+      (url, ...args) => this.trace(url.toString(), ...args)
+    );
+  }
+
+  fetchJSON(url, options) {
+    return this.fetch(
+      url,
+      {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        ...options
+      },
+      async response => {
+        return { response, json: await response.json() };
+      }
+    );
   }
 
   async initializeRepositories() {
-    let next = new URL("repos/search?limit=1000", this.api);
+    let next = "repos/search?limit=1000";
     do {
-      const response = await fetch(next, {
-        headers: this.headers,
-        accept: "application/json"
-      });
+      const { response, json } = await this.fetchJSON(next);
 
       if (!response.ok) {
         console.log(response);
         return;
       }
 
-      const json = await response.json();
       for (const r of json.data) {
         const group = await this.addRepositoryGroup(r.owner.username, r.owner);
         group.addRepository(r.name, r);
@@ -93,17 +112,12 @@ export class GiteaProvider extends MultiGroupProvider {
       return repositoryGroup;
     }
 
-    const fetchOptions = {
-      headers: this.headers
-      //   accept: "application/json"
-    };
-
     let clazz;
     let result;
 
     const f = async type => {
       clazz = type === "users" ? GiteaUser : GiteaOrganization;
-      result = await fetch(new URL(join(type, name), this.api), fetchOptions);
+      result = await this.fetch(join(type, name));
     };
 
     await f(options && options.email ? "users" : "orgs");

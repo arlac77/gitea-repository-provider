@@ -1,6 +1,11 @@
 import test from "ava";
-import { assertRepo } from "repository-provider-test-support";
+import {
+  assertRepo,
+  createMessageDestination
+} from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
+
+const messageDestination = createMessageDestination().messageDestination;
 
 const owner1 = {
   name: "markus",
@@ -32,12 +37,13 @@ const repoFixtures = {
     fullName: "markus/Omnia",
     owner: owner1
   },
-  "https://mfelten.dynv6.net/services/git/github-mirror/gitea-repository-provider.git": {
-    provider: GiteaProvider,
-    fullName: "github-mirror/gitea-repository-provider",
-    owner: owner6,
-    isArchived: false
-  },
+  "https://mfelten.dynv6.net/services/git/github-mirror/gitea-repository-provider.git":
+    {
+      provider: GiteaProvider,
+      fullName: "github-mirror/gitea-repository-provider",
+      owner: owner6,
+      isArchived: false
+    },
   "https://mfelten.dynv6.net/services/git/markus/de.mfelten.archlinux.git": {
     provider: GiteaProvider,
     fullName: "markus/de.mfelten.archlinux",
@@ -77,7 +83,10 @@ const repoFixtures = {
 test("locate repository several", async t => {
   t.plan(42);
 
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize(
+    { messageDestination },
+    process.env
+  );
 
   for (const [name, repoFixture] of Object.entries(repoFixtures)) {
     const repository = await provider.repository(name);

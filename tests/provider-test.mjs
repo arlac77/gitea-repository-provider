@@ -1,6 +1,11 @@
 import test from "ava";
-import { providerTest } from "repository-provider-test-support";
+import {
+  providerTest,
+  createMessageDestination
+} from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
+
+const messageDestination = createMessageDestination().messageDestination;
 
 test("factory name", t => t.is(GiteaProvider.name, "gitea"));
 
@@ -29,10 +34,13 @@ test("provider constructor", t => {
 });
 
 test("initialize", t => {
-  let provider = GiteaProvider.initialize(undefined, {
-    GITEA_TOKEN: "123456",
-    GITEA_API: "http://mydomain.com/gitea/api/v1"
-  });
+  let provider = GiteaProvider.initialize(
+    { messageDestination },
+    {
+      GITEA_TOKEN: "123456",
+      GITEA_API: "http://mydomain.com/gitea/api/v1"
+    }
+  );
   t.is(provider.name, "gitea");
   t.is(provider.api, "http://mydomain.com/gitea/api/v1/");
   t.deepEqual(provider.repositoryBases, [
@@ -41,8 +49,11 @@ test("initialize", t => {
   ]);
   t.is(provider.token, "123456");
 
-  provider = GiteaProvider.initialize(undefined, {
-    GITEA_TOKEN: "123456"
-  });
+  provider = GiteaProvider.initialize(
+    { messageDestination },
+    {
+      GITEA_TOKEN: "123456"
+    }
+  );
   t.is(provider, undefined);
 });

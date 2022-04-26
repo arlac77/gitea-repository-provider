@@ -1,9 +1,12 @@
 import test from "ava";
 import {
   assertRepo,
-  repositoryListTest
+  repositoryListTest,
+  createMessageDestination
 } from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
+
+const messageDestination = createMessageDestination().messageDestination;
 
 const repoFixtures = {
   "": undefined,
@@ -42,7 +45,10 @@ const repoFixtures = {
 };
 
 test("locate repository several", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize(
+    { messageDestination },
+    process.env
+  );
 
   t.plan(25);
 
@@ -52,7 +58,7 @@ test("locate repository several", async t => {
   }
 });
 
-const provider = GiteaProvider.initialize(undefined, process.env);
+const provider = GiteaProvider.initialize({ messageDestination }, process.env);
 const fullResult = {
   "markus/Omnia": {
     name: "Omnia"

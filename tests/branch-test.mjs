@@ -1,6 +1,8 @@
 import test from "ava";
-import { assertCommit } from "repository-provider-test-support";
+import { assertCommit, createMessageDestination } from "repository-provider-test-support";
 import GiteaProvider from "gitea-repository-provider";
+
+const messageDestination = createMessageDestination().messageDestination;
 
 const entryFixtures = {
   ".gitignore": { startsWith: "out" },
@@ -33,7 +35,7 @@ async function checkEntry(t, entry, fixture) {
 }
 
 test("branch list entries", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize( {messageDestination}, process.env);
   const branch = await provider.branch("markus/Omnia");
 
   t.plan(Object.keys(entryFixtures).length + 2);
@@ -48,7 +50,7 @@ test("branch list entries", async t => {
 });
 
 test("branch list entries filtered", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize({messageDestination}, process.env);
   const branch = await provider.branch("markus/Omnia");
 
   t.plan(1);
@@ -59,7 +61,7 @@ test("branch list entries filtered", async t => {
 });
 
 test("branch entry master", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize({messageDestination}, process.env);
   const branch = await provider.branch("markus/Omnia");
 
   const entry = await branch.entry("Makefile");
@@ -67,7 +69,7 @@ test("branch entry master", async t => {
 });
 
 test("branch entry none master", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize({messageDestination}, process.env);
   const branch = await provider.branch(
     "markus/sync-test-repository#pr-source-1"
   );
@@ -80,7 +82,7 @@ test("branch entry none master", async t => {
 });
 
 test.skip("branch commmit", async t => {
-  const provider = GiteaProvider.initialize(undefined, process.env);
+  const provider = GiteaProvider.initialize({messageDestination}, process.env);
 
   await assertCommit(
     t,

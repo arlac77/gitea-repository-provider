@@ -21,18 +21,10 @@ export class GiteaBranch extends Branch {
   }
 
   async *entries(patterns) {
-    const url = new URL(
+    const { json } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "git/trees", await this.refId()) +
-        "?recursive=true",
-      this.provider.api
+        "?recursive=true"
     );
-
-    const result = await fetch(url, {
-      headers: this.provider.headers,
-      accept: "application/json"
-    });
-
-    const json = await result.json();
 
     for (const entry of matcher(json.tree, patterns, {
       name: "path"
@@ -47,11 +39,8 @@ export class GiteaBranch extends Branch {
 
   async removeEntries(entries) {
     for await (const entry of entries) {
-      await fetch(
-        new URL(
-          `/repos/${this.repository.fullName}/contents/${entry.name}`,
-          this.provider.api
-        ),
+      await this.provider.fetch(
+        `/repos/${this.repository.fullName}/contents/${entry.name}`,
         {
           method: "DELETE",
           body: JSON.stringify({ branch: this.name, message: "", sha: "" })
@@ -61,16 +50,11 @@ export class GiteaBranch extends Branch {
   }
 
   async sha(path) {
-    const result = await fetch(
-      new URL(
-        join("repos", this.repository.fullName, "contents", path) +
-          "#" +
-          this.name,
-        this.provider.api
-      )
+    const { json } = await this.provider.fetchJSON(
+      join("repos", this.repository.fullName, "contents", path) +
+        "#" +
+        this.name
     );
-
-    const json = await result.json();
 
     return json.sha;
   }
@@ -89,22 +73,13 @@ export class GiteaBranch extends Branch {
       sha: await this.sha(entry.name)
     };
 
-    const result = await fetch(
-      new URL(
-        join("repos", this.repository.fullName, "contents", entry.name),
-        this.provider.api
-      ),
+    const { json } = await this.provider.fetchJSON(
+      join("repos", this.repository.fullName, "contents", entry.name),
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...this.provider.headers
-        },
         body: JSON.stringify(data)
       }
     );
-  
-    const json = await result.json();
 
     entry.sha = json.sha;
     return entry;
@@ -123,22 +98,15 @@ export class GiteaBranch extends Branch {
     );
 
     const data = updates;
-    const result = await fetch(
-      new URL(
-        join("repos", this.repository.fullName, "git/trees/", updates.sha),
-        this.provider.api
-      ),
+    const { json } = await this.provider.fetchJSON(
+      join("repos", this.repository.fullName, "git/trees/", updates.sha),
       {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          ...this.provider.headers
-        },
         body: JSON.stringify(data)
       }
     );
 
-    return result.json;
+    return json;
   }
 }
 
@@ -157,25 +125,19 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
     return this.branch.provider;
   }
 
-  get buffer()
-  {
+  get buffer() {
     return this.getBuffer();
   }
 
   async getBuffer() {
-    const url = new URL(
-      join(
-        "repos",
-        this.branch.repository.fullName,
-        "contents",
-        this.name + "?ref=" + this.branch.name
-      ),
-      this.provider.api
+    const url = join(
+      "repos",
+      this.branch.repository.fullName,
+      "contents",
+      this.name + "?ref=" + this.branch.name
     );
 
-    const result = await fetch(url, {
-      headers: this.provider.headers
-    });
+    const result = await this.provider.fetch(url);
 
     const stream = await result.body;
     const chunks = [];
@@ -205,20 +167,18 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
     return this.branch.provider;
   }
 
-  get readStream()
-  {
+  get readStream() {
     return this.getReadStream();
   }
 
   async getReadStream() {
-    const url = new URL(
-      join("repos", this.branch.repository.fullName, "raw", this.name),
-      this.provider.api
+    const url = join(
+      "repos",
+      this.branch.repository.fullName,
+      "raw",
+      this.name
     );
-
-    const result = await fetch(url, {
-      headers: this.provider.headers
-    });
+    const result = await this.provider.fetch(url);
 
     return await result.body;
   }
