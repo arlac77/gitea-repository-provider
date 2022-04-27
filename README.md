@@ -32,7 +32,6 @@ repository provider for gitea
     *   [Parameters](#parameters-3)
 *   [GiteaOrganization](#giteaorganization)
 *   [GiteaProvider](#giteaprovider)
-    *   [headers](#headers)
     *   [repositoryBases](#repositorybases)
     *   [name](#name)
     *   [instanceIdentifier](#instanceidentifier)
@@ -106,12 +105,6 @@ Known environment variables:
 
 *   GITEA_TOKEN api token
 *   GITEA_API api url
-
-### headers
-
-Fetch headers.
-
-Returns **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** suitable as fetch headers
 
 ### repositoryBases
 
