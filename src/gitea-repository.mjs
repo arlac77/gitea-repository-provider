@@ -46,13 +46,12 @@ export class GiteaRepository extends Repository {
     };
   }
 
-  async fetch(path, options) {
-    return await this.provider.fetch(join("repos", this.fullName, path), {
-      headers: {
-        "content-type": "application/json"
-      },
-      ...options
-    });
+  fetch(path, ...args) {
+    return this.provider.fetch(join("repos", this.fullName, path),...args);
+  }
+
+  fetchJSON(path, ...args) {
+    return this.provider.fetchJSON(join("repos", this.fullName, path), ...args);
   }
 
   /**
@@ -61,6 +60,11 @@ export class GiteaRepository extends Repository {
   async update() {
     return this.fetch("", {
       method: "PATCH",
+
+      headers: {
+        "content-type": "application/json"
+      },
+
       body: JSON.stringify(
         mapAttributesInverse(
           optionJSON(this, undefined, this.constructor.writableAttributes),
@@ -71,19 +75,15 @@ export class GiteaRepository extends Repository {
   }
 
   async initializeBranches() {
-    const result = await this.fetch("branches");
-
-    if (!result.ok) {
-      console.log(result);
-      return;
-    }
-
-    for (const bd of await result.json()) {
+    const { json } = await this.fetchJSON("branches");
+    for (const bd of json) {
       this.addBranch(bd.name, bd);
     }
   }
 
   async createBranch(name, from, options) {
+    await this.initializeBranches();
+
     const branch = this._branches.get(name);
     if (branch) {
       return branch;
@@ -97,27 +97,18 @@ export class GiteaRepository extends Repository {
       body.old_branch_name = from.name;
     }
 
-    const result = await this.fetch("branches", {
+    const { json } = await this.fetchJSON("branches", {
       method: "POST",
       body: JSON.stringify(body)
     });
 
-    if (result.ok) {
-      return this.addBranch(name, await result.json());
-    }
-
-    throw result;
+    return this.addBranch(name, json);
   }
 
   async initializeHooks() {
-    const result = await this.fetch("hooks");
+    const { json } = await this.fetchJSON("hooks");
 
-    if (!result.ok) {
-      console.log(result);
-      return;
-    }
-
-    for (const h of await result.json()) {
+    for (const h of json) {
       this.addHook(
         new this.hookClass(this, h.id, new Set(h.events), {
           ...h,
@@ -128,14 +119,13 @@ export class GiteaRepository extends Repository {
   }
 
   async refId(ref) {
-    const result = await this.fetch(`git/${ref}`);
-    const data = await result.json();
+    const { json } = await this.fetchJSON(`git/${ref}`);
 
-    if (Array.isArray(data)) {
-      return data[0].object.sha;
+    if (Array.isArray(json)) {
+      return json[0].object.sha;
     }
 
-    return data.object.sha;
+    return json.object.sha;
   }
 
   get branchClass() {

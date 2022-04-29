@@ -44,14 +44,8 @@ export class GiteaPullRequest extends PullRequest {
     const getBranch = async u =>
       provider.branch([u.repo.full_name, u.ref].join("#"));
 
-    const result = await respository.fetch(`pulls?state=${state}`);
+    const { json } = await respository.fetchJSON(`pulls?state=${state}`);
 
-    if (!result.ok) {
-      console.log(result);
-      return;
-    }
-
-    const json = await result.json();
     for (const p of json) {
       const source = await getBranch(p.head);
       if (filter.source && !source.equals(filter.source)) {

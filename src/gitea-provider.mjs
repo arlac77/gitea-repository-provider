@@ -55,7 +55,7 @@ export class GiteaProvider extends MultiGroupProvider {
     };
   }
 
-  fetch(url, options = {}, responseHandler) {
+  fetch(url, options = {}, responseHandler, actions) {
     return stateActionHandler(
       fetch,
       new URL(url, this.api),
@@ -67,12 +67,12 @@ export class GiteaProvider extends MultiGroupProvider {
         }
       },
       responseHandler,
-      undefined,
+      actions,
       (url, ...args) => this.trace(url.toString(), ...args)
     );
   }
 
-  fetchJSON(url, options) {
+  fetchJSON(url, options, actions) {
     return this.fetch(
       url,
       {
@@ -83,7 +83,8 @@ export class GiteaProvider extends MultiGroupProvider {
       },
       async response => {
         return { response, json: await response.json() };
-      }
+      },
+      actions
     );
   }
 
