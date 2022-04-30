@@ -2,12 +2,12 @@
 [![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![minified size](https://badgen.net/bundlephobia/min/gitea-repository-provider)](https://bundlephobia.com/result?p=gitea-repository-provider)
 [![downloads](http://img.shields.io/npm/dm/gitea-repository-provider.svg?style=flat-square)](https://npmjs.org/package/gitea-repository-provider)
-[![GitHub Issues](https://img.shields.io/github/issues/arlac77/gitea-repository-provider.svg?style=flat-square)](https://github.com/arlac77/gitea-repository-provider/issues)
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Farlac77%2Fgitea-repository-provider%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/arlac77/gitea-repository-provider/goto)
+[![GitHub Issues](https://img.shields.io/github/issues/gitea-repository-provider/gitea-repository-provider.svg?style=flat-square)](https://github.com/gitea-repository-provider/gitea-repository-provider/issues)
+[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fgitea-repository-provider%2Fgitea-repository-provider%2Fbadge\&style=flat)](https://actions-badge.atrox.dev/gitea-repository-provider/gitea-repository-provider/goto)
 [![Styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Known Vulnerabilities](https://snyk.io/test/github/arlac77/gitea-repository-provider/badge.svg)](https://snyk.io/test/github/arlac77/gitea-repository-provider)
-[![Coverage Status](https://coveralls.io/repos/arlac77/gitea-repository-provider/badge.svg)](https://coveralls.io/github/arlac77/gitea-repository-provider)
+[![Known Vulnerabilities](https://snyk.io/test/github/gitea-repository-provider/gitea-repository-provider/badge.svg)](https://snyk.io/test/github/gitea-repository-provider/gitea-repository-provider)
+[![Coverage Status](https://coveralls.io/repos/gitea-repository-provider/gitea-repository-provider/badge.svg)](https://coveralls.io/github/gitea-repository-provider/gitea-repository-provider)
 
 # gitea-repository-provider
 
