@@ -99,43 +99,41 @@ export class GiteaProvider extends MultiGroupProvider {
       }
 
       for (const r of json.data) {
-        const group = await this.addRepositoryGroup(r.owner.username, r.owner);
-        group.addRepository(r.name, r);
+        (await this.addRepositoryGroup(r.owner.username, r.owner)).addRepository(r.name, r);
       }
 
       next = getHeaderLink(response.headers);
     } while (next);
   }
 
+/*
   async addRepositoryGroup(name, options) {
-    let repositoryGroup = this._repositoryGroups.get(name);
+    let repositoryGroup = await this.repositoryGroup(name);
     if (repositoryGroup) {
       return repositoryGroup;
     }
 
-    let clazz;
-    let result;
+    let clazz,r;
 
-    const f = async type => {
-      clazz = type === "users" ? GiteaUser : GiteaOrganization;
-      result = await this.fetch(join(type, name));
+    const f = async isUser => {
+      clazz = isUser ? GiteaUser : GiteaOrganization;
+      r = await this.fetchJSON(join(isUser ? "users" : "orgs", name));
     };
 
-    await f(options && options.email ? "users" : "orgs");
+    await f(options && options.email);
 
-    if (!result.ok) {
-      await f(clazz === GiteaUser ? "users" : "orgs");
+    if (!r.result.ok) {
+      await f(clazz === GiteaUser);
     }
 
-    if (!result.ok) {
-      console.log(result);
+    if (!r.result.ok) {
+      console.log(r.result);
       return;
     }
 
-    repositoryGroup = new clazz(this, name, await result.json());
-    this._repositoryGroups.set(repositoryGroup.name, repositoryGroup);
-    return repositoryGroup;
+    return new clazz(this, name, await r.json);
   }
+*/
 
   /**
    * All possible base urls.
