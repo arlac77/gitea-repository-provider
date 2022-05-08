@@ -102,7 +102,5 @@ export class GiteaPullRequest extends PullRequest {
 
   async decline() {}
 
-  async _write() {}
-
   async _merge(method) {}
 }
