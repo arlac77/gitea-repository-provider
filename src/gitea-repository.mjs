@@ -82,9 +82,8 @@ export class GiteaRepository extends Repository {
   }
 
   async createBranch(name, from, options) {
-    await this.initializeBranches();
+    const branch = await super.branch(name);
 
-    const branch = this._branches.get(name);
     if (branch) {
       return branch;
     }
