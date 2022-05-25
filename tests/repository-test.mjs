@@ -81,7 +81,7 @@ const repoFixtures = {
 };
 
 test("locate repository several", async t => {
-  t.plan(42);
+  t.plan(38 /*42*/);
 
   const provider = GiteaProvider.initialize(
     { messageDestination },
