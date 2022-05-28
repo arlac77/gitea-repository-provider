@@ -46,12 +46,12 @@ export class GiteaRepository extends Repository {
     };
   }
 
-  fetch(path, ...args) {
-    return this.provider.fetch(join("repos", this.fullName, path),...args);
+  fetch(path, options) {
+    return this.provider.fetch(join("repos", this.fullName, path), options);
   }
 
-  fetchJSON(path, ...args) {
-    return this.provider.fetchJSON(join("repos", this.fullName, path), ...args);
+  fetchJSON(path, options) {
+    return this.provider.fetchJSON(join("repos", this.fullName, path), options);
   }
 
   /**
@@ -108,10 +108,10 @@ export class GiteaRepository extends Repository {
     const { json } = await this.fetchJSON("hooks");
 
     for (const h of json) {
-      this.addHook( h.id, {
-          ...h,
-          ...h.config
-        });
+      this.addHook(h.id, {
+        ...h,
+        ...h.config
+      });
     }
   }
 

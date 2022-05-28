@@ -55,7 +55,8 @@ export class GiteaProvider extends MultiGroupProvider {
     };
   }
 
-  fetch(url, options = {}, responseHandler, actions) {
+  fetch(url, options = {}) {
+    options.reporter = (url, ...args) => this.trace(url.toString(), ...args);
     return stateActionHandler(
       fetch,
       new URL(url, this.api),
@@ -65,26 +66,22 @@ export class GiteaProvider extends MultiGroupProvider {
           authorization: `token ${this.token}`,
           ...options.headers
         }
-      },
-      responseHandler,
-      actions,
-      (url, ...args) => this.trace(url.toString(), ...args)
+      }      
     );
   }
 
-  fetchJSON(url, options, actions) {
+  fetchJSON(url, options) {
     return this.fetch(
       url,
       {
         headers: {
           "Content-Type": "application/json"
         },
+        postprocess: async response => {
+          return { response, json: await response.json() };
+        },
         ...options
-      },
-      async response => {
-        return { response, json: await response.json() };
-      },
-      actions
+      }
     );
   }
 
