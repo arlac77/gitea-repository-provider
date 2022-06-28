@@ -22,7 +22,7 @@ export class GiteaBranch extends Branch {
 
   async *entries(patterns) {
     const { json } = await this.provider.fetchJSON(
-      join("repos", this.repository.fullName, "git/trees", await this.refId()) +
+      join("repos", this.repository.fullName, "git/trees", await this.refId) +
         "?recursive=true"
     );
 
