@@ -73,7 +73,8 @@ const repoFixtures = {
           "pull_request_review_comment",
           "pull_request_sync",
           "repository",
-          "release"
+          "release",
+          "package"
         ])
       }
     ]

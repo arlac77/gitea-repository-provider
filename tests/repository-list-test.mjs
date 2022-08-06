@@ -33,7 +33,8 @@ const repoFixtures = {
     branch: "master",
     fullName: "markus/de.mfelten.archlinux",
     description: "infrastructure build on arch linux (arm)",
-    provider: GiteaProvider
+    provider: GiteaProvider,
+    isFork: false
   },
 
   "arlac77/aggregation-repository-provider": undefined
@@ -50,7 +51,7 @@ test("locate repository several", async t => {
     process.env
   );
 
-  t.plan(25);
+  t.plan(27);
 
   for (const [name, repoFixture] of Object.entries(repoFixtures)) {
     const repository = await provider.repository(name);

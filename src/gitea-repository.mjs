@@ -6,6 +6,7 @@ import { GiteaBranch } from "./gitea-branch.mjs";
 export class GiteaRepository extends Repository {
   static get attributeMapping() {
     return {
+      fork: "isFork",
       archived: "isArchived",
       template: "isTemplate",
       private: "isPrivate",
