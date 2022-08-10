@@ -117,7 +117,7 @@ export class GiteaProvider extends MultiGroupProvider {
       r = await this.fetchJSON(join(isUser ? "users" : "orgs", name));
     };
 
-    await f(options && options.email);
+    await f(options?.email);
 
     if (!r.result.ok) {
       await f(clazz === GiteaUser);
