@@ -51,8 +51,8 @@ Writes content into the branch.
 
 #### Parameters
 
-*   `entry` **ConentEntry** 
-*   `message` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+*   `entry` **ConentEntry**&#x20;
+*   `message` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<Entry>** written content with sha values set
 
@@ -64,9 +64,9 @@ Commit entries.
 
 *   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)** commit message
 *   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>** content to be commited
-*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+*   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**&#x20;
 
-Returns **Commit** 
+Returns **Commit**&#x20;
 
 ## GiteaContentEntry
 
@@ -76,9 +76,9 @@ works for all branches
 
 ### Parameters
 
-*   `name`  
-*   `mode`  
-*   `branch`  
+*   `name` &#x20;
+*   `mode` &#x20;
+*   `branch` &#x20;
 
 ## GiteaMasterOnlyContentEntry
 
@@ -88,9 +88,9 @@ only works for master branch
 
 ### Parameters
 
-*   `name`  
-*   `mode`  
-*   `branch`  
+*   `name` &#x20;
+*   `mode` &#x20;
+*   `branch` &#x20;
 
 ## GiteaOrganization
 
@@ -103,8 +103,8 @@ only works for master branch
 Gitea provider.
 Known environment variables:
 
-*   GITEA_TOKEN api token
-*   GITEA_API api url
+*   GITEA\_TOKEN api token
+*   GITEA\_API api url
 
 ### repositoryBases
 
@@ -133,14 +133,14 @@ Result will be filtered by source branch, destination branch and states.
 
 #### Parameters
 
-*   `respository` **Repository** 
+*   `respository` **Repository**&#x20;
 *   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
-    *   `filter.source` **Branch?** 
-    *   `filter.destination` **Branch?** 
-    *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?** 
+    *   `filter.source` **Branch?**&#x20;
+    *   `filter.destination` **Branch?**&#x20;
+    *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?**&#x20;
 
-Returns **Iterator\<PullRequest>** 
+Returns **Iterator\<PullRequest>**&#x20;
 
 ## update
 
