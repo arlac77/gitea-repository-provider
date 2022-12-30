@@ -17,33 +17,23 @@ export class GiteaRepository extends Repository {
   }
 
   static get attributes() {
+    const boolean_attribute = {
+      type: "boolean",
+      default: false,
+      writable: true
+    };
+
     return {
       ...super.attributes,
-      allow_manual_merge: { type: "boolean", default: false, writable: true },
-      allow_merge_commits: { type: "boolean", default: false, writable: true },
-      allow_rebase: { type: "boolean", default: false, writable: true },
-      allow_rebase_explicit: {
-        type: "boolean",
-        default: false,
-        writable: true
-      },
-      allow_squash_merge: { type: "boolean", default: false, writable: true },
-      autodetect_manual_merge: {
-        type: "boolean",
-        default: false,
-        writable: true
-      },
-      ignore_whitespace_conflicts: {
-        type: "boolean",
-        default: false,
-        writable: true
-      },
-      default_delete_branch_after_merge: {
-        type: "boolean",
-        default: false,
-        writable: true
-      },
-      default_merge_style: { type: "string", writable: true }
+      allow_manual_merge: boolean_attribute,
+      allow_merge_commits: boolean_attribute,
+      allow_rebase: boolean_attribute,
+      allow_rebase_explicit: boolean_attribute,
+      allow_squash_merge: boolean_attribute,
+      autodetect_manual_merge: boolean_attribute,
+      ignore_whitespace_conflicts: boolean_attribute,
+      default_delete_branch_after_merge: boolean_attribute,
+      default_merge_style: boolean_attribute
     };
   }
 
