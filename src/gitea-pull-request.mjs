@@ -18,6 +18,12 @@ export class GiteaPullRequest extends PullRequest {
       mergeable: { type: "boolean" }
     };
   }
+  
+  static get attributeMapping() {
+    return {
+      is_locked: "locked",
+    };
+  }
 
   /**
    * List all pull request for a given repo.
