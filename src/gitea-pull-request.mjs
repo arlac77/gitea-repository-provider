@@ -7,13 +7,14 @@ import { join } from "./util.mjs";
  *
  */
 export class GiteaPullRequest extends PullRequest {
-  static get validStates() {
-    return new Set(["OPEN", "CLOSED"]);
-  }
-
   static get attributes() {
     return {
       ...super.attributes,
+      state: {
+        type: "string",
+        values: new Set(["OPEN", "CLOSED"]),
+        writeable: true
+      },
       mergeable: { type: "boolean" }
     };
   }
@@ -34,7 +35,7 @@ export class GiteaPullRequest extends PullRequest {
     let state = "all";
 
     if (filter.states) {
-      for (const s of GiteaPullRequest.validStates)
+      for (const s of this.constructor.attributes.state.values)
         if (filter.states.has(s)) {
           state = s.toLocaleLowerCase();
           break;
@@ -89,7 +90,6 @@ export class GiteaPullRequest extends PullRequest {
         body: JSON.stringify(data)
       }
     );
-
 
     const json = await result.json();
 
