@@ -1,6 +1,5 @@
 import fetch from "node-fetch";
-
-import { PullRequest } from "repository-provider";
+import { PullRequest, boolean_attribute } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -15,7 +14,7 @@ export class GiteaPullRequest extends PullRequest {
         values: new Set(["OPEN", "CLOSED"]),
         writeable: true
       },
-      mergeable: { type: "boolean" }
+      mergeable: boolean_attribute // { type: "boolean" }
     };
   }
   
