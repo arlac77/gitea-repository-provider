@@ -1,5 +1,5 @@
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
-import { Repository } from "repository-provider";
+import { Repository, boolean_attribute } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
@@ -20,11 +20,6 @@ export class GiteaRepository extends Repository {
   }
 
   static get attributes() {
-    const boolean_attribute = {
-      type: "boolean",
-      default: false,
-      writable: true
-    };
 
     return {
       ...super.attributes,
