@@ -3,6 +3,9 @@ import { Repository } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
+/**
+ * @see {https://try.gitea.io/api/swagger#/repository/repoGet}
+ */
 export class GiteaRepository extends Repository {
   static get attributeMapping() {
     return {
@@ -33,7 +36,10 @@ export class GiteaRepository extends Repository {
       autodetect_manual_merge: boolean_attribute,
       ignore_whitespace_conflicts: boolean_attribute,
       default_delete_branch_after_merge: boolean_attribute,
-      default_merge_style: boolean_attribute
+      default_merge_style: boolean_attribute,
+      stars_count: { type: "integer" },
+      ssh_url: { type: "url" },
+      empty: { type: "boolean" }
     };
   }
 
