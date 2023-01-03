@@ -3,12 +3,11 @@ import { stateActionHandler } from "fetch-rate-limit-util";
 import { getHeaderLink } from "fetch-link-util";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 
-import { MultiGroupProvider } from "repository-provider";
+import { MultiGroupProvider, url_attribute } from "repository-provider";
 import { GiteaRepository } from "./gitea-repository.mjs";
 import { GiteaPullRequest } from "./gitea-pull-request.mjs";
 import { GiteaOrganization } from "./gitea-organization.mjs";
 import { GiteaUser } from "./gitea-user.mjs";
-import { join } from "./util.mjs";
 
 /**
  * Gitea provider.
@@ -37,7 +36,7 @@ export class GiteaProvider extends MultiGroupProvider {
       ...super.attributes,
 
       api: {
-        type: "url",
+        ...url_attribute,
         description: "URL of the provider api",
         set: value =>
           value === undefined || value.endsWith("/") ? value : value + "/",

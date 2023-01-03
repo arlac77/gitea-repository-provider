@@ -14,7 +14,7 @@ export class GiteaPullRequest extends PullRequest {
         values: new Set(["OPEN", "CLOSED"]),
         writeable: true
       },
-      mergeable: boolean_attribute // { type: "boolean" }
+      mergeable: boolean_attribute
     };
   }
   
