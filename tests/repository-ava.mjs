@@ -72,6 +72,7 @@ const repoFixtures = {
           "pull_request_review_rejected",
           "pull_request_review_comment",
           "pull_request_sync",
+          "wiki",
           "repository",
           "release",
           "package"
