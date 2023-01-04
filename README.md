@@ -38,7 +38,8 @@ repository provider for gitea
 *   [GiteaPullRequest](#giteapullrequest)
     *   [list](#list)
         *   [Parameters](#parameters-4)
-*   [update](#update)
+*   [GiteaRepository](#gitearepository)
+    *   [update](#update)
 *   [GiteaUser](#giteauser)
 
 ## GiteaBranch
@@ -142,7 +143,13 @@ Result will be filtered by source branch, destination branch and states.
 
 Returns **Iterator\<PullRequest>**&#x20;
 
-## update
+## GiteaRepository
+
+**Extends Repository**
+
+*   **See**: {<https://try.gitea.io/api/swagger#/repository/repoGet}>
+
+### update
 
 <https://try.gitea.io/api/swagger#/repository/repoEdit>
 
