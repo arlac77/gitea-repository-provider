@@ -1,5 +1,5 @@
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
-import { Repository, boolean_attribute, url_attribute } from "repository-provider";
+import { Repository, boolean_attribute, url_attribute, empty_attiribute, count_attribute } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
@@ -32,9 +32,9 @@ export class GiteaRepository extends Repository {
       ignore_whitespace_conflicts: boolean_attribute,
       default_delete_branch_after_merge: boolean_attribute,
       default_merge_style: boolean_attribute,
-      stars_count: { type: "integer" },
+      stars_count: count_attribute,
       ssh_url: url_attribute,
-      empty: { type: "boolean" }
+      empty: empty_attiribute
     };
   }
 
