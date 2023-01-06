@@ -1,4 +1,4 @@
-import { RepositoryGroup } from "repository-provider";
+import { RepositoryGroup, boolean_attribute } from "repository-provider";
 
 /**
  *
@@ -9,7 +9,8 @@ export class GiteaOrganization extends RepositoryGroup {
       ...super.attributes,
       username: { type: "string" },
       location: { type: "string" },
-      visibility: { type: "string" }
+      visibility: { type: "string" },
+      repo_admin_change_team_access: boolean_attribute
     };
   }
 
