@@ -71,7 +71,7 @@ test("branch entry master", async t => {
 test("branch entry none master", async t => {
   const provider = GiteaProvider.initialize({messageDestination}, process.env);
   const branch = await provider.branch(
-    "markus/sync-test-repository#pr-source-1"
+    "markus/sync-test-repository#pr-test/source-1"
   );
 
   const entry = await branch.entry("README.md");
