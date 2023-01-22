@@ -78,7 +78,7 @@ export class GiteaBranch extends Branch {
     const data = {
       message,
       branch: this.name,
-      content: (await entry.getBuffer()).toString("base64"),
+      content: (await entry.buffer).toString("base64"),
       sha: await this.sha(entry.name)
     };
 
