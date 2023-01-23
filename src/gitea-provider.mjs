@@ -83,6 +83,10 @@ export class GiteaProvider extends MultiGroupProvider {
     );
   }
 
+  /**
+   * @see https://try.gitea.io/api/swagger#/repository/repoSearch
+   * @returns 
+   */
   async initializeRepositories() {
     let next = "repos/search?limit=1000";
     do {

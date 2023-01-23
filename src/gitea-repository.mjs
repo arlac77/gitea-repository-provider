@@ -4,7 +4,9 @@ import {
   boolean_attribute,
   url_attribute,
   empty_attiribute,
-  count_attribute
+  count_attribute,
+  size_attribute,
+  language_attribute
 } from "repository-provider";
 import { join } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
@@ -28,6 +30,8 @@ export class GiteaRepository extends Repository {
   static get attributes() {
     return {
       ...super.attributes,
+      size_attribute,
+      language_attribute,
       allow_manual_merge: boolean_attribute,
       allow_merge_commits: boolean_attribute,
       allow_rebase: boolean_attribute,
