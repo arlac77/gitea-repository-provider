@@ -32,6 +32,7 @@ repository provider for gitea
     *   [Parameters](#parameters-3)
 *   [GiteaOrganization](#giteaorganization)
 *   [GiteaProvider](#giteaprovider)
+    *   [initializeRepositories](#initializerepositories)
     *   [repositoryBases](#repositorybases)
     *   [name](#name)
     *   [instanceIdentifier](#instanceidentifier)
@@ -106,6 +107,10 @@ Known environment variables:
 
 *   GITEA\_TOKEN api token
 *   GITEA\_API api url
+
+### initializeRepositories
+
+*   **See**: <https://try.gitea.io/api/swagger#/repository/repoSearch>
 
 ### repositoryBases
 
