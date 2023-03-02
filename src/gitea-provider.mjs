@@ -134,12 +134,17 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 */
 
+  get url()
+  {
+    return this.repositoryBases[0];	
+  }
+  
   /**
    * All possible base urls.
    * @return {string[]} common base urls of all repositories
    */
   get repositoryBases() {
-    return super.repositoryBases.concat([this.api.replace(/api\/v.+$/, "")]);
+    return super.repositoryBases.concat([this.api?.replace(/api\/v.+$/, "")]);
   }
 
   get repositoryClass() {
