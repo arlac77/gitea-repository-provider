@@ -1,4 +1,5 @@
 import { matcher } from "matching-iterator";
+import { streamToUint8Array, streamToString } from "browser-stream-util";
 import {
   BufferContentEntryMixin,
   StreamContentEntryMixin,
@@ -148,15 +149,30 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
 
     const result = await this.provider.fetch(url);
 
-    const stream = await result.body;
-    const chunks = [];
-    for await (const chunk of stream) {
-      chunks.push(chunk);
-    }
-
-    const entry = JSON.parse(Buffer.concat(chunks).toString("utf8"));
-    return Buffer.from(entry.content, "base64");
+    console.log("GiteaContentEntry", await result.body);
+    return streamToUint8Array(await result.body);
   }
+
+
+  async getString()
+  {
+    const url = join(
+      "repos",
+      this.branch.repository.fullName,
+      "contents",
+      this.name + "?ref=" + this.branch.name
+    );
+
+    const result = await this.provider.fetch(url);
+
+    return streamToString (await result.body);
+  }
+
+  get string()
+  {
+    return this.getString();
+  }
+
 }
 
 /**
@@ -191,4 +207,15 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
 
     return await result.body;
   }
+
+  async getString()
+  {
+    return streamToString (await this.getReadStream());
+  }
+
+  get string()
+  {
+    return this.getString();
+  }
 }
+

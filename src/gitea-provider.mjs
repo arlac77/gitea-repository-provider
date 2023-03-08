@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { stateActionHandler } from "fetch-rate-limit-util";
 import { getHeaderLink } from "fetch-link-util";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
@@ -56,7 +55,6 @@ export class GiteaProvider extends MultiGroupProvider {
   fetch(url, options = {}) {
     options.reporter = (url, ...args) => this.trace(url.toString(), ...args);
     return stateActionHandler(
-      fetch,
       new URL(url, this.api),
       {
         ...options,

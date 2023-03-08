@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { PullRequest, boolean_attribute } from "repository-provider";
 import { join } from "./util.mjs";
 
