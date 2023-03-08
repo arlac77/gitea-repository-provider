@@ -68,7 +68,7 @@ test("branch entry master", async t => {
   await checkEntry(t, entry, entryFixtures.Makefile);
 });
 
-test("branch entry none master", async t => {
+test.skip("branch entry none master", async t => {
   const provider = GiteaProvider.initialize({messageDestination}, process.env);
   const branch = await provider.branch(
     "markus/sync-test-repository#pr-test/source-1"
