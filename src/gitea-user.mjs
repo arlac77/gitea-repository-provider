@@ -1,4 +1,4 @@
-import { RepositoryGroup } from "repository-provider";
+import { RepositoryGroup, default_attribute } from "repository-provider";
 
 /**
  *
@@ -7,10 +7,10 @@ export class GiteaUser extends RepositoryGroup {
   static get attributes() {
     return {
       ...super.attributes,
-      login: { type: "string" },
-      email: { type: "string" },
-      username: { type: "string" },
-      language: { type: "string" }
+      login: default_attribute,
+      email: default_attribute,
+      username: default_attribute,
+      language: default_attribute
     };
   }
 

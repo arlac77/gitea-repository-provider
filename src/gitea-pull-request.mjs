@@ -1,4 +1,8 @@
-import { PullRequest, boolean_attribute } from "repository-provider";
+import {
+  PullRequest,
+  boolean_attribute,
+  default_attribute
+} from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -9,17 +13,17 @@ export class GiteaPullRequest extends PullRequest {
     return {
       ...super.attributes,
       state: {
-        type: "string",
+        ...default_attribute,
         values: new Set(["OPEN", "CLOSED"]),
         writeable: true
       },
       mergeable: boolean_attribute
     };
   }
-  
+
   static get attributeMapping() {
     return {
-      is_locked: "locked",
+      is_locked: "locked"
     };
   }
 

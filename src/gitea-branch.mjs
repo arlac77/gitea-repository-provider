@@ -6,7 +6,7 @@ import {
   ContentEntry,
   BaseCollectionEntry
 } from "content-entry";
-import { Branch, boolean_attribute, count_attribute } from "repository-provider";
+import { Branch, boolean_attribute, count_attribute, default_attribute } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -26,7 +26,7 @@ export class GiteaBranch extends Branch {
       user_can_push: boolean_attribute,
       required_approvals: count_attribute,
       enable_status_check: boolean_attribute,
-      effective_branch_protection_name: { type: "string" }
+      effective_branch_protection_name: default_attribute
     };
   }
 
