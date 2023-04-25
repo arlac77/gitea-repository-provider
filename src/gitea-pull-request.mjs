@@ -3,7 +3,7 @@ import {
   boolean_attribute,
   default_attribute
 } from "repository-provider";
-import { join } from "./util.mjs";
+import { join, headers } from "./util.mjs";
 
 /**
  *
@@ -92,7 +92,7 @@ export class GiteaPullRequest extends PullRequest {
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          ...headers,
           ...provider.headers
         },
         body: JSON.stringify(data)

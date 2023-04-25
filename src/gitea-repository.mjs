@@ -8,7 +8,7 @@ import {
   size_attribute,
   language_attribute
 } from "repository-provider";
-import { join } from "./util.mjs";
+import { join, headers } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
 /**
@@ -69,11 +69,7 @@ export class GiteaRepository extends Repository {
   async update() {
     return this.fetch("", {
       method: "PATCH",
-
-      headers: {
-        "content-type": "application/json"
-      },
-
+      headers,
       body: JSON.stringify(
         mapAttributesInverse(
           optionJSON(this, undefined, this.constructor.writableAttributes),

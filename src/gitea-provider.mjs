@@ -7,6 +7,7 @@ import { GiteaRepository } from "./gitea-repository.mjs";
 import { GiteaPullRequest } from "./gitea-pull-request.mjs";
 import { GiteaOrganization } from "./gitea-organization.mjs";
 import { GiteaUser } from "./gitea-user.mjs";
+import { headers } from "./util.mjs";
 
 /**
  * Gitea provider.
@@ -70,9 +71,7 @@ export class GiteaProvider extends MultiGroupProvider {
     return this.fetch(
       url,
       {
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers,
         postprocess: async response => {
           return { response, json: await response.json() };
         },
