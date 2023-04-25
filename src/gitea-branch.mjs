@@ -6,7 +6,12 @@ import {
   ContentEntry,
   BaseCollectionEntry
 } from "content-entry";
-import { Branch, boolean_attribute, count_attribute, default_attribute } from "repository-provider";
+import {
+  Branch,
+  boolean_attribute,
+  count_attribute,
+  default_attribute
+} from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -50,7 +55,7 @@ export class GiteaBranch extends Branch {
   async removeEntries(entries) {
     for await (const entry of entries) {
       await this.provider.fetch(
-        `/repos/${this.repository.fullName}/contents/${entry.name}`,
+        join("repos", this.repository.fullName, "contents", entry.name),
         {
           method: "DELETE",
           body: JSON.stringify({ branch: this.name, message: "", sha: "" })
@@ -153,9 +158,7 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
     return streamToUint8Array(await result.body);
   }
 
-
-  async getString()
-  {
+  async getString() {
     const url = join(
       "repos",
       this.branch.repository.fullName,
@@ -165,14 +168,12 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
 
     const result = await this.provider.fetch(url);
 
-    return streamToString (await result.body);
+    return streamToString(await result.body);
   }
 
-  get string()
-  {
+  get string() {
     return this.getString();
   }
-
 }
 
 /**
@@ -208,14 +209,11 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
     return await result.body;
   }
 
-  async getString()
-  {
-    return streamToString (await this.getReadStream());
+  async getString() {
+    return streamToString(await this.getReadStream());
   }
 
-  get string()
-  {
+  get string() {
     return this.getString();
   }
 }
-
