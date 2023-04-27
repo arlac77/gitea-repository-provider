@@ -9,12 +9,17 @@ import { join, headers } from "./util.mjs";
  *
  */
 export class GiteaPullRequest extends PullRequest {
+  /**
+   * possible states
+   */
+  static states = new Set(["OPEN", "CLOSED"]);
+
   static get attributes() {
     return {
       ...super.attributes,
       state: {
         ...default_attribute,
-        values: new Set(["OPEN", "CLOSED"]),
+        values: this.states,
         writeable: true
       },
       mergeable: boolean_attribute
