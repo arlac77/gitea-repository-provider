@@ -37,6 +37,7 @@ repository provider for gitea
     *   [name](#name)
     *   [instanceIdentifier](#instanceidentifier)
 *   [GiteaPullRequest](#giteapullrequest)
+    *   [states](#states)
     *   [list](#list)
         *   [Parameters](#parameters-4)
 *   [GiteaRepository](#gitearepository)
@@ -131,6 +132,10 @@ Returns **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/G
 ## GiteaPullRequest
 
 **Extends PullRequest**
+
+### states
+
+possible states
 
 ### list
 
