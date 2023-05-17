@@ -40,7 +40,7 @@ export class GiteaPullRequest extends PullRequest {
    * @param {Branch?} filter.source
    * @param {Branch?} filter.destination
    * @param {Set<string>?} filter.states
-   * @return {Iterator<PullRequest>}
+   * @return {AsyncIterator<PullRequest>}
    */
   static async *list(respository, filter = {}) {
     const provider = respository.provider;

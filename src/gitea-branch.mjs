@@ -78,7 +78,7 @@ export class GiteaBranch extends Branch {
    * Writes content into the branch.
    * @param {ConentEntry} entry
    * @param {String} message
-   * @return {Promise<Entry>} written content with sha values set
+   * @return {Promise<ConentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
     const data = {
@@ -104,7 +104,7 @@ export class GiteaBranch extends Branch {
    * Commit entries.
    * @param {string} message commit message
    * @param {ContentEntry[]} entries content to be commited
-   * @param {Object} options
+   * @param {Object} [options]
    * @return {Commit}
    */
   async commit(message, entries, options) {
