@@ -148,7 +148,7 @@ Result will be filtered by source branch, destination branch and states.
 *   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
     *   `filter.source` **Branch?**&#x20;
-    *   `filter.destination` **Branch?**&#x20;
+    *   `filter.destinations` **Branch?**&#x20;
     *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?**&#x20;
 
 Returns **AsyncIterator\<PullRequest>**&#x20;
