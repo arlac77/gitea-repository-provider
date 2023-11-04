@@ -17,6 +17,9 @@ jobs:
       - run: rm package-lock.json
       - run: npm install
       - run: npm test
+        env:
+          GITEA_API: ${{ secrets.GITEA_API }}
+          GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
       - uses: gr2m/create-or-update-pull-request-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
