@@ -15,8 +15,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: rm package-lock.json
-      - run: npm install
-      - run: npm test
+      - run: npm install-test
         env:
           GITEA_API: ${{ secrets.GITEA_API }}
           GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
