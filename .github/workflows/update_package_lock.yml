@@ -35,3 +35,4 @@ jobs:
           branch: package-lock
           labels: npm
           commit-message: 'chore(deps): lock'
+      - run: npx playwright install
