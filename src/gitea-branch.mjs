@@ -88,13 +88,17 @@ export class GiteaBranch extends Branch {
       sha: await this.sha(entry.name)
     };
 
-    const { json } = await this.provider.fetchJSON(
+    const { json, response } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "contents", entry.name),
       {
         method: "PUT",
         body: JSON.stringify(data)
       }
     );
+
+    if(!response.ok) {
+      throw new Error(response.statusText);
+    }
 
     entry.sha = json.sha;
     return entry;
