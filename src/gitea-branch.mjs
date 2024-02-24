@@ -78,7 +78,7 @@ export class GiteaBranch extends Branch {
   /**
    * Writes content into the branch.
    * @param {ContentEntry} entry
-   * @param {String} message
+   * @param {string} message
    * @return {Promise<ContentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
