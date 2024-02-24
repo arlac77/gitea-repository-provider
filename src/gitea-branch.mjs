@@ -8,7 +8,7 @@ import {
 } from "content-entry";
 import {
   Branch,
-  Commit,
+  CommitResult,
   boolean_attribute,
   count_attribute,
   default_attribute
@@ -110,7 +110,7 @@ export class GiteaBranch extends Branch {
    * @param {string} message commit message
    * @param {ContentEntry[]} entries content to be commited
    * @param {Object} [options]
-   * @return {Promise<Commit>}
+   * @return {Promise<CommitResult>}
    */
   async commit(message, entries, options) {
     const updates = await Promise.all(
@@ -218,6 +218,7 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
     return streamToString(await this.getReadStream());
   }
 
+  // @ts-ignore
   get string() {
     return this.getString();
   }

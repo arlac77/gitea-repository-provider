@@ -12,7 +12,7 @@ import { join, headers } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 
 /**
- * @see {https://try.gitea.io/api/swagger#/repository/repoGet}
+ * @see https://try.gitea.io/api/swagger#/repository/repoGet
  */
 export class GiteaRepository extends Repository {
   static get attributeMapping() {
