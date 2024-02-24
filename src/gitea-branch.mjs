@@ -8,6 +8,7 @@ import {
 } from "content-entry";
 import {
   Branch,
+  Commit,
   boolean_attribute,
   count_attribute,
   default_attribute
@@ -76,9 +77,9 @@ export class GiteaBranch extends Branch {
 
   /**
    * Writes content into the branch.
-   * @param {ConentEntry} entry
+   * @param {ContentEntry} entry
    * @param {String} message
-   * @return {Promise<ConentEntry>} written content with sha values set
+   * @return {Promise<ContentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
     const data = {
@@ -109,7 +110,7 @@ export class GiteaBranch extends Branch {
    * @param {string} message commit message
    * @param {ContentEntry[]} entries content to be commited
    * @param {Object} [options]
-   * @return {Commit}
+   * @return {Promise<Commit>}
    */
   async commit(message, entries, options) {
     const updates = await Promise.all(

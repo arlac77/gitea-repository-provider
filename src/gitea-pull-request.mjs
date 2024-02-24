@@ -1,5 +1,7 @@
 import {
   PullRequest,
+  Repository,
+  Branch,
   boolean_attribute,
   default_attribute
 } from "repository-provider";
@@ -38,7 +40,7 @@ export class GiteaPullRequest extends PullRequest {
    * @param {Repository} respository
    * @param {Object} filter
    * @param {Branch} [filter.source]
-   * @param {Branch} [filter.destinations]
+   * @param {Branch} [filter.destination]
    * @param {Set<string>} [filter.states]
    * @return {AsyncIterator<PullRequest>}
    */
