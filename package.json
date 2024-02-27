@@ -5,13 +5,13 @@
     "access": "public",
     "provenance": true
   },
+  "types": "./types/gitea-provider.d.mts",
   "exports": {
     ".": {
       "default": "./src/gitea-provider.mjs",
       "types": "./types/gitea-provider.d.mts"
     }
   },
-  "types": "./types/gitea-provider.d.mts",
   "description": "repository provider for gitea",
   "keywords": [
     "git",
