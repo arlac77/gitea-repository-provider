@@ -55,10 +55,10 @@ Writes content into the branch.
 
 #### Parameters
 
-*   `entry` **ConentEntry**&#x20;
-*   `message` **[String](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
+*   `entry` **ContentEntry**&#x20;
+*   `message` **[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)**&#x20;
 
-Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<ConentEntry>** written content with sha values set
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<ContentEntry>** written content with sha values set
 
 ### commit
 
@@ -70,7 +70,7 @@ Commit entries.
 *   `entries` **[Array](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array)\<ContentEntry>** content to be commited
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
-Returns **Commit**&#x20;
+Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<CommitResult>**&#x20;
 
 ## GiteaContentEntry
 
@@ -149,16 +149,16 @@ Result will be filtered by source branch, destination branch and states.
 *   `filter` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)**  (optional, default `{}`)
 
     *   `filter.source` **Branch?**&#x20;
-    *   `filter.destinations` **Branch?**&#x20;
+    *   `filter.destination` **Branch?**&#x20;
     *   `filter.states` **[Set](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Set)<[string](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String)>?**&#x20;
 
-Returns **AsyncIterator\<PullRequest>**&#x20;
+Returns **AsyncIterable\<PullRequest>**&#x20;
 
 ## GiteaRepository
 
 **Extends Repository**
 
-*   **See**: {<https://try.gitea.io/api/swagger#/repository/repoGet}>
+*   **See**: <https://try.gitea.io/api/swagger#/repository/repoGet>
 
 ### update
 
