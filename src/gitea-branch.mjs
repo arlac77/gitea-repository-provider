@@ -4,7 +4,7 @@ import {
   BufferContentEntryMixin,
   StreamContentEntryMixin,
   ContentEntry,
-  BaseCollectionEntry
+  CollectionEntry
 } from "content-entry";
 import {
   Branch,
@@ -46,7 +46,7 @@ export class GiteaBranch extends Branch {
       name: "path"
     })) {
       yield entry.type === "tree"
-        ? new BaseCollectionEntry(entry.path)
+        ? new CollectionEntry(entry.path)
         : new (this.name === "master"
             ? GiteaMasterOnlyContentEntry
             : GiteaContentEntry)(entry.path, parseInt(entry.mode, 8), this);
