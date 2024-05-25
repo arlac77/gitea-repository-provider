@@ -82,18 +82,20 @@ export class GiteaBranch extends Branch {
    * @return {Promise<ContentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
-    const data = {
-      message,
-      branch: this.name,
-      content: (await entry.buffer).toString("base64"),
-      sha: await this.sha(entry.name)
-    };
+    const buffer = await entry.buffer;
+    const decoder = new TextDecoder('utf8');
+    const content = btoa(decoder.decode(buffer));
 
     const { json, response } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "contents", entry.name),
       {
         method: "PUT",
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          message,
+          branch: this.name,
+          content,
+          sha: await this.sha(entry.name)
+        })
       }
     );
 
@@ -117,16 +119,21 @@ export class GiteaBranch extends Branch {
       entries.map(entry => this.writeEntry(entry, message))
     );
 
-    const data = updates;
-    const { json } = await this.provider.fetchJSON(
+    //console.log(updates);
+
+    /*
+    const { json, response } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "git/trees/", updates.sha),
       {
         method: "PUT",
-        body: JSON.stringify(data)
+        body: JSON.stringify(updates)
       }
-    );
+    );*/
 
-    return json;
+    // TODO hack
+    return {
+      ref: `refs/heads/${this.name}`
+    };
   }
 }
 
