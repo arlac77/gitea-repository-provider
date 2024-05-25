@@ -6,7 +6,8 @@ import {
   empty_attiribute,
   count_attribute,
   size_attribute,
-  language_attribute
+  language_attribute,
+  default_attribute
 } from "repository-provider";
 import { join, headers } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
@@ -51,7 +52,13 @@ export class GiteaRepository extends Repository {
       has_projects: boolean_attribute,
       has_pull_requests: boolean_attribute,
       has_wiki: boolean_attribute,
-      forks_count: count_attribute
+      forks_count: count_attribute,
+
+      // creation only ?
+      auto_init: boolean_attribute,
+      license: default_attribute,
+      trust_model: default_attribute,
+      readme: default_attribute
     };
   }
 
