@@ -83,7 +83,7 @@ export class GiteaBranch extends Branch {
    */
   async writeEntry(entry, message) {
     const buffer = await entry.buffer;
-    const decoder = new TextDecoder('utf8');
+    const decoder = new TextDecoder("utf8");
     const content = btoa(decoder.decode(buffer));
 
     const { json, response } = await this.provider.fetchJSON(
@@ -99,7 +99,7 @@ export class GiteaBranch extends Branch {
       }
     );
 
-    if(!response.ok) {
+    if (!response.ok) {
       throw new Error(response.statusText);
     }
 
@@ -118,17 +118,6 @@ export class GiteaBranch extends Branch {
     const updates = await Promise.all(
       entries.map(entry => this.writeEntry(entry, message))
     );
-
-    //console.log(updates);
-
-    /*
-    const { json, response } = await this.provider.fetchJSON(
-      join("repos", this.repository.fullName, "git/trees/", updates.sha),
-      {
-        method: "PUT",
-        body: JSON.stringify(updates)
-      }
-    );*/
 
     // TODO hack
     return {
@@ -165,9 +154,8 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
     );
 
     const result = await this.provider.fetch(url);
-
-    console.log("GiteaContentEntry", await result.body);
-    return streamToUint8Array(await result.body);
+    const body = await result.json();
+    return Buffer.from(body.content, "base64");
   }
 
   async getString() {
@@ -179,8 +167,8 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
     );
 
     const result = await this.provider.fetch(url);
-
-    return streamToString(await result.body);
+    const body = await result.json();
+    return Buffer.from(body.content, "base64").toString();
   }
 
   get string() {
@@ -216,6 +204,7 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
       "raw",
       this.name
     );
+
     const result = await this.provider.fetch(url);
 
     return await result.body;
