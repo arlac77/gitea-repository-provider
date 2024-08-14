@@ -26,7 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm run cover --if-present
+      - name: test and coverage
+        run: npm run cover --if-present
         env:
           GITEA_API: ${{ secrets.GITEA_API }}
           GITEA_TOKEN: ${{ secrets.GITEA_TOKEN }}
