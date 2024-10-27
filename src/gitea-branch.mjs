@@ -1,5 +1,5 @@
 import { matcher } from "matching-iterator";
-import { streamToUint8Array, streamToString } from "browser-stream-util";
+import { streamToString } from "browser-stream-util";
 import {
   BufferContentEntryMixin,
   StreamContentEntryMixin,
