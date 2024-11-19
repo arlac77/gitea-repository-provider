@@ -46,7 +46,7 @@
     "repository-provider": "^35.2.26"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.1",
     "@types/text-encoding": "^0.0.39",
     "ava": "^6.2.0",
     "c8": "^10.1.2",
