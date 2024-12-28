@@ -8,8 +8,8 @@
   "types": "./types/gitea-provider.d.mts",
   "exports": {
     ".": {
-      "default": "./src/gitea-provider.mjs",
-      "types": "./types/gitea-provider.d.mts"
+      "types": "./types/gitea-provider.d.mts",
+      "default": "./src/gitea-provider.mjs"
     }
   },
   "description": "repository provider for gitea",
