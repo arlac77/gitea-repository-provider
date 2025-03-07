@@ -76,7 +76,9 @@ const repoFixtures = {
           "wiki",
           "repository",
           "release",
-          "package"
+          "package",
+          "status",
+          "wiki"
         ])
       }
     ]
