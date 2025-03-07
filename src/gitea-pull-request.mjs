@@ -44,7 +44,7 @@ export class GiteaPullRequest extends PullRequest {
    * @param {Set<string>} [filter.states]
    * @return {AsyncIterable<PullRequest>}
    */
-  static async *list(respository, filter={}) {
+  static async *list(respository, filter = {}) {
     const provider = respository.provider;
 
     let state = "all";
@@ -58,13 +58,13 @@ export class GiteaPullRequest extends PullRequest {
     }
 
     const getBranch = async u =>
-      provider.branch([u.repo.full_name, u.ref].join("#"));
+      await provider.branch([u.repo.full_name, u.ref].join("#"));
 
     const { json } = await respository.fetchJSON(`pulls?state=${state}`);
 
     for (const p of json) {
       const source = await getBranch(p.head);
-      if (filter.source && !source.equals(filter.source)) {
+      if (!source || (filter.source && !source.equals(filter.source))) {
         continue;
       }
 
@@ -91,7 +91,7 @@ export class GiteaPullRequest extends PullRequest {
       ...options
     };
 
-    const result = await fetch(
+    const result = await provider.fetch(
       new URL(
         join("repos", destination.repository.fullName, "pulls"),
         provider.api
@@ -108,11 +108,7 @@ export class GiteaPullRequest extends PullRequest {
 
     const json = await result.json();
 
-    return new this(source, destination, json.number, {
-      body: json.body,
-      title: json.title,
-      state: json.state
-    });
+    return new this(source, destination, json.number, json);
   }
 
   async decline() {}

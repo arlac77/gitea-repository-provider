@@ -86,20 +86,23 @@ export class GiteaBranch extends Branch {
     const decoder = new TextDecoder("utf8");
     const content = btoa(decoder.decode(buffer));
 
+    const body = JSON.stringify({
+      message,
+      branch: this.name,
+      content,
+      sha: await this.sha(entry.name)
+    });
+
     const { json, response } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "contents", entry.name),
       {
         method: "PUT",
-        body: JSON.stringify({
-          message,
-          branch: this.name,
-          content,
-          sha: await this.sha(entry.name)
-        })
+        body
       }
     );
 
     if (!response.ok) {
+      //console.error(body);
       throw new Error(response.statusText);
     }
 
