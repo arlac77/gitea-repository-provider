@@ -74,7 +74,7 @@ Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/
 
 ## GiteaContentEntry
 
-**Extends BufferContentEntryMixin(ContentEntry)**
+**Extends BufferContentEntry**
 
 works for all branches
 
