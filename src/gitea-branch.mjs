@@ -1,8 +1,8 @@
 import { matcher } from "matching-iterator";
 import { streamToString } from "browser-stream-util";
 import {
-  BufferContentEntryMixin,
   StreamContentEntryMixin,
+  BufferContentEntry,
   ContentEntry,
   CollectionEntry
 } from "content-entry";
@@ -72,6 +72,7 @@ export class GiteaBranch extends Branch {
         this.name
     );
 
+    console.log("SHA",json);
     return json.sha;
   }
 
@@ -86,11 +87,15 @@ export class GiteaBranch extends Branch {
     const decoder = new TextDecoder("utf8");
     const content = btoa(decoder.decode(buffer));
 
+    const date = new Date();
     const body = JSON.stringify({
       message,
       branch: this.name,
       content,
-      sha: await this.sha(entry.name)
+      sha: await this.sha(entry.name),
+      dates: {
+        committer: date.toISOString()
+      }
     });
 
     const { json, response } = await this.provider.fetchJSON(
@@ -102,7 +107,7 @@ export class GiteaBranch extends Branch {
     );
 
     if (!response.ok) {
-      //console.error(body);
+      console.error(body);
       throw new Error(response.statusText);
     }
 
@@ -133,7 +138,7 @@ export class GiteaBranch extends Branch {
  * works for all branches
  *
  */
-class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
+class GiteaContentEntry extends BufferContentEntry {
   constructor(name, mode, branch) {
     super(name);
     this.branch = branch;
@@ -146,6 +151,11 @@ class GiteaContentEntry extends BufferContentEntryMixin(ContentEntry) {
 
   get buffer() {
     return this.getBuffer();
+  }
+
+  set buffer(value)
+  {
+    this._buffer = value;
   }
 
   async getBuffer() {
