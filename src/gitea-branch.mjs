@@ -141,8 +141,8 @@ export class GiteaBranch extends Branch {
 class GiteaContentEntry extends BufferContentEntry {
   constructor(name, mode, branch) {
     super(name);
+    this.mode = mode;
     this.branch = branch;
-    Object.defineProperty(this, "mode", { value: mode });
   }
 
   get provider() {
@@ -198,8 +198,8 @@ class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
 ) {
   constructor(name, mode, branch) {
     super(name);
+    this.mode = mode;
     this.branch = branch;
-    Object.defineProperty(this, "mode", { value: mode });
   }
 
   get provider() {
