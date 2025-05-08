@@ -81,7 +81,7 @@ works for all branches
 ### Parameters
 
 *   `name` &#x20;
-*   `mode` &#x20;
+*   `options` &#x20;
 *   `branch` &#x20;
 
 ## GiteaMasterOnlyContentEntry
@@ -93,7 +93,7 @@ only works for master branch
 ### Parameters
 
 *   `name` &#x20;
-*   `mode` &#x20;
+*   `options` &#x20;
 *   `branch` &#x20;
 
 ## GiteaOrganization
