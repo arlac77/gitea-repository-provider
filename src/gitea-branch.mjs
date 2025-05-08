@@ -45,11 +45,13 @@ export class GiteaBranch extends Branch {
     for (const entry of matcher(json.tree, patterns, {
       name: "path"
     })) {
+      const options = { mode: parseInt(entry.mode, 8)};
+
       yield entry.type === "tree"
-        ? new CollectionEntry(entry.path)
+        ? new CollectionEntry(entry.path, options)
         : new (this.name === "master"
             ? GiteaMasterOnlyContentEntry
-            : GiteaContentEntry)(entry.path, parseInt(entry.mode, 8), this);
+            : GiteaContentEntry)(entry.path, options, this);
     }
   }
 
@@ -139,9 +141,8 @@ export class GiteaBranch extends Branch {
  *
  */
 class GiteaContentEntry extends BufferContentEntry {
-  constructor(name, mode, branch) {
-    super(name);
-    this.mode = mode;
+  constructor(name, options, branch) {
+    super(name, options);
     this.branch = branch;
   }
 
@@ -196,9 +197,8 @@ class GiteaContentEntry extends BufferContentEntry {
 class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
   ContentEntry
 ) {
-  constructor(name, mode, branch) {
-    super(name);
-    this.mode = mode;
+  constructor(name, options, branch) {
+    super(name, options);
     this.branch = branch;
   }
 
