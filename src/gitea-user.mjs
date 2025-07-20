@@ -1,4 +1,5 @@
-import { RepositoryGroup, default_attribute } from "repository-provider";
+import { default_attribute, language_attribute } from "pacc";
+import { RepositoryGroup } from "repository-provider";
 
 /**
  *
@@ -10,7 +11,7 @@ export class GiteaUser extends RepositoryGroup {
       login: default_attribute,
       email: default_attribute,
       username: default_attribute,
-      language: default_attribute
+      language: language_attribute
     };
   }
 

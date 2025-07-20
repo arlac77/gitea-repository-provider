@@ -1,4 +1,5 @@
-import { RepositoryGroup, boolean_attribute, default_attribute } from "repository-provider";
+import { boolean_attribute, default_attribute } from "pacc";
+import { RepositoryGroup } from "repository-provider";
 
 /**
  *

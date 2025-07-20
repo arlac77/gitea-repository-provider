@@ -1,18 +1,12 @@
 import { matcher } from "matching-iterator";
-import { streamToString } from "browser-stream-util";
 import {
-  StreamContentEntryMixin,
+  StreamContentEntry,
   BufferContentEntry,
   ContentEntry,
   CollectionEntry
 } from "content-entry";
-import {
-  Branch,
-  CommitResult,
-  boolean_attribute,
-  count_attribute,
-  default_attribute
-} from "repository-provider";
+import { boolean_attribute, count_attribute, default_attribute } from "pacc";
+import { Branch, CommitResult } from "repository-provider";
 import { join } from "./util.mjs";
 
 /**
@@ -45,13 +39,33 @@ export class GiteaBranch extends Branch {
     for (const entry of matcher(json.tree, patterns, {
       name: "path"
     })) {
-      const options = { mode: parseInt(entry.mode, 8)};
+      const options = { mode: entry.mode };
 
       yield entry.type === "tree"
         ? new CollectionEntry(entry.path, options)
-        : new (this.name === "master"
-            ? GiteaMasterOnlyContentEntry
-            : GiteaContentEntry)(entry.path, options, this);
+        : this.name === "master"
+        ? new StreamContentEntry(entry.path, options, async entry => {
+            const url = join(
+              "repos",
+              this.repository.fullName,
+              "raw",
+              entry.name
+            );
+            const result = await this.provider.fetch(url);
+            return result.body;
+          })
+        : new BufferContentEntry(entry.path, options, async entry => {
+            const url = join(
+              "repos",
+              this.repository.fullName,
+              "contents",
+              entry.name + "?ref=" + this.name
+            );
+
+            const result = await this.provider.fetch(url);
+            const body = await result.json();
+            return Buffer.from(body.content, "base64");
+          });
     }
   }
 
@@ -74,7 +88,7 @@ export class GiteaBranch extends Branch {
         this.name
     );
 
-    console.log("SHA",json);
+    //console.log("SHA", json);
     return json.sha;
   }
 
@@ -133,102 +147,5 @@ export class GiteaBranch extends Branch {
     return {
       ref: `refs/heads/${this.name}`
     };
-  }
-}
-
-/**
- * works for all branches
- *
- */
-class GiteaContentEntry extends BufferContentEntry {
-  constructor(name, options, branch) {
-    super(name, options);
-    this.branch = branch;
-  }
-
-  get provider() {
-    return this.branch.provider;
-  }
-
-  get buffer() {
-    return this.getBuffer();
-  }
-
-  set buffer(value)
-  {
-    this._buffer = value;
-  }
-
-  async getBuffer() {
-    const url = join(
-      "repos",
-      this.branch.repository.fullName,
-      "contents",
-      this.name + "?ref=" + this.branch.name
-    );
-
-    const result = await this.provider.fetch(url);
-    const body = await result.json();
-    return Buffer.from(body.content, "base64");
-  }
-
-  async getString() {
-    const url = join(
-      "repos",
-      this.branch.repository.fullName,
-      "contents",
-      this.name + "?ref=" + this.branch.name
-    );
-
-    const result = await this.provider.fetch(url);
-    const body = await result.json();
-    return Buffer.from(body.content, "base64").toString();
-  }
-
-  get string() {
-    return this.getString();
-  }
-}
-
-/**
- * only works for master branch
- *
- */
-class GiteaMasterOnlyContentEntry extends StreamContentEntryMixin(
-  ContentEntry
-) {
-  constructor(name, options, branch) {
-    super(name, options);
-    this.branch = branch;
-  }
-
-  get provider() {
-    return this.branch.provider;
-  }
-
-  get readStream() {
-    return this.getReadStream();
-  }
-
-  async getReadStream() {
-    const url = join(
-      "repos",
-      this.branch.repository.fullName,
-      "raw",
-      this.name
-    );
-
-    const result = await this.provider.fetch(url);
-
-    return await result.body;
-  }
-
-  async getString() {
-    return streamToString(await this.getReadStream());
-  }
-
-  // @ts-ignore
-  get string() {
-    return this.getString();
   }
 }

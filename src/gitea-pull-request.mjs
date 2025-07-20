@@ -1,10 +1,5 @@
-import {
-  PullRequest,
-  Repository,
-  Branch,
-  boolean_attribute,
-  default_attribute
-} from "repository-provider";
+import { boolean_attribute, default_attribute } from "pacc";
+import { PullRequest, Repository, Branch } from "repository-provider";
 import { join, headers } from "./util.mjs";
 
 /**

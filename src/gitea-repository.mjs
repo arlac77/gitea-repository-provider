@@ -1,6 +1,5 @@
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import {
-  Repository,
   boolean_attribute,
   url_attribute,
   empty_attribute,
@@ -8,7 +7,8 @@ import {
   size_attribute,
   language_attribute,
   default_attribute
-} from "repository-provider";
+} from "pacc";
+import { Repository } from "repository-provider";
 import { join, headers } from "./util.mjs";
 import { GiteaBranch } from "./gitea-branch.mjs";
 

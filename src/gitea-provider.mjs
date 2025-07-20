@@ -1,8 +1,8 @@
 import { stateActionHandler } from "fetch-rate-limit-util";
 import { getHeaderLink } from "fetch-link-util";
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
-
-import { MultiGroupProvider, url_attribute, secret_attribute } from "repository-provider";
+import { url_attribute, secret_attribute } from "pacc";
+import { MultiGroupProvider } from "repository-provider";
 import { GiteaRepository } from "./gitea-repository.mjs";
 import { GiteaPullRequest } from "./gitea-pull-request.mjs";
 import { GiteaOrganization } from "./gitea-organization.mjs";
