@@ -27,10 +27,6 @@ repository provider for gitea
         *   [Parameters](#parameters)
     *   [commit](#commit)
         *   [Parameters](#parameters-1)
-*   [GiteaContentEntry](#giteacontententry)
-    *   [Parameters](#parameters-2)
-*   [GiteaMasterOnlyContentEntry](#giteamasteronlycontententry)
-    *   [Parameters](#parameters-3)
 *   [GiteaOrganization](#giteaorganization)
 *   [GiteaProvider](#giteaprovider)
     *   [initializeRepositories](#initializerepositories)
@@ -40,7 +36,7 @@ repository provider for gitea
 *   [GiteaPullRequest](#giteapullrequest)
     *   [states](#states)
     *   [list](#list)
-        *   [Parameters](#parameters-4)
+        *   [Parameters](#parameters-2)
 *   [GiteaRepository](#gitearepository)
     *   [update](#update)
 *   [GiteaUser](#giteauser)
@@ -71,30 +67,6 @@ Commit entries.
 *   `options` **[Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object)?**&#x20;
 
 Returns **[Promise](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise)\<CommitResult>**&#x20;
-
-## GiteaContentEntry
-
-**Extends BufferContentEntry**
-
-works for all branches
-
-### Parameters
-
-*   `name` &#x20;
-*   `options` &#x20;
-*   `branch` &#x20;
-
-## GiteaMasterOnlyContentEntry
-
-**Extends StreamContentEntryMixin(ContentEntry)**
-
-only works for master branch
-
-### Parameters
-
-*   `name` &#x20;
-*   `options` &#x20;
-*   `branch` &#x20;
 
 ## GiteaOrganization
 
