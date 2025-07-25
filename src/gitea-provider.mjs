@@ -31,53 +31,45 @@ export class GiteaProvider extends MultiGroupProvider {
     return "GITEA_";
   }
 
-  static get attributes() {
-    return {
-      ...super.attributes,
+  static attributes = {
+    ...super.attributes,
 
-      api: {
-        ...url_attribute,
-        description: "URL of the provider api",
-        set: value =>
-          value === undefined || value.endsWith("/") ? value : value + "/",
-        env: "{{instanceIdentifier}}API",
-        mandatory: true
-      },
+    api: {
+      ...url_attribute,
+      description: "URL of the provider api",
+      set: value =>
+        value === undefined || value.endsWith("/") ? value : value + "/",
+      env: "{{instanceIdentifier}}API",
+      mandatory: true
+    },
 
-      token: {
-        ...token_attribute,
-        description: "API token",
-        env: "{{instanceIdentifier}}TOKEN",
-        mandatory: true
-      }
-    };
-  }
+    token: {
+      ...token_attribute,
+      description: "API token",
+      env: "{{instanceIdentifier}}TOKEN",
+      mandatory: true
+    }
+  };
 
   fetch(url, options = {}) {
     options.reporter = (url, ...args) => this.trace(url.toString(), ...args);
-    return stateActionHandler(
-      new URL(url, this.api),
-      {
-        ...options,
-        headers: {
-          authorization: `token ${this.token}`,
-          ...options.headers
-        }
-      }      
-    );
+    return stateActionHandler(new URL(url, this.api), {
+      ...options,
+      headers: {
+        authorization: `token ${this.token}`,
+        ...options.headers
+      }
+    });
   }
 
   fetchJSON(url, options) {
-    return this.fetch(
-      url,
-      {
-        headers,
-        postprocess: async response => {
-          return { response, json: await response.json() };
-        },
-        ...options
-      }
-    );
+    return this.fetch(url, {
+      headers,
+      postprocess: async response => {
+        return { response, json: await response.json() };
+      },
+      ...options
+    });
   }
 
   /**
@@ -94,14 +86,16 @@ export class GiteaProvider extends MultiGroupProvider {
       }
 
       for (const r of json.data) {
-        (await this.addRepositoryGroup(r.owner.username, r.owner)).addRepository(r.name, r);
+        (
+          await this.addRepositoryGroup(r.owner.username, r.owner)
+        ).addRepository(r.name, r);
       }
 
       next = getHeaderLink(response.headers);
     } while (next);
   }
 
-/*
+  /*
   async addRepositoryGroup(name, options) {
     let repositoryGroup = await this.repositoryGroup(name);
     if (repositoryGroup) {
@@ -130,11 +124,10 @@ export class GiteaProvider extends MultiGroupProvider {
   }
 */
 
-  get url()
-  {
-    return this.repositoryBases[0];	
+  get url() {
+    return this.repositoryBases[0];
   }
-  
+
   /**
    * All possible base urls.
    * @return {string[]} common base urls of all repositories

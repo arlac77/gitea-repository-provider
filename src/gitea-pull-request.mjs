@@ -11,23 +11,19 @@ export class GiteaPullRequest extends PullRequest {
    */
   static states = new Set(["OPEN", "CLOSED"]);
 
-  static get attributes() {
-    return {
-      ...super.attributes,
-      state: {
-        ...default_attribute,
-        values: this.states,
-        writeable: true
-      },
-      mergeable: boolean_attribute
-    };
-  }
+  static attributes = {
+    ...super.attributes,
+    state: {
+      ...default_attribute,
+      values: this.states,
+      writeable: true
+    },
+    mergeable: boolean_attribute
+  };
 
-  static get attributeMapping() {
-    return {
-      is_locked: "locked"
-    };
-  }
+  static attributeMapping = {
+    is_locked: "locked"
+  };
 
   /**
    * List all pull request for a given repo.

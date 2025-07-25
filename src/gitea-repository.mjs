@@ -16,51 +16,47 @@ import { GiteaBranch } from "./gitea-branch.mjs";
  * @see https://try.gitea.io/api/swagger#/repository/repoGet
  */
 export class GiteaRepository extends Repository {
-  static get attributeMapping() {
-    return {
-      fork: "isFork",
-      archived: "isArchived",
-      template: "isTemplate",
-      private: "isPrivate",
-      mirror: "isMirror",
-      website: "homePageURL",
-      default_branch: "defaultBranchName"
-    };
-  }
+  static attributeMapping = {
+    fork: "isFork",
+    archived: "isArchived",
+    template: "isTemplate",
+    private: "isPrivate",
+    mirror: "isMirror",
+    website: "homePageURL",
+    default_branch: "defaultBranchName"
+  };
 
-  static get attributes() {
-    return {
-      ...super.attributes,
-      size_attribute,
-      language_attribute,
-      allow_manual_merge: boolean_attribute,
-      allow_merge_commits: boolean_attribute,
-      allow_rebase: boolean_attribute,
-      allow_rebase_explicit: boolean_attribute,
-      allow_squash_merge: boolean_attribute,
-      autodetect_manual_merge: boolean_attribute,
-      ignore_whitespace_conflicts: boolean_attribute,
-      default_delete_branch_after_merge: boolean_attribute,
-      default_merge_style: boolean_attribute,
-      stars_count: count_attribute,
-      ssh_url: url_attribute,
-      empty: empty_attribute,
-      open_issues_count: count_attribute,
-      open_pr_counter: count_attribute,
-      watchers_count: count_attribute,
-      release_counter: count_attribute,
-      has_projects: boolean_attribute,
-      has_pull_requests: boolean_attribute,
-      has_wiki: boolean_attribute,
-      forks_count: count_attribute,
+  static attributes = {
+    ...super.attributes,
+    size_attribute,
+    language_attribute,
+    allow_manual_merge: boolean_attribute,
+    allow_merge_commits: boolean_attribute,
+    allow_rebase: boolean_attribute,
+    allow_rebase_explicit: boolean_attribute,
+    allow_squash_merge: boolean_attribute,
+    autodetect_manual_merge: boolean_attribute,
+    ignore_whitespace_conflicts: boolean_attribute,
+    default_delete_branch_after_merge: boolean_attribute,
+    default_merge_style: boolean_attribute,
+    stars_count: count_attribute,
+    ssh_url: url_attribute,
+    empty: empty_attribute,
+    open_issues_count: count_attribute,
+    open_pr_counter: count_attribute,
+    watchers_count: count_attribute,
+    release_counter: count_attribute,
+    has_projects: boolean_attribute,
+    has_pull_requests: boolean_attribute,
+    has_wiki: boolean_attribute,
+    forks_count: count_attribute,
 
-      // creation only ?
-      auto_init: boolean_attribute,
-      license: default_attribute,
-      trust_model: default_attribute,
-      readme: default_attribute
-    };
-  }
+    // creation only ?
+    auto_init: boolean_attribute,
+    license: default_attribute,
+    trust_model: default_attribute,
+    readme: default_attribute
+  };
 
   fetch(path, options) {
     return this.provider.fetch(join("repos", this.fullName, path), options);

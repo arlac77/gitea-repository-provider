@@ -14,21 +14,17 @@ import { join } from "./util.mjs";
  *
  */
 export class GiteaBranch extends Branch {
-  static get attributeMapping() {
-    return {
-      full_name: "displayName"
-    };
-  }
-  static get attributes() {
-    return {
-      ...super.attributes,
-      user_can_merge: boolean_attribute,
-      user_can_push: boolean_attribute,
-      required_approvals: count_attribute,
-      enable_status_check: boolean_attribute,
-      effective_branch_protection_name: default_attribute
-    };
-  }
+  static attributeMapping = {
+    full_name: "displayName"
+  };
+  static attributes = {
+    ...super.attributes,
+    user_can_merge: boolean_attribute,
+    user_can_push: boolean_attribute,
+    required_approvals: count_attribute,
+    enable_status_check: boolean_attribute,
+    effective_branch_protection_name: default_attribute
+  };
 
   async *entries(patterns) {
     const { json } = await this.provider.fetchJSON(
