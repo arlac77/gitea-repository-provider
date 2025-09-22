@@ -11,17 +11,10 @@ test("factory name", t => t.is(GiteaProvider.name, "gitea"));
 
 test(providerTest, new GiteaProvider());
 
-const config = GiteaProvider.optionsFromEnvironment({
-  GITEA_TOKEN: "123456",
-  GITEA_API: "http://mydomain.com/gitea/api/v1/"
-});
-
-test("provider env options", t => {
-  t.deepEqual(config, {
-    token: "123456",
-    api: "http://mydomain.com/gitea/api/v1/"
-  });
-});
+const config = {
+  token: "123456",
+  api: "http://mydomain.com/gitea/api/v1/"
+};
 
 test("provider constructor", t => {
   const provider = new GiteaProvider(config);

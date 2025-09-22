@@ -37,7 +37,7 @@ export class GiteaProvider extends MultiGroupProvider {
     api: {
       ...url_attribute,
       description: "URL of the provider api",
-      set: value =>
+      prepareValue: value =>
         value === undefined || value.endsWith("/") ? value : value + "/",
       env: "{{instanceIdentifier}}API",
       mandatory: true

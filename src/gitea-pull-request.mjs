@@ -18,11 +18,8 @@ export class GiteaPullRequest extends PullRequest {
       values: this.states,
       writeable: true
     },
-    mergeable: boolean_attribute
-  };
-
-  static attributeMapping = {
-    is_locked: "locked"
+    mergeable: boolean_attribute,
+    locked: { ...PullRequest.attributes.locked, externalName: "is_locked" }
   };
 
   /**

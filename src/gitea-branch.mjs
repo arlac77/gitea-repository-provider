@@ -5,7 +5,7 @@ import {
   ContentEntry,
   CollectionEntry
 } from "content-entry";
-import { boolean_attribute, count_attribute, default_attribute } from "pacc";
+import { count_attribute, default_attribute, boolean_attribute_writable } from "pacc";
 import { Branch, CommitResult } from "repository-provider";
 import { join } from "./util.mjs";
 
@@ -14,15 +14,13 @@ import { join } from "./util.mjs";
  *
  */
 export class GiteaBranch extends Branch {
-  static attributeMapping = {
-    full_name: "displayName"
-  };
   static attributes = {
     ...super.attributes,
-    user_can_merge: boolean_attribute,
-    user_can_push: boolean_attribute,
+    displayName: { ...Branch.attributes.displayName, externalName: "full_name" },
+    user_can_merge: boolean_attribute_writable,
+    user_can_push: boolean_attribute_writable,
     required_approvals: count_attribute,
-    enable_status_check: boolean_attribute,
+    enable_status_check: boolean_attribute_writable,
     effective_branch_protection_name: default_attribute
   };
 

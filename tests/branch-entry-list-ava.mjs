@@ -9,13 +9,13 @@ const REPOSITORY_NAME =
   "https://mfelten.dynv6.net/services/git/markus/sync-test-repository";
 
 const messageDestination = createMessageDestination().messageDestination;
-const config = {
-  messageDestination,
-  ...GiteaProvider.optionsFromEnvironment(process.env)
-};
 
 test("branch entries list", async t => {
-  const provider = new GiteaProvider(config);
+  const provider = GiteaProvider.initialize(
+    { messageDestination },
+    process.env
+  );
+
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.branch("master");
   await entryListTest(t, branch, undefined, {
@@ -27,7 +27,11 @@ test("branch entries list", async t => {
 });
 
 test("branch entries list with pattern", async t => {
-  const provider = new GiteaProvider(config);
+  const provider = GiteaProvider.initialize(
+    { messageDestination },
+    process.env
+  );
+
   const repository = await provider.repository(REPOSITORY_NAME);
   const branch = await repository.branch("master");
 
