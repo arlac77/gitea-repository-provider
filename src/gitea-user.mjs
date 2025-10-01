@@ -16,10 +16,4 @@ export class GiteaUser extends RepositoryGroup {
     username: username_attribute,
     language: language_attribute
   };
-
-  static attributeMapping = {
-    ...super.attributeMapping,
-    avatar_url: "avatarURL",
-    is_admin: "isAdmin"
-  };
 }
