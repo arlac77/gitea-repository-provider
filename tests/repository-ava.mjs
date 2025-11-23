@@ -79,7 +79,8 @@ const repoFixtures = {
           "package",
           "status",
           "wiki",
-          "workflow_job"
+          "workflow_job",
+          "workflow_run"
         ])
       }
     ]
