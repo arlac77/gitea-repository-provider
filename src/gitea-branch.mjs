@@ -102,10 +102,16 @@ export class GiteaBranch extends Branch {
       message,
       branch: this.name,
       content,
+      author: {
+        name:"xxx",
+        email: "xxx@mail.com"
+      },
       sha: await this.sha(entry.name),
       dates: {
+        author: date.toISOString(),
         committer: date.toISOString()
-      }
+      },
+      signoff: false
     });
 
     const { json, response } = await this.provider.fetchJSON(
