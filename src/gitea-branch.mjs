@@ -97,14 +97,16 @@ export class GiteaBranch extends Branch {
     const decoder = new TextDecoder("utf8");
     const content = btoa(decoder.decode(buffer));
 
+    const owner = this.repository.owner;
+
     const date = new Date();
     const body = JSON.stringify({
       message,
       branch: this.name,
       content,
       author: {
-        name:"xxx",
-        email: "xxx@mail.com"
+        name: owner.name,
+        email: owner.email
       },
       sha: await this.sha(entry.name),
       dates: {
