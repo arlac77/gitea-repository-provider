@@ -34,8 +34,8 @@
     "lint:docs": "documentation lint ./src**/*.mjs"
   },
   "dependencies": {
-    "browser-stream-util": "^1.3.6",
-    "content-entry": "^14.2.5",
+    "browser-stream-util": "^1.3.7",
+    "content-entry": "^14.2.6",
     "fetch-link-util": "^1.1.3",
     "fetch-rate-limit-util": "^4.5.4",
     "matching-iterator": "^2.1.4",
