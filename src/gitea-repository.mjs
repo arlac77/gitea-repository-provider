@@ -1,6 +1,8 @@
 import { replaceWithOneTimeExecutionMethod } from "one-time-execution-method";
 import {
+  filterWritable,
   boolean_attribute,
+  boolean_attribute_writable_false,
   url_attribute,
   empty_attribute,
   count_attribute,
@@ -16,15 +18,6 @@ import { GiteaBranch } from "./gitea-branch.mjs";
  * @see https://try.gitea.io/api/swagger#/repository/repoGet
  */
 export class GiteaRepository extends Repository {
-  static attributeMapping = {
-    fork: "isFork",
-    archived: "isArchived",
-    template: "isTemplate",
-    private: "isPrivate",
-    mirror: "isMirror",
-    website: "homePageURL",
-    default_branch: "defaultBranchName"
-  };
 
   static attributes = {
     ...super.attributes,
@@ -55,7 +48,10 @@ export class GiteaRepository extends Repository {
     auto_init: boolean_attribute,
     license: default_attribute,
     trust_model: default_attribute,
-    readme: default_attribute
+    readme: default_attribute,
+
+    isMirror: { ...boolean_attribute_writable_false, externalName: "mirror" },
+    homePageURL: { ...super.attributes.homePageURL, externalName: "website" }
   };
 
   fetch(path, options) {
@@ -73,12 +69,7 @@ export class GiteaRepository extends Repository {
     return this.fetch("", {
       method: "PATCH",
       headers,
-      body: JSON.stringify(
-        mapAttributesInverse(
-          optionJSON(this, undefined, this.constructor.writableAttributes),
-          this.constructor.attributeMapping
-        )
-      )
+      body: JSON.stringify(this.toJSON(filterWritable))
     });
   }
 
