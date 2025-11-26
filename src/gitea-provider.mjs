@@ -95,34 +95,15 @@ export class GiteaProvider extends MultiGroupProvider {
     } while (next);
   }
 
-  /*
-  async addRepositoryGroup(name, options) {
-    let repositoryGroup = await this.repositoryGroup(name);
-    if (repositoryGroup) {
-      return repositoryGroup;
+  repositoryGroupClassFor(name, options) {
+    if (options.login || options.is_admin || options.starred_repos_count) {
+      //console.log("USER", name);
+      return GiteaUser;
     }
+    //console.log("ORG", name);
 
-    let clazz,r;
-
-    const f = async isUser => {
-      clazz = isUser ? GiteaUser : GiteaOrganization;
-      r = await this.fetchJSON(join(isUser ? "users" : "orgs", name));
-    };
-
-    await f(options?.email);
-
-    if (!r.result.ok) {
-      await f(clazz === GiteaUser);
-    }
-
-    if (!r.result.ok) {
-      console.log(r.result);
-      return;
-    }
-
-    return new clazz(this, name, await r.json);
+    return GiteaOrganization;
   }
-*/
 
   get url() {
     return this.repositoryBases[0];
@@ -144,9 +125,9 @@ export class GiteaProvider extends MultiGroupProvider {
     return GiteaPullRequest;
   }
 
-  get repositoryGroupClass() {
+  /*get repositoryGroupClass() {
     return GiteaOrganization;
-  }
+  }*/
 }
 
 replaceWithOneTimeExecutionMethod(

@@ -1,20 +1,30 @@
-import {
-  default_attribute,
-  language_attribute,
-  username_attribute,
-  email_attribute
-} from "pacc";
-import { RepositoryGroup } from "repository-provider";
+import { default_attribute, language_attribute } from "pacc";
+import { GiteaOrganization } from "./gitea-organization.mjs";
 
 /**
  *
  */
-export class GiteaUser extends RepositoryGroup {
+export class GiteaUser extends GiteaOrganization {
   static attributes = {
     ...super.attributes,
     login: default_attribute,
-    email: email_attribute,
-    username: username_attribute,
     language: language_attribute
   };
+
+  /*
+  active
+created
+followers_count
+following_count
+html_url
+is_admin
+language
+last_login
+login
+login_name
+prohibit_login
+restricted
+source_id
+starred_repos_count
+*/
 }
