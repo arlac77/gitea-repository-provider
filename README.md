@@ -137,7 +137,7 @@ Returns **AsyncIterable\<PullRequest>**&#x20;
 
 ## GiteaUser
 
-**Extends RepositoryGroup**
+**Extends GiteaOrganization**
 
 # install
 
