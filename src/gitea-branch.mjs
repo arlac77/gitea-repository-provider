@@ -5,7 +5,11 @@ import {
   ContentEntry,
   CollectionEntry
 } from "content-entry";
-import { count_attribute, default_attribute, boolean_attribute_writable } from "pacc";
+import {
+  count_attribute,
+  default_attribute,
+  boolean_attribute_writable
+} from "pacc";
 import { Branch, CommitResult } from "repository-provider";
 import { join } from "./util.mjs";
 
@@ -16,7 +20,10 @@ import { join } from "./util.mjs";
 export class GiteaBranch extends Branch {
   static attributes = {
     ...super.attributes,
-    displayName: { ...Branch.attributes.displayName, externalName: "full_name" },
+    displayName: {
+      ...Branch.attributes.displayName,
+      externalName: "full_name"
+    },
     user_can_merge: boolean_attribute_writable,
     user_can_push: boolean_attribute_writable,
     required_approvals: count_attribute,
@@ -93,17 +100,14 @@ export class GiteaBranch extends Branch {
    * @return {Promise<ContentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
-    const buffer = await entry.buffer;
-    const decoder = new TextDecoder("utf8");
-    const content = btoa(decoder.decode(buffer));
-
+    const buffer = await entry.string;
     const owner = this.repository.owner;
-
     const date = new Date();
+
     const body = JSON.stringify({
       message,
       branch: this.name,
-      content,
+      content: btoa(buffer),
       author: {
         name: owner.name,
         email: owner.email
@@ -115,7 +119,6 @@ export class GiteaBranch extends Branch {
       },
       signoff: false
     });
-
     const { json, response } = await this.provider.fetchJSON(
       join("repos", this.repository.fullName, "contents", entry.name),
       {
