@@ -6,8 +6,8 @@ import {
   CollectionEntry
 } from "content-entry";
 import {
-  count_attribute,
-  default_attribute,
+  count_attribute_writable,
+  string_attribute_writable,
   boolean_attribute_writable
 } from "pacc";
 import { Branch, CommitResult } from "repository-provider";
@@ -26,9 +26,9 @@ export class GiteaBranch extends Branch {
     },
     user_can_merge: boolean_attribute_writable,
     user_can_push: boolean_attribute_writable,
-    required_approvals: count_attribute,
+    required_approvals: count_attribute_writable,
     enable_status_check: boolean_attribute_writable,
-    effective_branch_protection_name: default_attribute
+    effective_branch_protection_name: string_attribute_writable
   };
 
   async *entries(patterns) {
@@ -89,7 +89,6 @@ export class GiteaBranch extends Branch {
         this.name
     );
 
-    //console.log("SHA", json);
     return json.sha;
   }
 
