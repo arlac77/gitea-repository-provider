@@ -6,7 +6,7 @@ const messageDestination = createMessageDestination().messageDestination;
 const provider = GiteaProvider.initialize({ messageDestination}, process.env);
 
 const markusGroup = {
-  markus: { id: 1, name: "markus", username: "markus" }
+  markus: { id: 1, name: "markus", username: "markus", language: "", is_admin: false }
 };
 const githubMirrorGroup = {
   "github-mirror": { id: 6, description: "mirror of github.com" }
