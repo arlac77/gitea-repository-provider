@@ -99,14 +99,14 @@ export class GiteaBranch extends Branch {
    * @return {Promise<ContentEntry>} written content with sha values set
    */
   async writeEntry(entry, message) {
-    const buffer = await entry.string;
+    const content = await entry.string;
     const owner = this.repository.owner;
     const date = new Date();
 
     const body = JSON.stringify({
       message,
       branch: this.name,
-      content: btoa(buffer),
+      content: btoa(content),
       author: {
         name: owner.name,
         email: owner.email
