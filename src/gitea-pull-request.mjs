@@ -1,4 +1,4 @@
-import { boolean_attribute, default_attribute } from "pacc";
+import { boolean_attribute, state_attribute_writable } from "pacc";
 import { PullRequest, Repository, Branch } from "repository-provider";
 import { join, headers } from "./util.mjs";
 
@@ -14,12 +14,11 @@ export class GiteaPullRequest extends PullRequest {
   static attributes = {
     ...super.attributes,
     state: {
-      ...default_attribute,
+      ...state_attribute_writable,
       values: this.states,
-      writeable: true
     },
-    mergeable: boolean_attribute,
-    locked: { ...PullRequest.attributes.locked, externalName: "is_locked" }
+    mergeable: { ...boolean_attribute, name: "mergeable" },
+    locked: { ...PullRequest.attributes.locked, name: "locked", externalName: "is_locked" }
   };
 
   /**

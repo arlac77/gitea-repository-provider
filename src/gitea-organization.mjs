@@ -1,6 +1,6 @@
 import {
   boolean_attribute,
-  default_attribute,
+  string_attribute,
   email_attribute,
   username_attribute
 } from "pacc";
@@ -22,8 +22,8 @@ export class GiteaOrganization extends RepositoryGroup {
     },
     username: username_attribute,
     email: email_attribute,
-    location: default_attribute,
-    visibility: default_attribute,
-    repo_admin_change_team_access: boolean_attribute
+    location: {...string_attribute, name: "location" },
+    visibility: {...string_attribute, name: "visibility" },
+    repo_admin_change_team_access: boolean_attribute, name: "repo_admin_change_team_access" }
   };
 }

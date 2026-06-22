@@ -24,11 +24,20 @@ export class GiteaBranch extends Branch {
       ...Branch.attributes.displayName,
       externalName: "full_name"
     },
-    user_can_merge: boolean_attribute_writable,
-    user_can_push: boolean_attribute_writable,
-    required_approvals: count_attribute_writable,
-    enable_status_check: boolean_attribute_writable,
-    effective_branch_protection_name: string_attribute_writable
+    user_can_merge: { ...boolean_attribute_writable, name: "user_can_merge" },
+    user_can_push: { ...boolean_attribute_writable, name: "user_can_push" },
+    required_approvals: {
+      ...count_attribute_writable,
+      name: "required_approvals"
+    },
+    enable_status_check: {
+      ...boolean_attribute_writable,
+      name: "enable_status_check"
+    },
+    effective_branch_protection_name: {
+      ...string_attribute_writable,
+      name: "effective_branch_protection_name"
+    }
   };
 
   async *entries(patterns) {
@@ -45,28 +54,28 @@ export class GiteaBranch extends Branch {
       yield entry.type === "tree"
         ? new CollectionEntry(entry.path, options)
         : this.name === "master"
-        ? new StreamContentEntry(entry.path, options, async entry => {
-            const url = join(
-              "repos",
-              this.repository.fullName,
-              "raw",
-              entry.name
-            );
-            const result = await this.provider.fetch(url);
-            return result.body;
-          })
-        : new BufferContentEntry(entry.path, options, async entry => {
-            const url = join(
-              "repos",
-              this.repository.fullName,
-              "contents",
-              entry.name + "?ref=" + this.name
-            );
+          ? new StreamContentEntry(entry.path, options, async entry => {
+              const url = join(
+                "repos",
+                this.repository.fullName,
+                "raw",
+                entry.name
+              );
+              const result = await this.provider.fetch(url);
+              return result.body;
+            })
+          : new BufferContentEntry(entry.path, options, async entry => {
+              const url = join(
+                "repos",
+                this.repository.fullName,
+                "contents",
+                entry.name + "?ref=" + this.name
+              );
 
-            const result = await this.provider.fetch(url);
-            const body = await result.json();
-            return Buffer.from(body.content, "base64");
-          });
+              const result = await this.provider.fetch(url);
+              const body = await result.json();
+              return Buffer.from(body.content, "base64");
+            });
     }
   }
 
