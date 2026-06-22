@@ -136,7 +136,7 @@ export class GiteaBranch extends Branch {
     );
 
     if (!response.ok) {
-      console.error(body);
+      console.error(response, body);
       throw new Error(response.statusText);
     }
 
